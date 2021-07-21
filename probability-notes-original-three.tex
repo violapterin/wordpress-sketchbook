@@ -1,0 +1,654 @@
+\documentclass[12pt]{article}
+%
+\usepackage[T1]{fontenc}% the font used to be T1-encoding
+\usepackage{garamondx}% default font: Garamond. (urw-garamond is badly written)
+\usepackage[garamondx,cmbraces]{newtxmath}% math supporting package
+\renewcommand*\ttdefault{cmtt}% typewriter font: Computer Modern Teletype. (previously also used: lcmtt, Computer Modern Teletype L; pcr, Courier New
+\usepackage{cabin}% sans-serif font: Cabin
+%
+\usepackage{
+  amsmath,% facilitates math formulae typography
+  amssymb,% several other symbols
+  graphicx,% enables graphics insertion
+  color% enables colored text
+}
+\usepackage[
+ frak= esstix, scr= boondoxo, cal= cm, bb= boondox
+]{mathalfa}% do not alter the order of this line (for strange reasons)
+% available ones: (* has small cases)
+% frak: *esstix, *boondox, *pxtx
+% bb: ams, pazo, fourier, esstix, *boondox, px, txof.
+% cal & scr: rsfs, rsfso, zapfc, pxtx, *esstix, *boondox, *boondoxo, *dutchcal. 
+%
+% Formatting.
+\setlength{\parskip}{1.5ex}% vertical spacing between paragraphs
+\setlength{\parindent}{4ex}% indent in a paragraph
+\usepackage{titling}% controls typesetting the title
+\setlength{\droptitle}{-2cm}% decreases spacing over the title
+\usepackage[
+  top=2.1cm, bottom=1.9cm, left=1.8cm, right=1.8cm
+]{geometry}% sets page margins
+\usepackage[compact]{titlesec}% adjusts spacing of each sec.; used below.
+\titlespacing{\section}{8ex}{*0}{*0}% resp., left margin, vertical spacing, seperation to text following.
+\titlespacing{\subsection}{2ex}{*0}{*2}% see above
+\titlespacing{\subsubsection}{0pt}{*0}{*0}
+\titleformat{\subsection}[% modifies the title of a subsec.
+  runin% no new-line before subsequent text
+]{
+  \color{red}\large\bfseries\itshape %color, font, shape
+}{}{}{}[]% end \titleformat
+\usepackage{listings}% quoting codes
+\definecolor{myGreen}{rgb}{0,0.6,0}
+\lstset{
+  language = Matlab,
+  basicstyle=\small\bfseries\ttfamily,breaklines=true,
+  keywordstyle=\color{blue},
+  commentstyle=\color{myGreen},
+}
+%\everymath{\displaystyle}% forces displaying in-text math w/ full height
+%
+% Custom shorthands.
+% lower case Greek alphabets w/ long name
+\newcommand\aG\alpha \newcommand\bG\beta  \newcommand\gG\gamma \newcommand\dG\delta \newcommand\eG\varepsilon \newcommand\zG\zeta \newcommand\tG\vartheta \newcommand\kG\kappa \newcommand\lG\lambda \newcommand\sG\sigma \newcommand\fG\varphi \newcommand\oG\omega 
+% upper case Greek alphabets
+\newcommand\GG\varGamma \newcommand\DG\varDelta \newcommand\TG\Theta \newcommand\LG\varLambda \newcommand\SG\varSigma \newcommand\FG\varPhi \newcommand\YG\varUpsilon \newcommand\OG\varOmega
+%
+% other symbols
+\newcommand{\oo}\infty% infinity, whose shape resembles "oo"
+\newcommand{\F}\frac% "F"raction
+\newcommand{\R}\sqrt% "R"oot
+\newcommand{\M}\cdot% "M"ultiply
+\newcommand{\N}\nabla% del sign
+\newcommand{\X}\times% cross, whose shape resembles "X"
+\newcommand{\Pt}\partial% "P"ar"T"ial differentiation
+\newcommand{\V}\boldsymbol% bold italic, e.g. "V"ectors
+\newcommand{\Ev}\forall% "Ev"ery
+\newcommand{\Ex}\exists% "Ex"ists
+\newcommand{\St}{\textsf{\large \: s.t. \:}}% "S"uch "T"hat
+\newcommand{\Eq}{\Leftrightarrow}% "Eq"ivelent
+\newcommand{\Ip}{\Rightarrow} % "I"m"p"lies
+\newcommand{\ii}{ \mathring{\imath} }% for imag. unit
+\newcommand{\jj}{ \mathring{\jmath} }% for imag. unit
+\newcommand{\dd}{ \BF{d} }% for differential
+\newcommand{\ee}{ \BF{e} }% for natural base
+%
+% brackets, customized fonts
+\newcommand{\Rb}[1]{ \left( #1 \right) }% "R"ound "b"racket, or more commonly parenthesis
+\newcommand{\Sb}[1]{ \left[ #1 \right] }%("S"quare) "b"racket
+\newcommand{\Cb}[1]{ \left\{ #1 \right\} }%("C"urly) "b"race
+\newcommand{\Ab}[1]{ \left\langle #1 \right\rangle } %Chevrons, e.g. "A"ngle brackt
+\newcommand{\Nm}[1]{ \left| #1 \right| } %"N"or"m"
+\newcommand{\Bk}[2]{ \left\langle #1 \middle| #2 \right\rangle } %"B"ra-"K"et notation
+\newcommand{\Nb}[1]{ \quad \mbox{\color{blue}[#1]} \quad }%"N"ota "b"ene, i.e. note
+\newcommand{\Emph}[1]{ {\color{blue}\bfseries{#1}} }% my emphasis
+\newcommand{\BF}[1]{ \mathbb{#1} }% "B"lackboard "F"ont
+\newcommand{\CF}[1]{ \mathcal{#1} }% "C"ursive "F"ont
+\newcommand{\GF}[1]{ \mathfrak{#1} }% "G"othic "F"ont
+\newcommand{\SF}[1]{ \mathscr{#1} }% "S"cript "F"ont
+\newcommand{\Ss}[1]{\textsf{\bfseries{#1}}}% "S"ans-"s"erif
+\newcommand{\Tw}[1]{\texttt{#1}}% "t"ype"w"riter font
+%
+% miscellaneous
+\renewcommand{\L}\label% "L"a"b"el
+\newcommand\Nt{\notag\\}% "N"o"t"ag
+\newcommand{\EqG}[1]{ \begin{gather}{#1}\end{gather} }% Eqn. Gather
+\newcommand{\EqGo}[1]{ \begin{gather*}{#1}\end{gather*} } % unnumbered
+\newcommand{\EqA}[1]{ \begin{align}{#1}\end{align} }% Eqn. Align
+\newcommand{\EqAo}[1]{ \begin{align*}{#1}\end{align*} }% unnumbered
+\newcommand{\Id}{\hspace{5em}}% "I"n"d"ent, esp. in multi-line formulae
+%
+\renewcommand{\P}[1]{ \CF{P}\Rb{#1} }% probability
+\newcommand{\E}[1]{ \Tw{E}\Rb{#1} }% expectation value
+\newcommand{\Var}[1]{ \Tw{Var}\Rb{#1} }% variance
+\newcommand{\I}[1]{ \BF{I}_{\{#1\}} }% indicator function
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+\title{\textit{\textbf{\huge Theory of Probability (I)}}: \\ Part 3 -- \textsc{Central Limit Thm., Martingales}}
+\date{}
+\author{}
+\maketitle
+\allowdisplaybreaks[4]% allows page breaks amid eqn. arrays.
+
+\vspace{-3.7cm} %removes vertical spacing 
+\hfill{\itshape lectured by prof. Zhi-Zhong Zhang} \par
+\hfill{\itshape organized by Tzu-Yu Jeng} \par
+\hfill{\itshape Nov. 17 to Dec. 31, 2015} \\
+\vspace{-0.7cm} 
+
+\setcounter{section}{6}
+\section{characteristic functions}
+\subsection*{(63) lemma 3.1.1.} [Nov. 17] If \(c_j \in \BF{C} \to 0\) as \(a_j \to \oo\), 
+and \(a_jc_j \to \lG\), then \((1+c_j)^{a_j} \to e^\lG\) as \(j \to \oo\). \par
+\Ss{Proof.} Note that \((1/z)\log(1+z) \to 1\) as \(z \to 0\). 
+Thus, as \(j \to \oo\), \EqGo{
+ a_j \log(1+c_j) = a_j c_j \F{\log(1+c_j)}{c_j} \to \lG \M 1 =\lG,
+}
+
+\subsection*{(64) def.} Given is a rv \(X\) (or a probability distribution \(\mu: \BF{R} \mapsto \CF{B}(\BF{R})\), or a distribution function \(F\)), we define, for \(\Ev t \in \BF{R}\), its \Ss{characteristic function}, if existent, to be \EqGo{
+ \fG(t) =\E{\ee^{itX}} 
+ =\int_{\BF{R}} \ee^{itx} \mu(\dd x) 
+ =\int_{\BF{R}} \ee^{itx} \dd F(x),
+} 
+
+\subsection*{(65) properties.} For a characteristic function \(\fG\), \\
+\indent (i) \(\fG(0)=1\) \\
+\indent (ii) \(\fG(-t) = \fG(t)^{*}\) \\
+\indent (iii) \(|\fG(t)| \leq \E{|\ee^{itX}|} \leq 1\) \\
+\indent (iv) \(\fG\) is uniformly continuous. \\
+\indent (v) if \(X\) and \(Y\) are independent, then \(\fG_{X+Y}(t) = \fG_X(t) +\fG_Y(t)\). \par
+\Ss{Proof.} Only (iv) is shown here; others are straightforward. \EqGo{
+ |\fG(t+h)-\fG(t)|
+ = \Nm{ \int_\OG ( \ee^{ix(t+h)} -\ee^{ixt} ) \mu(\dd x) }
+ \leq \int_\OG |\ee^{itx}| |\ee^{ihx} -1| \mu(\dd x)|
+ \to 0,
+} as \(h \to 0\); convergence follows from the bounded convergence thm. 
+
+\subsection*{(66) thm. 3.3.4.} Let \(\fG(t)\) be the characteristic function of probability measure \(\mu\). 
+Then for \(a<b\), \EqGo{
+ \lim_{T \to \oo} \F{1}{2\pi} \int_{-T}^T \F{\ee^{-ita} -\ee^{-itb}}{it} \fG(t) \dd t
+ = \mu((a,b)) +\F{1}{2}\mu(\{a,b\}).
+} (they are resp. measure for the interval and for endpoints) That is to say, \(\fG\) determines \(\mu\) uniquely. \par
+\Ss{Proof.} In the expression \EqGo{
+ \F{1}{2\pi} \int_{-T}^T \F{\ee^{-ita} -\ee^{-itb}}{it} \int_{\BF{R}} \ee^{itx} \M \mu(\dd x) \M \dd t,
+} its integrand is bounded as such: \EqGo{
+ \Nm{\F{\ee^{-ita} -\ee^{-itb}}{it} \ee^{itx}}
+ \leq \Nm{\int_a^b \ee^{-itz} \dd z}
+ \leq \int_a^b |\ee^{-itz}| \dd z
+ \leq |b-a|,
+} then Fubini's thm.\ may be used, and integral sign is exchanged, and by noting evenness and oddness, \EqAo{
+ \Tw{lhs} =& \F{1}{2\pi} \int_{-T}^T \int_{\BF{R}} \ee^{itx} \F{\ee^{-ita} -\ee^{-itb}}{it} \M \mu(\dd x) \M \dd t \\
+ =& \F{1}{2\pi} \int_{\BF{R}} \int_{-T}^T \ee^{itx} \F{\ee^{-ita} -\ee^{-itb}}{it} \M \dd t \M \mu(\dd x) \\
+ =& \F{1}{2\pi} \int_{\BF{R}} 2 \int_{-T}^T \Rb{\F{\sin(x-a)t}{t} -\F{\sin(x-b)t}{t} } \dd t \M \mu(\dd x).
+} To compute this, first look up improper integral, for \(\aG>0\), \EqGo{
+ \lim_{T \to \oo} \int_0^T \F{\sin(\aG t)}{t} \dd t = \F{\pi}{2}.
+} With this applied, and limit taken, \begin{gather*}
+ \lim_{T \to \oo} \int_{-T}^T \Rb{\F{\sin(x-a)t}{t} -\F{\sin(x-b)t}{t} } \dd t
+ = \begin{cases}
+ 0, &x<a \lor x>b \\
+ \pi/2, &x=a \lor x=b \\
+ \pi, &a<x<b.
+ \end{cases}
+\end{gather*} The result follows at once. 
+
+\subsection*{(67) an estimation of \(\mu\)} [Nov. 19] (from Varadan's book) Let \(\mu\) be a probability measure on \((\BF{R},\CF{B}(\BF{R}))\), with char. function \(\fG\). 
+Then for \(\Ev \aG >0\), \EqGo{
+ \mu\Rb{ \Cb{x: |x| \geq \F{1}{a}} } \leq \F{7}{a} \int_0^a (1- \GF{Re}(\fG(t))) \dd t.
+} \indent \Ss{Proof.} By def. of \(\fG\), 
+by integral being positive and Fubini's thm., 
+by \(\sin(\tG)/\tG \leq 1\) and integrand being positive, 
+by checking \(\sin(\tG)/\tG <\sin(1)/1\) while \(\tG>1\), 
+\EqAo{
+ & \F{1}{a} \int_0^a \Rb{1- \GF{Re} \int_{\BF{R}} \ee^{\ii tx} \mu(\dd x)} \dd t 
+ = \F{1}{a} \int_0^a \int_{\BF{R}} (1 -\cos(tx)) \mu(\dd x) \dd t \\
+ =& \F{1}{a} \int_{\BF{R}} \int_0^a (1 -\cos(tx)) \dd t \mu(\dd x) 
+ = \F{1}{a} \int_{\BF{R}} \Rb{ 1 -\F{\sin(ax)}{ax} } \mu(\dd x) \\
+ \geq& \int_{x:|ax| \geq 1} \Rb{ 1 -\F{\sin(ax)}{ax} } \mu(\dd x) 
+ \geq \Rb{ 1 -\F{\sin(1)}{1} } \int_{x:|ax| \geq 1} \mu(\dd x) 
+ \geq \F{1}{7} \int_{x:|ax| \geq 1} \mu(\dd x).
+}
+
+\subsection*{(68) lemma 3.3.7.} For all \(x \in \BF{R}\), \EqGo{
+ \Nm{ \ee^{\ii x} -\sum_{m=0}^n \F{(\ii x)^m}{m!} }
+ \leq \Tw{min}\Cb{ \F{|x|^n+1}{(n+1)!}, \F{|x|^n}{n!} }.
+} \indent \Ss{Proof.} (sketched below; see text for details) Integration by parts gives \EqGo{
+ \int_0^x (x-s)^n \ee^{\ii s} \dd s
+ = \F{x^{n+1}}{n+1} + \F{\ii}{n+1} \int_0^x (x-s)^{n+1} \ee^{\ii s} \dd s
+} Start with \(n' =0\) and keep using \((x-s)^{n'+1}\) to represent \((x-s)^{n'}\), then after some calculations \EqGo{
+ R_n := \ee^{\ii x} -\sum_{m=0}^n \F{(\ii x)^m}{m!}
+ = \F{\ii^{n+1}}{n!} \int_0^x (x-s)^n \ee^{\ii s} \dd s.
+} Take abs value of the integrand, noting \(|\ee^{\ii s}| =1\), and do the integral of \((x-s)^n\) to get \EqGo{
+ |R_n| \leq \F{|x|^{n+1}}{(n+1)!}.
+} \indent On the other hand, do integration by parts to verify \EqGo{
+ \int_{s=0}^x (x-s)^n \dd \ee^{\ii s}
+ = n \int_{s=0}^x (x-s)^{n-1} (\ee^{\ii s} -1) \dd s
+} and take abs value of the integrand and replace \(|\ee^{-\ii s}| \leq 2\) to get \EqGo{
+ |R_n| \leq \F{2|x|^n}{n!}.
+} 
+
+\section{weak convergence}
+\subsection*{(69) def.} Let \(\mu_1,\dotsc,\mu_\oo\) be probability measure on \((\BF{R}, \CF{B}(\BF{R}))\), 
+corresponding resp. to \(X_1,\dotsc,X_\oo\), and \(F_1,\dotsc,F_\oo\) resp. be distribution functions of them. 
+Then \(F_n\) is said to \Ss{weakly converge} to \(F_\oo\) (and hence \(\mu_n\), the measure which that Stieltjes measures induce, to also weakly converge to that \(\mu_\oo\)), if \(F_n(t) \to F_\oo(t)\) for \(\Ev t \in \CF{C}(F_\oo)\) (conti.\ points of \(F_\oo\)). 
+This is denoted as \(F_n \leadsto F_\oo\) [T.-Y. J. --- I used this special arrow to distinguish implication]. 
+
+\subsection*{(70) thm. 3.2.3.} [Dec. 3] Let \(X_n\) and \(X\) be real r.v. with \(\OG =\BF{R}\). 
+Then \(X_n \leadsto X\) iff \(\E{f(X_n)} \to \E{f(X)}\) for \(\Ev\) bounded and conti.\ function, \(f\). 
+In other words, \(\mu_n \leadsto \mu\) iff \(\int_{-\oo}^\oo f(x) \dd \mu_n \to \int_{-\oo}^\oo f(x) \dd \mu\). \par
+\Ss{Proof.} [\(\Ip\)] Suppose \(\mu_n \leadsto \mu\), i.e., \(F_n(t) \to F(t)\), for \(\Ev t \in \CF{C}(F)\) (conti.\ pts of \(F\)). 
+Consider \(f\), any bounded conti.\ function, and pick arbitrary \(\eG >0\). 
+Then, \(\Ex a \in \CF{C}(F) \St F(a) < \eG\) and \(\Ex b \in \CF{C}(F) \St 1 -F(b) < \eG\) (see item (8-ii)). 
+As assumed, \(f\) is conti.\, in particular uniformly conti.\ on closed interval \([a,b]\), 
+we may find \(a =x_0 <x_1 <\dotsb< x_k =b\) and name \(I_j :=[x_{j-1}, x_j]\) for \(j =1,\dotsc,k\), with requirement \(\Tw{sup}_{t \in I_j} |f(s) -f(t)| <\eG\). \par
+Insert superfluous terms as thus, and use triangle ineq.: \EqAo{
+ &\int_{-\oo}^\oo f(x) \dd \mu_n -\int_{-\oo}^\oo f(x) \dd \mu \\
+ \leq& \Nm{ \int_{-\oo}^\oo f(x) \dd \mu_n -\int_a^b f(x) \dd \mu_n } +
+  \Nm{ \int_a^b f(x) \dd \mu_n -\sum_j f(x_j) \mu_n(I_j) } +
+  \Nm{ \sum_j f(x_j) \mu_n(I_j) -\sum_j f(x_j) \mu(I_j) } + \\
+  &\Id \Nm{ \sum_j f(x_j) \mu(I_j) -\int_a^b f(x) \dd \mu } +
+  \Nm{ \int_a^b f(x) \dd \mu -\int_{-\oo}^\oo f(x) \dd \mu }.
+} Investigate them one by one. As of the 1st and 5th, replace \(f\) by its bound (recall \(L^\oo\)-norm is maximum), and as in above bound \(1-F(b)\) and \(F(a)\). 
+Also set \(n\) so large that both \(|F_n(a) -F(a)|\) and \(|F_n(b) -F(b)| <\eG\). \EqAo{
+ \Tw{1st} \leq& \int_{-\oo}^a |f| \dd \mu_n +\int_b^\oo |f| \dd \mu_n \leq \|f\|_\oo (\eG +\eG). \\
+ \Tw{5th} \leq& \int_{-\oo}^a |f| \dd \mu +\int_b^\oo |f| \dd \mu \leq \|f\|_\oo (2\eG +2\eG).
+} Since \(I_k\)'s are so fine and \(f\) uniformly conti.\, as remarked above, \EqGo{
+ \Tw{2nd} \leq \sum_j \eG \M \mu_n(I_j) \leq \eG. \quad
+ \Tw{4th} \leq \sum_j \eG \M \mu(I_j) \leq \eG.
+} To bound the 3rd term, apply abs inside summand, factor \(\|f\|_\oo\) out, and note \(F_n \to F\) is uniform on closed \([a,b]\) (see, for example, Rudin's \textit{Principle of Math. Analysis}, 3e, p.150, thm.7.15): \EqGo{
+ \Tw{3rd} \leq \|f\|_\oo \sum_j \Rb{\mu_n(I_j) -\mu(I_j)} \leq \eG \|f\|_\oo
+} \indent Combined, they give the desired limit: \(\limsup (\Tw{1st} +\Tw{2nd} +\Tw{3rd} +\Tw{4th} +\Tw{5th}) =0\). \par
+[\(\Leftarrow\)] Conversely, define conti.\ function \begin{gather*}
+ h_{a,b}(x) := \begin{cases}
+   1, &x \leq a \\ 1 -(x-a)/(b-a), &a \leq x \leq b \\ 0, &b \leq x
+ \end{cases}
+\end{gather*} (i.e., connect 0 and 1 in linear manner) then \(\Ev \eG >0\), by assumption applied to \(h_{t,t+\eG}(x)\), \EqGo{
+ F_n(t) =\int \I{(\oo,t]} \dd \mu_n 
+ \leq \int h_{t,t+\eG}(x) \dd \mu_n
+ \to \int h_{t,t+\eG}(x) \dd \mu
+ \leq F(t+\eG) \\
+ \Ip \limsup_{n \to \oo} F_n(t) \leq F(t+\eG).
+} Similarly, \EqGo{
+ F_n(t) =\int \I{(\oo,t]} \dd \mu_n 
+ \geq \int h_{t-\eG,t}(x) \dd \mu_n
+ \to \int h_{t-\eG,t}(x) \dd \mu 
+ \geq F(t-\eG) \\
+ \Ip \liminf_{n \to \oo} F_n(t) \geq F(t-\eG).
+} Let \(\eG \to 0\). While \(F\) is conti.\, \(F(t^+) =F(t^-)\), it follows \(\limsup F_n(t)\) and \(\liminf F_n(t)\) are equal. 
+
+\subsection*{(71) remarks.} [Dec. 10] (i) Suppose \(X_n \to X_\oo\) in prob., then of course \(\E{f(X_n) -f(X_\oo)} \to 0\), for \(\Ev\) bounded conti.\ fnt.\ 
+By thm.3.2.3, \(X_n \leadsto X_\oo\). \par
+(ii) \(\ee^{\ii t x}\) is bounded and conti.\ 
+By thm.3.2.3, if \(X_n \leadsto X_\oo\), then their resp. characteristic fnt.\ \(\fG_n(t) \to \fG_\oo(t)\). \par
+(iii) In the proof, we really just used a piecewise linear fnt.\ 
+Thus, we may weaker the assumption to be that \(\E{f(X_n)} \to \E{f(X_\oo)}\) for all bounded \textit{uniformly} conti.\ fnt.\ \(f\), or even \textit{Lipschitz conti.} fnt.
+
+\section{central limit theorems}
+We embark on the task of proving the central limit theorem (CLT). 
+Before that, several results is needful; but afterwards, CLT follows easily. 
+\subsection*{(72) thm. 3.2.6.} For \(\Ev\) sequence \(F_n\) of distribution fnt.s, \(\Ex\) a subsequence \(F_{n(k)}\) and a right conti.\ non-decreasing fnt.\ \(F\), 
+which satisfies \(\lim\limits_{k \to \oo} F_{n(k)}(x) =F(x)\), for \(\Ev x \in \CF{C}(F)\) (conti.\ pt.s). \par
+\Ss{Proof.} First, to construct \(\tilde{F}\) that is limit of \(F_n\)'s at every rational, and then connect undefined points between them. 
+We are to apply the standard \Ss{diagonal technique} (see, say, Rudin, \textit{Principles of Math. Analysis}, 3e p.156, thm.7.2.3, where this is entirely reproduced.) 
+Number \(\BF{Q} \cap [0,1]\) (which is well-known to be countable) by \(1,2,3,\dotsc\), and denote as \(q_i\). 
+Now \(F_i\)'s are bounded by \([0,1]\), in particular \(\{F_i(q_1)\}\) are bounded. 
+By Bolzano-Weierstrass thm., there is a converging sub-sequence. 
+Call the index set \(\{n_1(i)\}\). 
+Among them, \(\{F_{n_1(i)}(q_2)\}\) are bounded, and contains a converging sub-sequence with index set \(\{n_2(i)\}\) which  \(\subset \{n_1(i)\}\). 
+Among them, \(\{F_{n_2(i)}(q_3)\}\) are bounded, and contains a converging sub-sequence with index set \(\{n_3(i)\}\) which  \(\subset \{n_2(i)\}\)...and so forth. 
+They list as thus: \EqAo{
+ &F_{n_1(1)}(q_1),\; F_{n_1(2)}(q_1),\; F_{n_1(3)}(q_1),\dotsc \\
+ &F_{n_2(1)}(q_2),\; F_{n_2(2)}(q_2),\; F_{n_2(3)}(q_2),\dotsc \\
+ &F_{n_3(1)}(q_3),\; F_{n_3(2)}(q_3),\; F_{n_3(3)}(q_3),\dotsc
+} We can't just hope a subsequence that converges to \(F\) will be automatically defined, because such process is not finite.  
+However, the diagonal \(m(i) :=n_i(i)\) truly is defined, and runs even faster than every \(n_l(i)\) for \(\Ev l\), so need not worry convergence. 
+So, let's set \begin{gather*}
+ \tilde{F}(q_i) := \lim_{k \to \oo} F_{m(k)}(q_i). \\
+ F(t) := \begin{cases}
+  \tilde{F}(t), &t \in \BF{Q} \cap [0,1] \\
+  \underset{q: q \geq t, q \in \BF{Q}}{\inf} \tilde{F}(t), &t \in [0,1] -\BF{Q}
+ \end{cases}
+\end{gather*} \indent To show \(F\) is right conti., consider any \(t\). 
+Observe \(F\) is non-decreasing, by def.\ (the larger \(t\) is, the smaller set being taken inf, and the smaller the inf is). 
+It suffice to inspect \(\Ev \eG >0\), and find such \(\dG\) that \(F(s) \leq F(t) +\eG\) whenever \(t \leq s \leq t+\dG\). 
+But this is obvious from def.\ of inf. To put more clearly, consider otherwise that it's false for \(\Ev \dG\), then practically each \(q\) which \(>t\) has been included in the process of taking inf when we decrease \(t'\), and it follows \(F(t) =\inf\limits_{q:q>t} \tilde{F}(q)\) is at least \(\geq F(t)+\eG\). \par
+But we seeks to do more: to show limit holds on every conti.\ pt. 
+Observe, by \(F_{m(k)}\) is non-decreasing, \(F_{m(k)}(t) \leq F_{m(k)}(q)\). 
+Letting \(k \to \oo\) on both side, we see \(\limsup\limits_{k \to \oo} F_{m(k)}(t) \leq \tilde{F}(q) =F(q)\), where we know lim exists at \(q\). 
+Since this holds for all \(q >t\), \EqGo{
+ \limsup_{k \to \oo} F_{m(k)}(t) 
+ \leq \inf_{q: q \geq t,\; q \in \BF{Q}} \tilde{F}(q) =F(t).
+} \indent On the other hand, consider \(t \in \CF{C}(F)\). 
+We just showed right conti. 
+Now let \(s \uparrow t\), then \(F(s) \uparrow F(t)\). 
+Since limit exists, we may well choose rational \(s\)'s that approach \(t\). 
+Recall \(F_{m(k)}(s) \leq F_{m(k)}(t)\) since each is a distribution fnt. 
+Then \EqGo{
+ \liminf_{k \to \oo} F_{m(k)}(t).
+ \geq \tilde{F}(s) =F(s) \to F(t^-)
+} \indent Combining, \EqGo{
+ F(t) =F(t^-) 
+ \leq \liminf_{k \to \oo} F_{m(k)}(t) 
+ \leq \limsup_{k \to \oo} F_{m(k)}(t) 
+ \leq F(t). \\
+ \Ip \liminf_{k \to \oo} F_{m(k)}(t) 
+ =\liminf_{k \to \oo} F_{m(k)}(t)
+ =\lim_{k \to \oo} F_{m(k)}(t) =F(t).
+}
+
+\subsection*{(73) def.} [Dec. 15] A set of dist.\ fnt.s, \(\SF{A} :=\{F_\lG, \lG \in \LG\}\) is said \Ss{totally bounded}, or \Ss{weakly compact}, 
+if \(\Ev\) sequence \(F_n\) that \(\subset \SF{A}\), there is a sequence \(F_{n(k)}\) that converges weakly to some limiting probability dist.\ fnt. 
+A sequence of dist.\ fnt.s \(F_n\) is \Ss{tight}, if for \(\Ev \eG >0\), \(\Ex 0 < M_\eG < \oo\), such that \(1 -F_n((-M_\eG, M_\eG]) \leq \eG\). \par
+With \(\mu_n\) in place of \(F_n\) above, the same is understood. 
+
+\subsection*{(74) thm. 3.2.7.} The sequence \(F_n\) is weakly compact iff it is tight. \par
+\Ss{Proof.} Suppose \(F_n\) is tight and \(F_{n(k)} \leadsto F\) in the vague sense: it need not \(\to 1\) at \(\oo\), and \(\to 0\) at \(-\oo\); i.e., it remains to show \(F\) is a dist.\ fnt. 
+Find suitable \(-r <-M_\eG <M_\eG <s\), so that \EqGo{
+ F(\BF{R}) 
+ \geq F((r,s])
+ = \lim_{k \to \oo} (r,s]
+ \geq \limsup_{k \to \oo} F_{n(k)}((-M_\eG, M_\eG]) 
+ \geq \liminf_{k \to \oo} F_{n(k)}((-M_\eG, M_\eG]) 
+ \geq 1 -\eG. 
+} Thus \(F(\BF{R}) =1\), and is a dist.\ fnt. \par
+Conversely, suppose \(F_n\) is weakly compact, but, for sake of argument, were not tight. 
+Then \(\Ex\) such \(\eG >0\), for \(\Ev K \in R\), that: \(\liminf_{n \to \oo} F_n((-K,K]) \leq 1 -\eG\). 
+Then \(\Ex n(k)\) s.t. \(F_{n(k)}((-K,K]) \leq 1 -\eG\). 
+By Helly's selection thm., \(\Ex n(k_j)\) s.t. \(F_{n(k_j)}(t) \to F(t)\), for \(\Ev t \in \CF{C}(F)\) (conti.\ pt.s of \(F\)). 
+Then for suitable \(r,s \in \CF{C}(F)\), \EqGo{
+ F((r,s])
+ =\lim_{j \to \oo} F_{n(k_j)}((r,s])
+ \leq \liminf_{j \to \oo} F_{n(k_j)}((-K_j,K_j])
+ \leq 1 -\eG. 
+} This is contrary to def.\ of dist.\ fnt.s. 
+
+\subsection*{(75) thm. 3.3.6,} (L\'evy's construction thm.) 
+Let \(\mu_n\), where \(1 \leq n \leq \oo\), be probability measures, with char.\ fnt.\ \(\fG_n\). Then: 
+(i) If \(\mu_n \leadsto \mu_\oo\), it follows \(\fG_N(t) \leadsto \fG_\oo(t)\), for \(\Ev t\). 
+(ii) If \(\fG_n(t) \to \fG(t)\) for \(\Ev t\), for some \(\fG\) conti.\ at 0, 
+it follows that \(\mu_n\) is tight, and \(\mu_n\) conv.\ weakly to a measure with char.\ fnt.\ to be \(\fG\). \par
+
+\Ss{Proof.} (i) comes from thm.3.2.3 (item 70). \par
+To show (ii). Let \(F_n\) be the dist.\ fnt.\ of \(\mu_n\). 
+For any subset \(F_{n(k)}\), there exist a further subsequence \(n(k_j)\) such that \(F_{n(k_j)} \leadsto F\) (in vague sence, need not be dist.\ fnt.) by Helly's selection thm. 
+We then apply the approximation of item 67: \EqGo{
+ \CF{P} \Rb{|x| \geq \F{1}{a}} 
+ \leq \F{7}{a} \int_0^a (1 -\GF{Re} \fG_{n(k_j)}(t)) \dd t 
+ \to \F{7}{a} \int_0^a (1 -\GF{Re} \fG(t)) \dd t 
+ < \eG, 
+} where this \(\CF{P}\) is understood as that induced by \(\mu_{n(k_j)}\). 
+If \(a\) is small, \(\limsup \CF{P} <\eG\) as \(j \to \oo\), because integral \(\approx\) value of \(\fG\) taken at \(0\), while \(\fG \approx 1\) there. 
+In other words, \(\mu_{n(k_j)}\) is tight, and it follows \(F_{n(k_j)} \leadsto F\) which is a dist.\ fnt. \par
+The corresponding \(\fG_{n(k_j)}\) also \(\to\) some \(\tilde{\fG}\) accordingly. 
+However, we already know \(\fG_{n(k_j)}(t) \to \fG(t)\), which has dist.\ \(F\). 
+Essentially, from dist.\ fnt.\ one may find, via inverse Fourier transform, the char.\ fnt.\ that rv. 
+Thus, \(\tilde{\fG} =\fG\) identically. 
+
+\subsection*{(76) lemma 3.4.3.} [Dec. 17] Let \(z_1,\dotsc,z_n,w_1,\dotsc,w_n \in \BF{C}\), with \(|z_j| \leq \tG,\; |w_j| \leq \tG\). 
+Then \EqGo{
+ \Nm{ \prod_{j=1}^n z_j -\prod_{j=1}^n w_j } \leq \tG^{n-1} \sum_{j=1}^n |z_j -w_j|.
+} \indent \Ss{Proof.} Use math.\ induction. \(n=1\) is trivial. 
+Suppose result to be true for \(n'=n\). Consider the case \(n' =n+1\). \EqAo{
+ &\Nm{ \prod_{j=1}^{n+1} z_j -\prod_{j=1}^{n+1} w_j } 
+ \leq \Nm{ \prod_{j=1}^{n+1} z_j -w_{n+1} \prod_{j=1}^n } +\Nm{ w_{n+1} \prod_{j=1}^n z_j -\prod_{j=1}^{n+1} w_j } \\
+ \leq& |z_{n+1} -w_{n+1}| \tG^n +\tG \Nm{ \prod_{j=1}^n z_j -\prod_{j=1}^n w_j }
+ \leq |z_{n+1} -w_{n+1}| \tG^n +\tG^n \sum_{j=1}^n |z_j -w_j|
+ = \tG^n \sum_{j=1}^{n+1} |z_j -w_j|
+} by triangle ineq., by induction premise. This completes math.\ induction. 
+
+\subsection*{(77) thm. 3.4.1.} (central limit thm.) Let \(X_j\) iid, with \(\E{X_j} =\mu\), \(\Var{X_j} =\sG^2\), and as before, \(S_n := X_1 +\dotsb+ X_n\). Then \EqGo{
+ \F{S_n -n\mu}{\R{n}} \leadsto \SF{N}(0, \sG^2).
+} \indent \Ss{Proof.} Let \(Y_j =X_j -\mu\), \(Y_j\) iid, with \(\E{Y_j} =0\), \(\Var{Y_j} =\sG^2\). 
+\EqAo{
+ &\E{\exp\Rb{ \ii t \F{Y_1+\dotsb+Y_n}{\R{n}} }}
+ = \E{\prod_{j=1}^n \exp\Rb{ \F{\ii t}{\R{n}} Y_j }}
+ = \prod_{j=1}^n \E{\exp\Rb{ \F{\ii t}{\R{n}} Y_j }}
+ = \Sb{\E{\exp\Rb{ \F{\ii t}{\R{n}} Y_j }}}^n \\
+ \Ip& \Nm{ \E{\exp\Rb{ \ii t \F{Y_1+\dotsb+Y_n}{\R{n}} }} -\Rb{1 -\F{t^2 \sG^2}{2n}}^n } 
+ = 1^{n-1} \M n \Nm{ \E{\exp\Rb{ \ii t \F{Y_1}{\R{n}} }} -\Rb{1 -\F{t^2 \sG^2}{2n} } }
+} where the lemma (item 76) is used on the two products subtracting with \(\tG =1\). 
+Surely, \(|\fG|\) (imaginary exponent) is bounded by 1, and by hypothesis \(\sG\)'s are bounded. \par
+By lemma 3.3.7 (item 68), applied to \(\fG(t) =\E{\ee^{\ii t Y}}\), \EqGo{
+ \Nm{ \fG(t) -\sum_{j=0}^k \F{(\ii t)^j}{j!} \E{Y^j} }
+ \leq \E{ \F{|t|^{k+1} |Y|^{k+1}}{(k+1)!} \land \F{2 |t|^k |Y|^k}{k!} }.
+} Invoke this, with \(t\) replaced by \(t/\R{n}\), and \(k=2\) then, back to the main line, \EqGo{
+ \leq n \E{ \F{|t|^3 |Y_1|^3}{6 n^{3/2}} \land \F{2 |t|^2 |Y_1|^2}{n} }.
+} as \(n \to \oo\), this \(\to \E{0} =0\). 
+CLT follows by dominated convergence thm.
+
+\subsection*{(78) thm. 3.4.2.} (Lindeberg-Feller condition for triangular arrays) For each \(n\), let \(X_{n,m},\; 1 \leq m \leq n\), be independent rv w/ \(\E{X_{n,m}} =0\) and \(\Var{X_{n,m}} =\sG_{n,m}^2\), s.t.: \\
+\indent (i) \(\sum_{j=1}^n \sG_{n,m}^2 \to \sG^2 >0\). \\
+\indent (ii) \(\Ev \eG >0,\; \lim\limits_{n \to \oo} \sum_{m=1}^n \E{|X_{n,m}|^2: |X_{n,m}| >\eG} =0\). \par
+Then \(S_n := X_1 +\dotsb+ X_n \leadsto \SF{N}(0,\sG^2)\). \par
+\Ss{Proof.} By similar manipulations and by lemma 3.3.7 (item 68), as in proof of CLT (item 77), \EqAo{
+ &\Nm{ \E{\ee^{\ii t S_n}} -\prod_{j=1}^n \Rb{1 -\F{1}{2} t^2 \sG_{n,j}^2} }
+ =\Nm{ \prod_{j=1}^n \E{\ii t X_{n,j}} -\prod_{j=1}^n \Rb{1 -\F{1}{2} t^2 \sG_{n,j}^2} } \\
+ =& \tG^{n-1} \sum_{j=1}^n \Nm{
+   \E{\exp\Rb{ \ii t X_{n,j} }} -\Rb{1 -\F{t^2 \sG_{n,j}^2}{2n}} 
+ }
+ \leq \tG^{n-1} \sum_{j=1}^n \E{ \F{|t|^3 |X_{n,j}|^3}{3!} \land \F{2 |t|^2 |X_{n,j}|^2}{2!} }.
+} Split this term into two: one in which \(|X_{n,j}| \leq \eG\) or \(\geq \eG\), resp.. 
+Consider the former: factor one \(|X_{n,j}|\) out, and the rest, \(\sum_{j=1}^n \E{|X_{n,j}|^2}\), is bounded by hypothesis (i). The former term is then \(\leq \eG |t|^3 \sG^2 /6 \to 0\). 
+While the latter \(\to 0\) also, by hypothesis (ii). \par
+The rest work is first to recognize \(\limsup\limits_{n \to \oo} \sup\limits_{1 \leq j \leq n} \sG_{n,j}^2 \to 0\), because we may split as in above \(|X_{n,j}| \geq \eG\) or \(\leq \eG\), and both \(\to 0\). 
+Finally apply exercise 3.1.1: \EqGo{
+ \prod_{j=1}^n \Rb{ 1 -\F{1}{2} t^2 \sG_{n,j}^2 }
+ \to \exp\Rb{ -\F{t^2}{2} \sum_{j=1}^n \sG_{n,j}^2 }
+ \to \exp\Rb{ -\F{t^2}{2} \sG^2 }.
+} This follows directly from expansion of exp. See text for details. 
+
+\section{conditional expectation}
+\subsection*{(79) def.} [Dec. 22] Let \((\OG,\SF{F}_0,\CF{P})\) be given, \(\SF{F} \subset \SF{F}_0\) be a sub-\(\sG\)-field, and \(X \in \SF{F}_0\) be a r.v.\ with \(\E{|X|} <\oo\). 
+\(\SF{F}\) being given, the \Ss{conditional expectation}, denoted as \(Y := \E{X \Big| \SF{F}}\), of \(X\), is a r.v.\ satisfying \\
+\indent (i) \(Y \in \SF{F}\) \\
+\indent (ii) \(\Ev A \in \SF{F},\; \int_A Y \dd \CF{P} =\int_A X \dd \CF{P}\). 
+
+\subsection*{(80) prop.} The \Ss{conditional expectation} is unique in the a.s.\ sense: different \Ss{versions} may vary only almost nowhere. \par
+\Ss{Proof.} Use the setting in item 79. 
+Then conditional exp.\ \(Y \in \SF{F}\). 
+Check the requirement \(Y \in L^1\) first. 
+Introduce \(Y =Y^+ -Y^-\). 
+Now, \EqAo{
+ \int_\OG Y_+ \dd \CF{P} 
+ =&\int_{\oG: Y \geq 0} Y \dd \CF{P} 
+ =\int_{\oG: Y \geq 0} X \dd \CF{P} 
+ \leq \int_{\oG: Y \geq 0} |X| \dd \CF{P}, \\
+ \int_\OG Y_- \dd \CF{P} 
+ =&\int_{\oG: Y <0} (-Y) \dd \CF{P} 
+ =\int_{\oG: Y <0} (-X) \dd \CF{P} 
+ \leq \int_{\oG: Y < 0} |X| \dd \CF{P}. \\
+ \Ip \int_\OG |Y| \dd \CF{P}
+ =&\int_\OG (Y^+ -Y^-) \dd \CF{P}
+ \leq \int_\OG |X| \dd \CF{P}
+ =\E{|X|} <\oo.
+} \indent Suppose both \(Y,Y'\) satisfy (i) and (ii). 
+Then \(Y-Y' \in \SF{F}\). 
+Define \(A\) to be \(\{\oG: Y \neq Y'\}\) (where they differ). But \EqGo{
+ \int_A (Y-Y') \dd \CF{P}
+ = \int_A Y \dd \CF{P} -\int_A Y' \dd \CF{P}
+ = \int_A X \dd \CF{P} -\int_A X \dd \CF{P} =0.
+} Thus \(\P{A} =0\), and hence \(Y =Y'\) a.s. 
+[T.-Y. J. --- Now \(\P{\{\oG: |Y-Y'| >2^{-k}\}} =0\), and use continuity from above.]
+
+\subsection*{(81) prop.} The conditional expectation exists. \par
+\Ss{Proof.} Let \(X =X^+ -X^-\) be given. To construct \(Y_1 :=\E{X^+  \Big| \SF{F}}\). 
+Define the function \(\mu(A) := \int_A X^+ \dd \CF{P}\). 
+It's not difficult to check it is a measure on \(\OG\). 
+By Radon-Nikodym thm., \(\Ex Y_1 \in \SF{F}\), \(Y_1 \geq 0\), s.t. \(\mu(A) =\int_A Y_1 \dd \CF{P},\; \Ev A \in \SF{F}\). 
+Similarly, we may construct \(Y_2 :=\E{X^-  \Big| \SF{F}}\). \par
+Claim \(Y := Y_1 -Y_2\) is what we want. First, \(Y \in \SF{F}\) follows since \(Y_1,Y_2 \in \SF{F}\). 
+Next, \(\Ev A \in \SF{F}\), \EqAo{
+ \int_A X \dd \CF{P}
+ =& \int_A (X^+ -X^-) \dd \CF{P}
+ = \int_A X^+ \dd \CF{P} -\int_A X^- \dd \CF{P} \\
+ =& \int_A Y_1 \dd \CF{P} -\int_A Y_2 \dd \CF{P}
+ = \int_A Y \dd \CF{P}.
+}
+
+\subsection*{(82) thm. 5.1.2.} [Dec. 24] Suppose \(\E{|X|} <\oo,\; \E{|Y|} <\oo\). Then: \\
+\indent (i) \(\E{aX+Y  \Big| \SF{F}} =a \E{X \Big| \SF{F}} +\E{Y \Big| \SF{F}}\), a.s. \\
+\indent (ii) whenever \(X \leq Y\), it follows \(\E{X \Big| \SF{F}} \leq \E{Y \Big| \SF{F}}\), a.s. \\
+\indent (iii) whenever \(X_n \geq 0,\; X_n \uparrow X\) with \(\E{|X|} <\E{X} <\oo\), it follows \(\E{X_n \Big| \SF{F}} \uparrow \E{X \Big| \SF{F}}\). \par
+\Ss{Proof.} Choose \(\Ev A \in \SF{F}\). To show (i). \EqGo{
+ \int_A (a\E{X \Big| \SF{F}} +\E{Y \Big| \SF{F}}) \dd \CF{P}
+ =a\int_A X \dd \CF{P} +\int_A Y \dd \CF{P}
+ =\int_A (aX +Y) \dd \CF{P}.
+} And \(a \E{X \Big| \SF{F}} +\E{Y \Big| \SF{F}}\) is the conditional exp.\ \(\E{aX+Y  \Big| \SF{F}}\). \par
+To show (ii). \EqGo{
+ \int_A \E{X \Big| \SF{F}} \dd \CF{P}
+ =\int_A X \dd \CF{P}
+ \leq\int_A Y \dd \CF{P}
+ =\int_A \E{Y \Big| \SF{F}} \dd \CF{P}
+} Then \(\E{X \Big| \SF{F}} \geq \E{X \Big| \SF{F}} +\eG\) almost nowhere (see argument in item 81, last paragraph). \par
+To show (iii). Here, \(X-X_n \downarrow 0\). 
+By part (ii), \(\E{(X-X_n) \Big| \SF{F}} \downarrow\) a certain limit, say \(\downarrow Z\). 
+Then \EqGo{
+ \int_A \E{X-X_n \Big| \SF{F}} \dd \CF{P}
+ =\int_A (X-X_n) \dd \CF{P} 
+ =\int_A Z \dd \CF{P}.
+} But \(X_n \uparrow X\), hence 2nd integral \(=0\). 
+This is true for \(\Ev A \in \SF{F}\), thus \(Z =0\). 
+
+\subsection*{(83) thm. 5.1.6.} If \(\SF{F}_1 \subset \SF{F}_2\), then \(\E{\E{X \Big| \SF{F}_1} \Big| \SF{F}_2} =\E{\E{X \Big| \SF{F}_2} \Big| \SF{F}_1} =\E{X \Big| \SF{F}_1}\), a.s. \par
+\Ss{Proof.} That \(\E{\E{X \Big| \SF{F}_1} \Big| \SF{F}_2} =\E{X \Big| \SF{F}_1}\) is trivial. 
+[Indeed, a rv.\ is its own conditional exp., because it is what integrates to be the same thing in its own algebra.] \par
+It remains to show \(\E{\E{X \Big| \SF{F}_2} \Big| \SF{F}_1} =\E{X \Big| \SF{F}_1}\). 
+Choose \(A \in \SF{F}_1\); then \(A \in \SF{F}_2\) too. 
+The 1st equation follows from def.\ of condition exp.\ in \(\SF{F}_1\), and 2nd from that in \(\SF{F}_2\). \EqGo{
+ \int_A \E{X \Big| \SF{F}_1} \dd \CF{P}
+ =\int_A X \dd \CF{P}
+ =\int_A \E{X \Big| \SF{F}_2} \dd \CF{P}.
+} 
+
+\subsection*{(84) thm. 5.1.6.} \(\E{XY \Big| \SF{F}} =X\E{Y \Big| \SF{F}}\). \par
+\Ss{Proof.} Choose \(\Ev A \in \SF{F}\). 
+Check \(\int_A X \E{Y \Big| \SF{F}} \dd \CF{P} =\int_A XY \dd \CF{P}\), by approximation. 
+First, if \(X =\I{B}\), where \(B \in \SF{F}\), \EqGo{
+ \int_A \I{B} \E{Y \Big| \SF{F}} \dd \CF{P}
+ =\int_{A \cap B} \E{Y \Big| \SF{F}} \dd \CF{P}
+ =\int_{A \cap B} Y \dd \CF{P}
+ =\int_A \I{B} Y \dd \CF{P},
+} as desired. Next, if \(X =\sum_{j=1}^n \I{B_j} c_j\), where \(B_j \in \SF{F}\), result also holds by linearity (item 82, i). 
+Finally, by lower continuity (item 82, iii), approximate \(X\) by simple functions, then the result follows. 
+
+\section{martingales}
+\subsection*{(86) def.}  A sequence \(X_n\) is said \Ss{adapted} to \(\SF{F}_n\) if \(\Ev X_n \in \SF{F}_n\), where \(\SF{F}_n\) are sub-\(\sG\)-algebra that \(\uparrow\), in other words \(\SF{F}_n \subset \SF{F}_{n+1} \subset\dotsb\) (this chain of inclusion is called a \Ss{filtration}). 
+
+\subsection*{(87) def.} Suppose \(\E{|X|} <\oo\) and \(X_n\) is adapted to \(\SF{F}_n\). 
+Then \(X_n\) is a \Ss{martingale} if \(\E{X_{n+1} \Big| \SF{F}_n} =X_n\), 
+or a \Ss{submartingale} if \(\geq X_n\), 
+or a \Ss{supermartingale} if \(\leq X_n\). 
+Because according results often hold resp., to save space, say ``\(X_n\) is a (sub-/\_\_/super-)martg.''.
+
+\subsection*{(88) thm. 5.2.3. \& 5.2.4.} If \(X_n\) is a (sub-/\_\_)martg.\ w.r.t.\ \(\SF{F}_n\), and \(\fG\) a convex fnt.\ with \(\E{|\fG(X_n)|} <\oo,\; \Ev n\). 
+Then \(\fG(X_n)\) is a submartg.\ w.r.t.\ \(\SF{F}_n\). 
+In particular, if \(X_n\) is a (sub-/\_\_)martg., \((X_n -a)^+\) is too a submartg. 
+And if \(X_n\) is a supermartg., \(X_n \land a\) is too a supermartg. \par
+\Ss{Proof.} By Jensen's ineq.\ and convexity, by \(X_n\) being (sub-/\_\_)martg., (latter case even smaller) \EqGo{
+ \E{\fG(X_{n+1}) \Big| \SF{F}_n} 
+ \geq \fG(\E{X_{n+1} \Big| \SF{F}_n}) 
+ \geq \fG(X_n).
+} \indent Application of this result shows the two corollaries. Here, map \(z \mapsto (z-a)^+\) and map \(z \mapsto -(z \land a)\) are both convex. 
+
+\subsection*{(89) convention.} Introduce shorthand: \EqGo{
+ [H \bullet X]_n :=\sum_{m=1}^n H_m \M (X_m -X_{m-1}).
+} You may think of the gambling scenario, and picture this as a \Ss{strategy} by which you bet: 
+\(H_m\) is your stake (money put in) in the \(m\)-th round. 
+\(X_m\) is total money (possibly negative) you've gained. 
+
+\subsection*{(90) def.} Given is \(\SF{F}_n\); the strategy \(H_n\), \(n=1,2,\dotsc\), is said \Ss{predictable} if \(H_n \in \SF{F}_{n-1}\) (may be reasoned once the immediately previous game is over, because only making use of knowledge up to this point). 
+
+\subsection*{(91) thm. 5.2.5.} [Dec. 29] Suppose \(X_n\) is a (sub-/\_\_/super-)martg., and \(H_n\) is \(\geq 0\), is bounded and predictable. 
+Then \([H \bullet X]_n\) is also a (sub-/\_\_/super-)martg. \par
+\Ss{Proof.} \(\E{(H \bullet X)_{n+1} \Big| \SF{F}_n} =[H \bullet X]_n +H_{n+1} \E{(X_{n+1} -X_n) \Big| \SF{F}}\), where \(H_{n+1}\), which \(\in \SF{F}\), is pulled out of condition sign. 
+Since \(H_n\) positive, last term \(\lesseqgtr 0\) if \(X_n\) is a (sub-/\_\_/super-)martg., as desired. \par
+This thm.\ means that you, knowing everything having happened until \(n\)-th round, can neither turn a game originally favorable to you into one unfavorable to you (if you wish so), nor, similarly, a game unfavorable into one favorable. 
+
+\subsection*{(92) def.} A rv.\ \(\tau\) with values \(\in \BF{N} \cup \oo\) is a \Ss{stopping time} if \(\{\tau \leq n\} \in \SF{F}_n\) for \(\Ev n\), or equivalently \(\{\tau =n\} \in \SF{F}_n\) for \(\Ev n\). \par
+An analogy is that suppose the train stops at each of 1st, 2nd,..., \(n\)-th,... towns. 
+When one plans to get off the train at town \(n\), he may be alerted so at as early as town \(n-1\) or even earlier (is a stopping time), or simply get off at precisely town \(n\) once the bell rings (is a stopping time), but it is ridiculous to determine when to get off at as late as town \((n+1)\) or even later (is not a stopping time). 
+
+\subsection*{(93) thm. 5.2.6.} Suppose \(\tau\) is a stopping time and \(X_n\) is a (sub-/\_\_/super-)martg., then both \(X_{n \land \tau}\) and \(X_n -X_{n \land \tau}\) are also resp.\ a (sub-/\_\_/super-)martg. \par
+\Ss{Proof.} Take \(H_n =\I{n \leq \tau}\). 
+It is bounded, is \(\geq 0\), and is predictable since \(\{\oG: n \leq \tau\} =\OG -\{\oG: \tau \leq n-1\} \in \SF{F}_{n-1}\). 
+And \([H \bullet X]_n =X_{n \land \tau} -X_0\) (which is \(X_2 -X_1 +X_3 -X_2 +\dotsb\), add until possibly index reaches \(n \land \tau\)). 
+Application of item 91 shows desired result.  \par
+Also, \(K\) is bounded, is \(\geq 0\), and is predictable. 
+And \([K \bullet X]_n =[1 \bullet X]_n -[H \bullet X]_n =X_n -X_{n \land \tau}\)
+Application of item 91 shows desired result. 
+
+\subsection*{(94) thm. 5.2.7.} (up-crossing ineq.) Let \(X_n\) be a (sub-/\_\_)martg. Fix numbers \(a<b\). 
+Define stopping times \EqGo{
+ \tau_0 =-1, \quad
+ \tau_{2k-1} =\inf(\{j: j >\tau_{2k-2},\; X_j \leq a\}), \quad
+ \tau_{2k} =\inf(\{j: j >\tau_{2k-1},\; X_j \leq b\}).
+} and \(U_n((a,b)) :=\sup(\{k: \tau_{2k} \leq n\})\). Then \EqGo{
+ (b-a) \E{U_n((a,b))} \leq \E{(X_n -a)^+} -\E{(X_0 -a)^+}. 
+} \indent \Ss{Proof.} Before the proof, recognize the physical meaning as such: when random quantity \(X_n\) (perhaps stock price) goes below \(a\), record time, and when it goes above \(b\), record time, 
+and when it again goes below \(a\), record time, and when it again goes above \(b\), record time... and so on (see fig.). 
+\(U_n\) is for how many times \(a\) or \(b\) is hit. \par
+Let \(Y_n =a +(X_n -a)^+\) which is also a submartg.\ (item 88) and clearly has the same up-crossing number as \(X_n\) has. 
+Let \(H_n =\I{\tau_{2k-1} <n \leq \tau_{2k}}\) for some \(k\) (indicator that this section going upwards). 
+\(H_n\) is bounded, is \(\geq 0\), and clearly is predictable. 
+So \([H \bullet Y]_n\)'s forms a submartg., as \(Y_n\) is (item 91). 
+Define \(K_n :=1 -H_n\). 
+\(K_n\) is bounded, is \(\geq 0\), and clearly is predictable, thus \([K \bullet Y]_n\)'s too forms a submartg. 
+As a result \(\E{[K \bullet Y]_n} \geq \E{[K \bullet Y]_0}\) (see item 83 identity). But \([K \bullet Y]_0 =0\), because \(H_0 =0\) by construction. 
+By dropping \(\E{[K \bullet Y]_n}\), by replacing every cross by \((b-a)\) which is smaller, by possibly dropping last unfinished cross, \EqAo{
+ &\E{(X_n -a)^+} -\E{(X_0 -a)^+}
+ =\E{Y_n -Y_0} 
+ =\E{[1 \bullet Y]_n} \\
+ =&\E{[H \bullet Y]_n +[K \bullet Y]_n}
+ \geq \E{[H \bullet Y]_n} 
+ \geq \E{U_n((a,b)) \M (b-a)}.
+} 
+
+\subsection*{(94) thm. 5.2.8.} [Dec. 31] (Martingale convergence thm.) If \(X_n\) is a submartg.\ with \\ \(\sup_n \E{X_n^+} < \oo\). 
+Then \(X_n\) converges to a limit \(X\) a.s.\ and \(X \in L^1\). \par
+\Ss{Proof.} By dropping positive \((X_n -a)^+\), by a moment's thought that \(X_n^+ -|a| \geq X_n -a\) whenever \(X_n >a\), by assumption, \EqAo{
+ \E{U_n((a,b))} 
+ \leq& \F{1}{b-a} \Rb{\E{(X_n -a)^+} -\E{(X_0 -a)^+}}
+ \leq \F{1}{b-a} \E{X_n -a)^+} \\
+ \leq& \F{1}{b-a} \Rb{\E{X_n^+ +|a|}}
+ \leq K <\oo,\; \Ev n.
+} This implies \EqGo{
+ \E{U_\oo((a,b))}
+ =\lim_{n \to \oo} \E{U_n((a,b))}
+ \leq K <\oo,\; \Ev n,\; \Ex K.
+} So by dominant convergence thm., \(U_\oo((a,b)) <\oo\) a.s., \(\Ev a <b\). 
+This way, the case that \(X_n\) did not converge is impossible. Indeed, by \EqGo{
+ \P{ \limsup_{n \to \oo} X_n > \liminf_{n \to \oo} X_n } >0.
+} one may find rational \(a,b\) between them: \(\limsup X_n >b >a >\liminf X_n\), and among interval \((a,b)\) we observe up-crossing \(U_n\). 
+By def.\ of limsup and liminf, \(U_n =\oo\), contradictory to the fact \(U_n\) is finite. \par
+Let then \(X_n \to X\) a.s. It remains to show \(\E{|X|} <\oo\). 
+\EqAo{
+ \E{X^+} 
+ =&\E{\liminf_{n \to \oo} X_N^+} 
+ \leq \liminf_{n \to \oo} \E{X_n^+} 
+ <\oo. \\
+ \E{X^-} 
+ =&\E{\liminf_{n \to \oo} X_n^-} 
+ \leq \liminf_{n \to \oo} \E{X_n^-} 
+ =\liminf_{n \to \oo} \E{X_n^+ -X_n} \\
+ \leq& \textrm{const} -\liminf \E{X_n}
+ \leq \textrm{const} -\liminf \E{X_0}
+ \leq \oo.
+} where Fatou's lemma and def.\ of submartg.\ are resp.\ used. 
+
+\subsection*{(94) example 5.2.3.} Require \(T_0 =1\) and \(T_n := T_{n-1} +\xi_n\), where \(\xi_j\)'s are iid.\ with \(\P{\xi_j =1} =\P{\xi_j =1} =1/2\) (a symmetric random walk of a particle). 
+Clearly \(T_n\)'s form a martingale. 
+Define \(N :=\inf_{n: T_n =0}\) and \(X_n =T_{n \land N}\) (stop until the particle hits 0), which is positive. 
+By thm.5.2.6, \(X_n\)'s form a martingale. 
+By thm.5.2.9, it converges to a limit, which must be 0 by def.\ 
+However, by symmetry, \(\E{X_n} =\E{X_0} +\E{\xi_1+\dotsb+\xi_n} =\E{x_0} =1\), which is also \(\E{|X_n|}\). \par
+This is an important example that \(X_n\) does not converge in \(L^1\) (since \(1 \neq 0\)), but does converges a.s. 
+
+\subsection*{(94) thm. 5.2.10.} (Doob's decomposition) If \(X_n\) is adapted to \(\SF{F}_n\), then \(X_n =M_n +A_n\) for some \(M_n\) being a martingale and \(A_n\) being predictable with \(A_0 =0\). 
+Such decomposition is unique; in particular, \(X_n\) is a submartg.\ iff \(A_n\) is increasing. \par
+\Ss{Proof.} To motivate our guesswork, if such decomposition exists, then, by def.\ of martg.\ and by def.\ of being predictable, \EqGo{
+ \E{X_{n+1} \Big| \SF{F}_n}
+ =\E{(M_{n+1} +A_{n+1}) \Big| \SF{F}_n}
+ =M_n +A_{n+1}
+ =X_n -A_n +A_{n+1}.
+} This relation enables us to check by math.\ induction that predictable condition is met because \begin{gather*}
+ A_n =\begin{cases} A_{n-1} +\E{X_n \Big| \SF{F}_{n-1}} -X_{n-1}, &n \geq 1 \\ 0, &n =0.
+ \end{cases} \in \SF{F}_{n-1}.
+\end{gather*} And martingale condition is met because, again using above relation, \EqGo{
+ \E{M_n \Big| \SF{F}_{n-1}}
+ =\E{(X_n -A_n) \Big| \SF{F}_{n-1}}
+ =\E{X_n \Big| \SF{F}_{n-1}} -A_n
+ =X_{n-1} -A_{n-1} =M_{n-1}.
+} Math.\ induction is done and decomposition is complete. For the rest, see text.
+
+\subsection*{(94) prop.} Given are \(X \in L^1\) and filtration \(\SF{F}_n\). 
+Easy to see, \(\E{X \Big| \SF{F}_n}\) is a martingale (\(X\) plays the role like kind of ancestor of \(X_n\)'s!)
+
+\subsection*{(94) def.} Given is \(\lG \in \LG\). A collection of rv.s \(X_\lG\) is \Ss{uniformly integrable} if \EqGo{
+ \lim_{M \to \oo} \sup_{\lG \in \LG} \E{|X_\lG|:\; |X_\lG| \geq M} =0.
+}
+
+\subsection*{(94) thm. 5.5.6.} (\(L^1\) convergence thm.) \(\E{X \Big| \SF{F}_n} =X_n\) (has an ancestor), iff it's uniformly integrable. 
+See the text for proof.
+
+\end{document}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%~%~%~%~%~%~%~%~%~%~%~%~%~%~%~%~%~%~%~%~%~%~%~%~%~%~%~%~%~%~
+Yay~below this line nothing is printed.

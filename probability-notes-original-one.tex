@@ -1,0 +1,552 @@
+\documentclass[12pt]{article}
+%
+\usepackage[T1]{fontenc}% the font used to be T1-encoding
+\usepackage{garamondx}% default font: Garamond 
+\usepackage[garamondx,cmbraces]{newtxmath}
+\renewcommand*\ttdefault{cmtt}% typewriter font: Computer Modern Teletype L
+\usepackage{cabin}% sans-serif font: Cabin
+%
+\usepackage{
+  amsmath,% facilitates math formulae typography
+  amssymb,% several other symbols
+  graphicx,% enables graphics insertion
+  color% enables colored text
+}
+\usepackage[
+frak= boondox, scr= boondoxo, cal= cm, bb= boondox
+]{mathalfa}% do not alter the order of this line (for strange reasons)
+%
+% Formatting.
+\setlength{\parskip}{1.5ex}% vertical spacing between paragraphs
+\setlength{\parindent}{4ex}% indent in a paragraph
+\usepackage{titling}% controls typesetting the title
+\setlength{\droptitle}{-2cm}% decreases spacing over the title
+\usepackage[
+  top=2.1cm, bottom=1.9cm, left=1.8cm, right=1.8cm
+]{geometry}% sets page margins
+\usepackage[compact]{titlesec}% adjusts spacing of each sec.; used below.
+\titlespacing{\section}{8ex}{*0}{*0}% resp., left margin, vertical spacing, seperation to text following.
+\titlespacing{\subsection}{2ex}{*0}{*2}% see above
+\titlespacing{\subsubsection}{0pt}{*0}{*0}
+\titleformat{\subsection}[% modifies the title of a subsec.
+  runin% no new-line before subsequent text
+]{
+  \color{red}\large\bfseries\itshape %color, font, shape
+}{}{}{}[]% end \titleformat
+%\everymath{\displaystyle}% forces displaying in-text math w/ full height
+%
+% Custom shorthands.
+% lower case Greek alphabets w/ long name
+\newcommand\aG\alpha \newcommand\bG\beta  \newcommand\gG\gamma \newcommand\dG\delta \newcommand\eG\varepsilon \newcommand\zG\zeta \newcommand\tG\theta \newcommand\kG\kappa \newcommand\lG\lambda \newcommand\sG\sigma \newcommand\fG\varphi \newcommand\oG\omega 
+% upper case Greek alphabets
+\newcommand\GG\Gamma \newcommand\DG\Delta \newcommand\TG\Theta \newcommand\LG\Lambda  \newcommand\SG\Sigma \newcommand\OG\Omega
+%
+% other symbols
+\newcommand\oo\infty% infinity, whose shape resembles "oo"
+\newcommand\F\frac% "F"raction
+\newcommand\R\sqrt% "R"oot
+\newcommand\M\cdot% "M"ultiply
+\newcommand\N\nabla% del sign
+\newcommand\X\times% cross, whose shape resembles "X"
+\newcommand\Pt\partial% "P"ar"T"ial differentiation
+\newcommand\V\mathbm% bold italic, e.g. "V"ectors
+\newcommand\Ev\forall% "Ev"ery
+\newcommand\Ex\exists% "Ex"ists
+\newcommand\St{\textsf{\large \: s.t. \:}}% "S"uch "T"hat
+\newcommand{\Eq}{\Leftrightarrow}% "Eq"ivelent
+\newcommand{\Ip}{\Rightarrow} % "Imp"lies
+\newcommand{\ii}{ \mathring{\imath} }% for imag. unit
+\newcommand{\jj}{ \mathring{\jmath} }% for imag. unit
+\newcommand{\dd}{ \BF{d} }% for differential
+\newcommand{\ee}{ \BF{e} }% for natural base
+%
+% brackets, customized fonts
+\newcommand{\Rb}[1]{ \left( #1 \right) }% "R"ound "b"racket, or more commonly parenthesis
+\newcommand{\Sb}[1]{ \left[ #1 \right] }%("S"quare) "b"racket
+\newcommand{\Cb}[1]{ \left\{ #1 \right\} }%("C"urly) "b"race
+\newcommand{\Ab}[1]{ \left\langle #1 \right\rangle } %Chevrons, e.g. "A"ngle brackt
+\newcommand{\Nm}[1]{ \left| #1 \right| } %"N"or"m"
+\newcommand{\Bk}[2]{ \left\langle #1 \middle| #2 \right\rangle } %"B"ra-"K"et notation
+\newcommand{\Nb}[1]{ \quad \mbox{\color{blue}[#1]} \quad }%"N"ota "b"ene, i.e. note
+\newcommand{\Emph}[1]{ {\color{blue}\bfseries{#1}} }% my emphasis
+\newcommand{\BF}[1]{ \mathbb{#1} }% "B"lackboard "F"ont
+\newcommand{\CF}[1]{ \mathcal{#1} }% "C"ursive "F"ont
+\newcommand{\GF}[1]{ \mathfrak{#1} }% "G"othic "F"ont
+\newcommand{\SF}[1]{ \mathscr{#1} }% "S"cript "F"ont
+\newcommand{\Ss}[1]{\textsf{\textbf{#1}}}% "S"ans-"s"erif
+\newcommand{\Tw}[1]{\texttt{\textbf{#1}}}% "t"ype"w"riter font, e.g. quoting codes
+%
+% miscellaneous
+\renewcommand\L\label% "L"a"b"el
+\newcommand{\EqG}[1]{ \begin{gather}{#1}\end{gather} }% Eqn. Gather
+\newcommand{\EqGo}[1]{ \begin{gather*}{#1}\end{gather*} } % unnumbered
+\newcommand{\EqA}[1]{ \begin{align}{#1}\end{align} }% Eqn. Align
+\newcommand{\EqAo}[1]{ \begin{align*}{#1}\end{align*} }% unnumbered
+\newcommand{\EqAS}[1]{ \begin{align}\begin{split}{#1}\end{split}\end{align} }% numbered only once
+\newcommand{\Id}{\hspace{5em}}% "I"n"d"ent, esp. in multi-line formulae
+%
+\renewcommand{\P}[1]{ \CF{P} \Rb{#1} }% probability
+\newcommand{\E}[1]{ \Tw{E}\Rb{#1} }% expectation value
+\newcommand{\Var}[1]{ \Tw{Var}\Rb{#1} }% variance
+\newcommand{\I}[1]{ \BF I_{\{#1\}} }% indicator function
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+\title{\textit{\textbf{\huge Theory of Probability (I)}}: \\ Part 1 -- \textsc{Measure, Weak Law}}
+\date{}
+\author{}
+\maketitle
+\allowdisplaybreaks[4]% allows page breaks amid eqn. arrays.
+
+\vspace{-3.2cm} %removes vertical spacing 
+\hfill{\itshape lectured by prof. Zhi-Zhong Zhang} \par
+\hfill{\itshape organized by Tzu-Yu Jeng} \par
+\hfill{\itshape Sep. 15 to Oct. 15, 2015} \\
+\vspace{-0.7cm}
+
+\section{basic concepts}
+\subsection*{(1) \(\sG\)-field.} [Sep. 15] Let \(\OG\), understood as the sample space, be the set consisting of \(\oG\)'s, understood as events, and \(\SF{F}\) be a collection of subsets of \(\OG\). 
+\(\SF{F}\) is called a \(\sG\)-\Ss{algebra}, or called \(\sG\)-\Ss{field}, if it be the case that:
+(i) if \(A \in \SF{F}\), then \(A^c \in \SF{F}\); 
+(ii) and that if \(A_j \in \SF{F}, j=1,2,...\), then \(\cup_{j=1}^\oo \in \SF{F}\); 
+(iii) and that \(\varnothing \in \SF{F}, \OG \in \SF{F}\). 
+The tuple \((\OG, \SF{F})\) is called a measurable space. 
+Any \(A \St A \in \SF{F}\) is said to be \Ss{measurable}. 
+
+\subsection*{(2) measure.} \(\mu: \SF{F} \mapsto [0,\oo]\) is said to be a \Ss{measure} if it be the case: 
+\(\Ev A, \mu(A) \geq 0\), and that (called \(\sG\)-\Ss{additivity}) \(\Ev A_j \in \SF{F}\), which are mutually disjoint, \[
+\mu\Rb{ \bigcup_{j=1}^\oo A_j }
+= \sum_{j=1}^\oo \mu(A_j). 
+\] Note that: if \(j\) is uncountably many, the equality is meaningless, and there's no \(\sG\)-additivity. \par
+Moreover, \(\mu\) is called a \Ss{ probability measure } if \EqGo{
+0 \leq \mu(A) \leq 1, \quad \mu( \OG ) = 1.
+}
+
+\subsection*{(3) thm. 1.1.1.} Let \(\mu\) be a measure on \((\OG, \SF{F})\). Then it's the case that: \\
+\indent (i) \Ss{monoticity}. If \(A \subset B\), then \(\mu(A) \leq \mu(B)\). \\
+\indent (ii) \Ss{subadditivity}. If \(A \subset \cup_m A_m\), then \(\mu(A) \subset \sum_m \mu(A_m)\). \\
+\indent (iii) \Ss{continuity from below.} If \(A_j \uparrow A\), that is \(A_1 \subset A_2 \subset...\) and that \(A= \cup A_j\), then \(\mu(A_j) \uparrow \mu(A)\). \\
+\indent (iv) \Ss{continuity from above.} If \(A_j \downarrow A\), that is \(A_1 \supset A_2 \supset...\) and that \(A= \cap A_j\), then \(\mu(A_j) \downarrow \mu(A)\). \par
+Proof is left to the reader.
+
+\subsection*{(4) example 1.1.1.} Let \(\SF A\) be a collection of subsets of \(\OG\). 
+Then \(\Ex\) a smallest \(\sG\)-field containing \(\SF A\), denoted as \(\sG(\SF A)\), called the \(\sG\)-field generated by \(\SF A\). \par
+For example, \(\OG =\BF R\), \(\SF A\) is the collection of all open sets of \(\OG\), then \(\sG(\SF A)\) is called the \Ss{Borel} \(\sG\) field of \(\OG\). \par
+Another concrete example is that, \(\OG\) the interval \((0,1)\), \(\SF A\) is the Borel \(\sG\)-field of \((0,1)\), \(\CF{P}\) is the Lebesgue measure \(\lG\). We call the tuple \((\OG, \SF{F}, \lG)\) the \Ss{probability space}. 
+
+\subsection*{(5) distributions.} Let \((\OG, \SF{F})\) and \((\CF S, \SF H)\) be two measurable spaces, 
+and \(X: \OG \mapsto \CF S\) is a \Ss{measurable map} from \((\OG, \SF{F})\) to \((\CF S, \SF H)\), 
+if \(X^{-1}(B) = \{\oG: X(\oG) \in B\} \in \SF{F}, \Ev B \in \SF H\). \par
+Consider the case of \((\OG, \SF{F})\) and \((\BF R, \CF B(\BF R))\). 
+\(X: \OG \mapsto \BF R\) is a \Ss{random variable} from \((\OG, \SF{F})\) to \((\BF R, \CF B(\BF R))\), 
+if \(X^{-1}(B) = \{\oG: X(\oG) \in B\} \in \SF{F}, \Ev B \in \CF B(\BF R))\), 
+and is denoted by shorthand \(X \in \SF{F}\). \par
+Now, instead of working on the rather abstract \((\OG, \SF{F}, \lG)\), 
+we can work on familiar \((\BF R, \CF B(\BF R), \mu)\), 
+in light of the probability measure, \(\mu\), that \(X\) induces, which is defined to be: \(\mu(\CF B) = \lG( X^{-1}(\CF B) )\). 
+
+\subsection*{(6) example 1.2.1.} \((\OG, \SF{F})\) is given; \(A\in \SF{F}\). 
+Let \(\BF I\) be the indicator function of \(A\), defined to be: \begin{gather*}
+\BF I =
+ \begin{cases}
+  1, & \oG \in A \\
+  0, & \oG \notin A
+ \end{cases}
+\end{gather*} We note \(\BF I\) is a r.v. \par
+We recall some results from measure theory. \par
+\Ss{Def.} \(F\) is a \Ss{Stieltjes measure function} if: \(F\) is non-decreasing, and \(F\) is right continuous. 
+
+\subsection*{(7) thm.1.1.2.} Associated with \(F\), there exists one measure \(\mu\) on \((\BF R, \CF{B}(\BF R))\), with \(\mu( (a,b] )= F(b)-F(a)\). 
+In particular, when \(F(X) = X\), the corresponding measure \(\lG\) is the Lebesgue measure. \par
+\(F_X(a)\), the distribution function of \(X\), is defined to be \EqGo{
+ F(\oG: X(\oG) \leq a) 
+ = \P{ X^{-1}((-\oo, a]) }
+ = \mu( (-\oo, a] ). 
+} The proof is difficult and we omit.
+
+\subsection*{(8) thm.1.2.1.} Any distribution function \(F\) has the properties: 
+(i) \(F\) is non-decreasing. 
+(ii) \(\lim\limits_{x \to -\oo} F(x) =0\), and \(\lim\limits_{x \to \oo} F(x) =1\).
+(iii) \(F\) is right-continuous. 
+(iv) \(\P{ X=x } = F(x) - F(x^-) \). \par
+The proof is left to the reader. 
+
+\subsection*{(9) thm.1.2.2.} If \(F\) satisfies (1), (2) and (3) in the statement of thm.1.2.1, 
+then it is the distribution function of some r.v. \par
+Remark that, recall that in a introductory probability course, one never worries what \((\OG, \SF{F}, \CF{P})\) are. 
+However, with this result established, we are convinced suitable choices can always be found. 
+This tuple just makes every dream of yours come true, thus said the professor. \\
+\indent \Ss{Proof.} Assign \(\OG =(0,1), \SF{F} =\SF{B}(0,1), \CF{P} =\lG\). 
+We seek to construct the r.v. on such settings. 
+For \(\oG \in (0,1)\), define \( X(\oG) = \sup \{y: F(y)<\oG \} \). 
+This is well defined, 
+for r.h.s. is not empty by thm.1.2.1 (2), 
+and that least-upper-bound exists. \par
+We shall see \EqGo{
+ \{ \oG: X(\oG) \leq a \} 
+ = \{ \oG: \oG \leq F(a) \}
+ = (0, F(a)],
+} since if so, \(X\) would be a r.v., whose distribution \(F_X\) is just \(F\). \par
+We now prove the claim. Observe that \(F( X(\oG)+\dG ) \geq \oG, \Ev \dG >0\). 
+Thus, if \(F\) is right-continuous, then \( \lim\limits_{\dG \downarrow 0} F(X(\oG)+\dG) \) would imply that \(F(X(\oG)) \geq \oG\). \par
+Suppose \(X(\oG) \leq a \Ip F(a) \geq F(X(\oG)) \geq \oG\). 
+That is to say, \( \{ \oG: X(\oG) \leq a \} \subset \{ \oG: \oG \leq F(a) \} \)
+Suppose \( F(a) \geq \oG \). Now \(a\) serves as one upper bound of \(\{y: F(y)<\oG \}\) because \(F\) is nondecreasing. 
+So \(a\) is certainly larger than anything in \( X(\oG) \). 
+That is to say, \( \{ \oG: X(\oG) \leq a \} \supset \{ \oG: \oG \leq F(a) \} \). 
+In conclusion, \( \{ \oG: X(\oG) \leq a \} = \{ \oG: \oG \leq F(a) \} \).
+
+\subsection*{(10)} [Sep. 22] It is easily seen that the composition, addition, multiplication, etc. of measurable maps are still all measurable maps, because \(+,\M\), etc. are continuous functions that send open sets to open sets. 
+So, hence, is the case of r.v. \par
+While \(\inf X_n\), the infimum of a sequence of r.v.'s, may not exist, 
+their \(\sup_k \inf_{n \leq k} X_n := \liminf_n X_n\) must exist. 
+So is the case of sup and limsup. \par
+Moreover, \(\P{ \oG, \limsup(X_n(\oG)) - \liminf(X_n(\oG)) } =1\), 
+that is to say \( \lim_n X_n \) exists \Ss{almost everywhere} (a.e.), or \Ss{ almost surely} (a.s.). 
+
+\subsection*{(11) thm.1.6.4.} (Chebyshev's inequality.) Let \(X\) be a r.v. on \(( \OG, \SF{F}, \CF{P} )\). 
+Suppose that \(\fG: \BF R \mapsto \BF R\) and is \(\geq 0\), 
+and that \EqGo{
+i_{\CF A} = \inf_{y \in \CF A} \fG(y) 
+} Then: \EqGo{
+ i_{\CF A} \P{ X \in \CF A } 
+ \leq \CF E(\fG(X); X \in \CF A)
+ = \int_{ X \in \CF A} \fG(X) \dd \CF{P}
+ \leq \CF E(\fG(X))
+ = \int_\OG \fG(X(\oG)) \dd \CF{P}
+}
+
+\section{independence}
+\subsection*{(12) def.} \(\sG\)-fields \(\SF{F}_1,...,\SF{F}_n\) are said to be independent, if \EqGo{
+ \P{ \bigcap_{j=1}^n \SF{A}_j } 
+ = \prod_{j=1}^n \P{\SF{A}_j}, 
+ \Ev \SF{A}_j \in \SF{F}_j.
+} \indent R.v.s \(X_1,...,X_n\) from \((\OG, \SF{F})\) to \((S, \SF S)\) are said to be independent if those \(\sG(X) = \{ X^{-1}(B), B \in \SF S \}\), together considered, are independent. \par
+Events \(B_1,...,B_n\) are said to be independent if \(\I{B_1},...,\I{B_n}\) are independent. \par
+Infinite objects are independent if any finite-many of them are so. \par
+To check subsets \(\SF{A}_1,...,\SF{A}_n\) to be independent, we must resp. check every 2 of them, 3 of them...etc. \par
+[Sep. 24] We begin to develop some tools that is useful in checking independence.
+
+\subsection*{(13) lemma 2.1.1.} W.l.o.g., we may assume each \(\SF{A}_j\) contains \(\OG\) in checking the independence of \(\SF{A}_1,...,\SF{A}_n\). \par
+\Ss{Proof.} Because inclusion of \(\OG\) has nothing to do with previous requirement that \(\P{ \cap_j \SF{A}_j } =\prod_j \P{\SF{A}_j}\), while anything \(\cap \OG\) becomes the same, and is same \(\P{\SF{A}}\) times 1. \par
+
+\subsection*{(14) def.} \(\Pi\) is said a \(\pi\)-\Ss{system} if it is closed under intersection. 
+In other words, \(\SF{S}, \SF{T} \in \Pi \Ip \SF{S} \cap \SF{T} \in \Pi\). \par
+\(\LG\) is said a \(\lG\)-\Ss{system} if it is guaranteed that:
+(i) \(\OG \in \LG\);
+(ii) \(\SF{B} -\SF{A} \in \LG\), wherever \(\SF{A} ,\SF{B} \in \LG\); 
+(iii) if \(\SF{A}_n \uparrow\), and that \(\SF{A}_n \to \SF{A}\), then \(\SF{A} \in \LG\). \par
+\Ss{Dynkin's \(\pi\)-\(\lG\) thm.}  if \(\Pi\) is a \(\pi\)-system, \(\LG\) is a \(\lG\)-system, then \(\Pi \subset \LG\) implies \(\sG(\Pi) \subset \LG\). \par
+The proof is long and we omit. 
+
+\subsection*{(15) thm. 2.1.3.} Suppose \(\SF{A}_1,...,\SF{A}_n\) are independent and each \(\SF{A}_j\) is a \(\pi\)-system, 
+then \(\sG(\SF{A}_1),...,\sG(\SF{A}_n)\) are independent. \par
+\Ss{Proof.} By lemma 2.1.1, we may assume \(\OG \in \SF{A}_j\), for \(j=1,...,n\). 
+Choose arbitrary \(\SF{B}_j \in \SF{A}_j\), where \(j=2,...,n\), 
+where we introduce shorthand \(\SF{C} := \SF{B}_2\cap...\cap \SF{B}_n\). 
+Define \(\LG_1 = \{\SF{B}: \SF{B} \in \SF{F}, \P{\SF{B} \cap \SF{C}} = \P{\SF{B}} \P{\SF{B}_2}...\P{\SF{B}_n}\}\). 
+In particular, \(\SF{A}_1 \subset \LG_1\), by our assumption. 
+We shall see \(\LG_1\) is a \(\lG\)-system. We now show why. \par
+Clearly (i) \(\OG \in \LG_1\), because \(P(\OG \cap F) = P(F) = P(\OG)P(F)\). \par
+(ii) if \(\SF{A} \subset \SF{B}\) and both \(\in \LG_1\), is it the case \(\SF{A}-\SF{B} \in \LG_1\)? 
+Because \EqAo{
+ \P{(\SF{B}-\SF{A})\cap \SF{C}}
+ &= \P{\SF{B}\cap \SF{C} - \SF{A}\cap \SF{C}}
+ = \P{\SF{B}\cap \SF{C}} - \P{\SF{A}\cap \SF{C}} \\
+ &= \P{\SF{B}} \P{\SF{C}} - \P{\SF{A}} \P{\SF{C}}
+ = (\P{\SF{B}} - \P{\SF{A}})\P{\SF{C}} \\
+ &= \P{\SF{B}-\SF{A}} \P{\SF{C}}.
+} \indent (iii) Suppose \(\SF{A}_n \uparrow \SF{A}\), in other words \(\SF{A}_i \subset \SF{A}_{i+1}\) and that \(\SF{A} = \cap_1^\oo \SF{A}_n\),
+where each \(\SF{A}_n \in \LG_1\). 
+Is \(\SF{A} \in \LG_1\)? 
+First, \( (\SF{A}_n \cap \SF{C}) \uparrow (\SF{A} \cap \SF{C})\). Thus by thm.1.1.1(i), \EqAo{
+ \P{\SF{A} \cap \SF{C}}
+ =& \lim_{n\to\oo} \P{ \SF{A}_n \cap \SF{C} } 
+ = \lim_{n\to\oo} ( \P{\SF{A}_n} \M \P{\SF{C}} ) \\
+ =& \Rb{ \lim_{n\to\oo} \P{ \SF{A}_n } } \M \P{\SF{C}}
+ = \P{\SF{A}} \M \P{\SF{C}}.
+} \indent So \(\LG_1\) is a \(\lG\)-system that \(\supset \SF{A}_1\) (which is a \(\pi\)-system). 
+By \(\pi\)-\(\lG\) thm., \(\LG_1 \supset \sG(\SF{A}_1)\). 
+Moreover, \(\sG(\SF{A}_1),\SF{A}_2,...,\SF{A}_n\) are independent. \par
+Continue the argument to \(\SF{A}_2,...,\SF{A}_n,\sG(\SF{A}_1)\), a new list of members of \(\LG_2\) similarly-defined, 
+and it follows \(\sG(\SF{A}_2),...,\SF{A}_n,\sG(\SF{A}_1)\) are independent. 
+Continue the argument to \(\SF{A}_3,...,\SF{A}_n,\sG(\SF{A}_1),\sG(\SF{A}_2)\)... and so on. 
+Finally, \(\sG(\SF{A}_1),...,\sG(\SF{A}_n)\)  are independent. 
+
+\subsection*{(16) thm. 2.1.4.} If \(X_1,...,X_n : \SF{F} \mapsto \SF H\) together satisfy: \EqGo{
+ \P{X_1 \leq x_1,...,X_n \leq x_n}
+ = \prod_{j=1}^n \P{X_j \leq x_j}
+} then they are independent. \par
+\Ss{Proof.} Define \(\SF{A}_j := \{(-\oo,a], a\in \BF R\} \in \OG\), which is obviously a \(\pi\)-system. 
+By thm. 2.1.3, that \(\sG(\SF{A}_1),...,\sG(\SF{A}_n)\) are independent implies \(\sG(X_1),...,\sG(X_n)\) are independent. 
+Because \(X_j(\SF{A}_j)\) generates \(\SF H\),  \(\SF{A}_j)\) must have generated \(\SF{F}\). 
+In conclusion, \(X_1,...,X_n\) are independent. 
+
+\subsection*{(17) thm. 2.1.5.} [Oct. 1] Suppose \(\SF{F}_{i,j}, 1 \leq i \leq n, 1 \leq j \leq m(i)\), are independent \(\sG\)-fields, and let \(\SF{G}_i = \sG\Rb{ \bigcup_j \SF{F}_{i,j} }\). 
+Then \(\SF{G}_1,...,\SF{G}_n\) are independent. \par
+\Ss{Proof.} Fix \(i\), and let \(j\) vary, to form the collection \[
+ \SF{A}_i= \Cb{ \bigcap_{j=1}^{m(i)} A_{i,j}: A_{i,j} \in \SF{F}_{i,j} }, 
+\] which is obviously a \(\pi\)-system. 
+Now that \(\SF{A}_i\)'s are independent, 
+we just apply thm. 2.1.3 to conclude that \(\sG(\SF{A}_1),...,\sG(\SF{A}_1)\) are independent. 
+But \(\sG(\SF{A}_i) \supset \sG(\cup_j \SF{F}_{i,j})\). 
+So \(\sG\Rb{ \cup_j \SF{F}_{1,j} },...,\sG\Rb{ \cup_j \SF{F}_{n,j} }\) are independent; 
+in other words, \(\SF{G}_1,...,\SF{G}_n\) are so. 
+
+\subsection*{(18) thm. 2.1.7.} Suppose \(X_1,...,X_n\) are independent r.v.s, and \(X_j\) has distribution \(\mu_j\), 
+then \(X_1,...,X_n\) has distribution \(\mu_1 \X...\X \mu_n\). \par
+\Ss{Proof.} Let \(\nu\) be the distribution of \((X_1,...,X_n)\), 
+and \(\CF{A}\) be the collection of subsets \(B \in \CF{B}(\BF R^n)\).
+We seek to show \(\nu(\CF{A}) = \mu_1 (\CF{B}) \X...\X \mu_n (\CF{B})\). 
+We shall find it appropriate, because \EqAo{
+ &\nu(A_1 \X...\X A_n) 
+ = \P{\oG: ( X_1(\oG),..,X_n(\oG) ) \in A_1 \X...\X A_n} \\
+ =& \P{ \oG: X_j(\oG) \in A_j, j=1,...,n }
+ = \prod_{i=1}^n P(X_j \in A_j), 
+} because independence; and these are just \EqGo{ 
+ = \prod_j \mu_j(A_j) = (\mu_1 \X...\X \mu_j)(A_1 \X...\X A_n).
+} \indent However, we have also to make sure that \(\CF{A}\) is a suitable space. 
+Clearly \(\CF{A}\) is a \(\lG\)-system, 
+and it includes subsets \(\{ A_1 \X...\X A_n, A_j \in \CF{B}(\BF R) \}\) which is a \(\pi\) system. 
+As a result, \(\CF{A} \supset \sG( A_1 \X...\X A_n, A_j \in \CF{B}(\BF R) ) \), which is just \(\CF{B}(\BF R^n)\). 
+
+\subsection*{(19) thm.2.1.8.} Suppose \(X\) and \(Y\) are independent with distribution \(\mu\) and \(\nu\), resp. 
+If real, measurable function \(h\) is either \(>0\) or at least \(\E{|h(X,Y)|} <\oo\), 
+then \( \Tw{E}(h(X,Y)) = \iint h(X,Y) \mu (\dd x) \nu (\dd y) \). \par
+\Ss{Proof.} By def.\ of \(\Tw{E}\), by def.\ of composite measure, by Fubinit's thm., \EqAo{
+ &\E{h(X,Y)}
+ = \int_\OG h(X(\oG),Y(\oG)) \dd P \\
+ =& \int\int_{\BF R} h(X,Y) \dd \mu \X \dd \nu 
+ = \int \Rb{ \int h \dd \mu) } \dd \nu
+} The restriction on \(h\) is needed because requirement of Fubini's thm. \par
+It's remarked that, in particular, if \(h(x,y) = f(x)g(y)\), 
+and that, as restricted above, either function \(>0\) always or has finite \(\Tw{E}\) of its magnitude, 
+we know \(E(fg) = \iint ( f(x)g(y) \dd \mu(x) ) \dd \nu(y) = \E{f} \E{g}\) because we just separate two integrals. 
+
+\subsection*{(20) thm.2.1.14} (Kolmogorov's extension thm.) If the given probability measures \(\mu_n\) on \((\BF{R}^n, \CF{B}(\BF{R}^n))\) are consistent, 
+that is to say \( \mu_{n+1} (\CF{B}_1 \X...\X \CF{B}_n \X \BF R) = \mu_n(\CF{B}_1 \X...\X \CF{B}_n) \), 
+then \(\Ex\) one such probability measure \(\CF{P}\) on \((\BF{R}^\oo, \CF{B}(\BF{R}^\oo))\), as: \( \P{\{\oG: \oG_j \in \CF{B}_j, j=1,...,n\}} = \mu_n(\CF{B}_1 \X...\X \CF{B}_n) \). \par
+Note that, while it's easy to construct finitely many r.v.s, for we may well let \( \OG = R^n, \SF{F} = \CF{B}(R^n), \mu_1 \X...\X \mu_n = \CF{P}\), so by def., they are independent; 
+but this thm., however, we may construct independent variables consistent with some measure \(\mu\) chosen at our pleasure. (the proof is long and is in the appendix.) \par
+\Ss{Remarks}. [Oct. 6] But there are easier ways to construct independent random variables. 
+Suppose we are to create i.i.d. Bernoulli r.v.s. 
+The we may well define: \(a_n=\) the nth digit, in base 2, of a uniform r.v. \par
+To generate just one r.v., we simply find \(F^{-1}(X)\), where \(X\) is a uniform r.v. 
+It has distribution \(F\), as can be verified. \par
+In fact, we can generate \(N\) i.i.d. this way: let \EqGo{
+ Y_1 = 0.1 X_1 + 0.01 X_3 + 0.001 X_6 +... \\
+ Y_2 = 0.1 X_2 + 0.01 X_5 + 0.001 X_9 +... \\
+ Y_3 = 0.1 X_4 + 0.01 X_8 + 0.001 X_{13} +...
+} in the diagonal manner, where \(X_n\) are all independent Bernoulli r.v. 
+
+\section{weak laws of large numbers}
+\subsection*{(21) def.} \(Y_n\) is said to \Ss{converge to} \(Y\) \Ss{in probability} if \(\Ev \eG >0\), as \(n \to \oo)\). \par
+1. If \(Z_n - a_n \to 0\) in prob, and \(a_n \to a\), then \(Z_n \to a\) in prob. [it's clear]\par
+2. If \(X_j\)'s are uncorrelated, then \(X_j - a_j\)'s are also uncorrelated. [it's clear]\par
+3. \(\Var{X_1 +...+ X_n} = \Var{X_1} +...+ \Var{X_n}\), wherever \(E|X_j|^2 < \oo\). [for we just expand and see that \(|X_i -\mu_i||X_j -\mu_j|\) vanish]\par
+4. [Durrett lemma 2.2.2] If \(E(|Z_n -0|^k) \to 0,\; \Ev k > 0\), then \(Z_n \to 0\) in probability, in the sense of \(L^p\) norm. 
+[Use Chebyshev \(P(|Z_n-0| >\eG) \leq \eG^{-p} E(|Z_n|^p)\) and choose large \(p\).]
+
+\subsection*{(22) thm. 2.2.3.} Suppose \(X_j\)'s are uncorrelated with common expectation  \(\E{X_j} = \mu\), and moreover \(\Var{X_j} \leq c\), a const. 
+Let \(S_n := X_1 +...+ X_n\). 
+Then \(S_n / n \to \mu\) in \(L^2\)-sense. \par
+\Ss{Proof.} By pulling out \(1/n^2\), by \(X_i\) begin iid., by assumption, \EqAo{
+ &\E{\Nm{ \F{S_n}{n} - \mu}^2}
+ = \E{ \F{1}{n^2} (|X_1-\mu +...+ X_n-\mu|^2)} \\
+ =& \F{1}{n^2} \Var{X_1 +...+ X_n}
+ = \F{1}{n^2} \sum \Var{X_j} = \F{nc}{n^2} \to 0
+} Sum of variances split, because \(X_i\)'s are uncorrelated. 
+
+\subsection*{(23) Varadhan's book, thm. 2.3.3.} Let \(X_j\)'s be i.i.d. r.v., with \(E(|X_i|) <\oo\), and \(E(X_i) = \mu\), 
+then \(S_n/n \to \mu\) in \(L^1\) and in probability. \par
+\Ss{Proof.} The claim is equivalent to \(E|S_n/n - \mu| \to 0\), which we now show why. 
+Let \(M>0\) (later on \(M \to \oo\)) and define such truncation and remaining part, as \EqAo{
+ X_j =& X_j' + Y_j' \\
+ X_j' :=& X_j'^{(M)} = X_j \M \I{ |X_j|\leq M } \\
+ Y_j' :=& Y_j'^{(M)} = X_j - X_j'.
+} Denote \(a := \E{X_j'},\; b := \E{Y_j'}\), 
+hence \(\mu = a+b \). 
+It follows, then, \EqAo{
+ \E{|S_n/n - \mu|}
+ \leq& \E{\Nm{ \F{X_1' +...+ X_n'}{n} -a }} +
+  \E{\Nm{ \F{Y_1' +.....Y_n'}{n} -b }} \\
+ \leq& \E{\Nm{ \F{X_1' +...+ X_n'}{n} -a }^2}^{1/2} +
+  \F{1}{n} ( \E{|Y_1' -b|} +...+ \E{|Y_n' -b|} )
+} by Schwarz ineq. and triangle ineq. 
+take \(n \to \oo\) on either sides, 
+then by their being uncorrelated, former term is just \(\lim (1/n) (\Var{X_1} +...+ \Var{X_n}) \to 0\). 
+Also, latter term vanishes by Lebesgue dominance convergence thm. 
+Indeed, function of \(X_j'\) pointwise \(\to X_j\) as \(M \to \oo\), 
+and is dominated by that function of \(X_j\), 
+so integrals of \(Y_j' = X_j - X_j'\) vanish. 
+
+\subsection*{(24) Weierstra\ss\;approximation thm.} [Oct. 8] Let \(f\) be a continuous function on [0,1]. 
+Then \(\Ex\) a polynomial \(\phi_n\) that satisfies \EqGo{
+ \sup_{0 \leq x \leq 1} |\phi_n(x) - f(x)| \to 0,
+} as \(n \to \oo\). \par
+We have seen this in introductory analysis. 
+Now we show it, using probabilistic argument. \par
+\Ss{Proof.} For \(x \in [0,1]\), consider space \((\OG, \SF{F}, \CF{P}_x)\), 
+and independent Bernoulli r.v.s \(X_1, X_2...\), with success probability \(x\); 
+that is, \(\CF{P}{X_i =1} =x\). 
+Let \(S_n = X_1 +...+ X_n\). 
+Further let \EqGo{
+ \left\lVert f \right\rVert_\oo = \sup_{[0,1]} |f| \leq M
+} (recall by basic knowledge in analysis, this definition is appropriate as kind of \(L^p\) norm). 
+Now define \EqGo{
+ \fG (x) := \E{ f\Rb{\F{S_n}{n}} } 
+ = \sum_{m=0}^n \SF C_m^n x^m (1-x)^{n-m} f\Rb{\F{m}{n}},
+} which is called \Ss{Bernstein polynomial}. 
+Consider \EqGo{
+|\fG_n(x) - f(x)| 
+:= \Nm{ \E{ f\Rb{\F{S_n}{n}} } - f(x) }
+= \Nm{ \E{ f\Rb{\F{S_n}{n}} - f(x) } }
+} We wish this to be small. \par
+Towards that end, split \(\Tw{E}\) to be two parts, say \(E_1, E_2\): those among \(\OG\) on which \(|S_n /n| > \dG\), or \(< \dG\). 
+We note \(E_1 < 2M \P{ S_n /n - x }\). 
+Invoke Chebyshev's ineq.: \(\P{ S_n /n - x } \leq (n/ n^2) \Var{X_i} /\dG^2\). 
+Thus, \EqGo{
+ E_1 < \F{2M}{n \dG^2} \Var{X_i}
+} \indent What about \(E_2\)? Well, because the continuity of \(f\), 
+thus uniform continuity, and that \(S_n /n\) and \(x\) is close guarantees the sup of difference \(f(S_n /n)\) and \(f(x)\) is small. \par
+In conclusion, as \(n \to \oo\), \(\sup |\fG_n(x) - f(x)| \to 0\), taken uniformly w.r.t. \(x\). \par
+
+\section{triangular array}
+[Oct. 13] We turn to r.v.s comprising a triangular array \(X_{n,k},\; 1 \leq k \leq n\). 
+
+\subsection*{(25) thm. 2.2.4.} Let \(S_n := X_{n,1} +...+ X_{n,n},\; \mu_n := \E{S_n},\; \sG_n^2 := \Var{S_n}\). 
+If \(\sG_n^2 / b_n^2 \to 0\), then \((S_n - \mu_n) / b_n \to 0\) in \(L^2\) and in probability. \par
+\Ss{Proof.} \(
+ \E{ \Nm{(S_n-\mu_n)/b_n}^2 } 
+ = \Var{S_n} / b_n^2
+ \to \sG^2 / b_n^2 \to 0
+\), then we use item (21) no.4. 
+
+\subsection*{(26) coupon collector's problem. } Let \(Y_1,...,Y_n\) be i.i.d., uniform r.v. on discrete \(\{1,...n\}\). 
+Define waiting time \(\tau_k = \inf\{ m: |\{Y_1,...,Y_m\}| =k \}\), 
+i.e. the first moment \(k\) different items are collected. 
+For clarity let me suppress dependence on \(n\). \par
+Let us investigate \(\tau_n\)'s asymptotic behavior while \(n \to \oo\). 
+Note \(\tau_0 =0,\; \tau_1 =1\), 
+and denote \(X_k := \tau_k - \tau_{k-1}\). 
+the time we get an item distinct from all previous ones, from first \(k-1\) items. 
+Clearly \(X_k \sim\) geometric distribution with \(p= 1- (k-1)/n\), and are each independent. \par
+Because \(t_n = X_1 +...+ X_n\), \EqGo{
+ \E{\tau_n} = \sum_{k=1}^n \E{X_k}
+ = \sum_{k=1}^n \F{1}{1- \F{k-1}{n}}
+ = n \sum_{k=1}^n \F{1}{k} 
+ \sim \mu_n 
+ \sim n \log n,
+} while, \EqGo{
+ \Var{\tau_n} = \sum_{k=1}^n \Var{X_k}
+ \leq \sum_{k=1}^n (\F{1}{1-\F{k-1}{n}})^2 
+ = n^2 \sum_{k=1}^n \F{1}{k^2}
+ < n^2 \sum_{k=1}^\oo \F{1}{k^2} = \F{\pi^2 n^2}{6}.
+} By previous result (thm. 2.2.4), \EqGo{
+ \F{ \tau_n - n \sum 1/k }{ n \log n } \to 0\;\; \textrm{in prob.} 
+ \Ip \F{\tau_n}{n \log n} \to 1\;\; \textrm{in prob.}
+} \indent For example, if you wish to make so many friends whose birthdays together comprise all of 365 days, 
+you have to get roughly \(365 \log 365 \approx 2165\) Facebook friends. 
+
+\subsection*{(27) thm. 2.2.6.} Let \(X_{n,k},\; k=1,...,n\), be independent, 
+and \(Y_{n,k} = X_{n,k} \I{ |X_{n,k}| \leq b_n }\) (truncated by setting to 0, wherever \(> b_n\). It's not difficult to see they remain independent), denote \(S_n := X_{n,1} +...+ X_{n,n}\), 
+With some \(b_n \to \oo\) (\(b_n >0\)), assume: \\
+\indent (i) \(\sum_{k=1}^n \P{|X_{n,k}| >b_n} \to 0\). \\
+\indent (ii) \((1/b_n^2) \sum_{k=1}^n \E{Y_{n,k}^2} \to 0\). \\
+\indent Setting \(a_n := \sum_{k=1}^n \E{Y_{n,k}}\). Then: \(S_n - a_n / b_n \to 0\) in probability. \par
+\Ss{Proof.} All we are doing is just add anything we need to the assumptions, and apply them. 
+Let \(T_n := Y_{n,1} +...+ Y_{n,n}\). 
+The event that \(|(S_n - a_n)/ b_n|\) may be split into two parts: \(p_1\), where in addition, \(S_n = T_n\); and \(p_2\), \(S_n \neq T_n\). \par
+By substitution, by Chebyshev ineq., by that \(X_{n,k}\)'s are independent, and by assumption, \EqGo{
+ p_1 = \P{\Nm{\F{S_n - a_n}{b_n}} > \eG \land S_n = T_n }
+ = \P{\Nm{\F{T_n - a_n}{b_n}} > \eG }
+ \leq \F{ \Var{T_n} }{ \eG^2 b_n^2 } 
+ = \F{ \sum_{i=1}^n \Var{Y_i} }{ \eG^2 b_n^2 } 
+ \to 0.
+} By the fact that at least one \(X_{n,k} \neq Y_{n,k}\), and by def., and by assumption, \EqGo{
+ p_1 = \P{\Nm{\F{S_n - a_n}{b_n}} > \eG \land S_n \neq T_n }
+ \leq \sum_{k=1}^n \P{X_{n,k} \neq Y_{n,k}}
+ = \sum_{k=1}^n \P{ |X_{n,k}| > b_n } \to 0.
+} In conclusion, \(\Ev \eG,\; \P{|(S_n - a_n)/ b_n| >\eG} \to 0\) while \(n \to \oo\). 
+
+\subsection*{(28) lemma 2.2.8.} [Oct. 15] We begin with a lemma. 
+If \(Y \geq 0, p >0\), then \EqGo{
+ \E{Y^p} = \int_0^\oo p y^{p-1} \P{Y>y} \dd y.
+} \indent \Ss{Proof.} rhs \EqAo{
+ =& \int_0^\oo py^{p-1} \Rb{ \int_\OG \I{Y>y}\dd \CF{P} } \dd y
+ = \int_\OG \int_0^\oo py^{p-1} \I{Y>y} \dd y \dd \CF{P} \\
+ =& \int_\OG \int_0^Y py^{p-1} \dd y \dd P
+ = E(Y^p).
+} Since nonnegative, and integral assumed to exist, Fubini's thm. is valid. 
+
+\subsection*{(29) thm.2.2.7.} As an application of thm. 2.2.6, consider: 
+\(X_n\)'s which are i.i.d., with\\ \(m \P{|X_i|>m} \to 0\) while \(m \to \oo\). 
+As usual, \(S_n := X_1+...+X_n\). 
+Define restricted, iid. \(Y_k := X_k \I{|X_k|\leq n}\), and set \(\mu_n = \E{Y_1}\). \par
+\Ss{Proof.} [from Feller's book] Apply thm 2.2.6. 
+\(X_{n,k}\) there is \(X_k\) here, 
+and \(Y_{n,k}\) there is \(Y_k\) here, \(k=1,...,n\). 
+\(b_n\) there is \(n\) here. \par
+Note \EqGo{
+ \sum_{k=1}^n \P{|X_{n,k}| \geq n} = n \P{|X_1|>n} \to 0
+} by hypothesis. This is 1st condition of thm.2.2.6. \par
+To show the 2nd condition, where lemma 2.2.8 is used, and by that \(X_i\)'s are i.i.d., \EqGo{
+ \F{1}{n^2} n E(|X_i|\leq n) 
+ = \F{1}{n} \int_0^\oo 2y P(y< |X_i|\leq n) dy
+ = \F{2}{n} (a_1+...+a_n), 
+} here, \EqGo{
+ a_k := \int_{k-1}^k y \P{|X_i| >y} dy \leq \sup_{k-1 \leq y < k} y \P{|X_i| >y} \to 0,
+} as \(k \to \oo\), which is also by hypothesis. 
+If \(a_k \to 0\) as \(k \to \oo\), 
+it's implied \((a_1+...+a_n)/n \to 0\), by basic analysis knowledge. \par
+Then \((S_n - a_n) /n \to 0\) in probability, or, in view of \(a_n = n\mu_n\), in conclusion, \(S_n /n - \mu_n \to 0\). 
+
+\subsection*{(30) thm.2.2.9.} \(X_n\) i.i.d., and \(\E{|X_1|} < \oo,\; \mu = \E{X_i}\), 
+then \(Sn/n \to \mu\) in \(L^1\) and in probability. \par
+This is weak law of large numbers in the familiar form. (see text for proof)
+
+\subsection*{(31) counter example.} Cauchy distribution is with density function \EqGo{
+ \F{1}{\pi} \M \F{1}{1+x^2}
+} It does not satisfy \(m P(|X| > m) \to 0\) as \(m \to \oo\). 
+Indeed, it goes like \(\sim x \M x^{-1} \sim 1\). 
+
+\subsection*{(32) example 2.2.7} (St. Petersburg paradox) There are discrete, i.i.d. \(X_1,\dotsc,X_n\), for which \(\P{X_i = 2^j} =2^{-j}\). 
+Then \(\P{X_i \geq 2^m} = 2^{-m+1}\). 
+We want to investigate \(S_n := X_1 +\dotsb+ X_n\) in asymptotic regime. 
+The general idea is to use thm. 2.2.6; here, \(X_{n,k}\) all equals \(X_i\). 
+Towards that end, we guess suitable \(b_n\). \par
+To try to compute 1st condition in thm. 2.2.6. 
+By being i.i.d., and by pmf of \(X_i\): \EqGo{
+ \sum_{k=1}^n \P{|X_{n,k}| \geq b_n}
+ = n \P{X_1 \geq b_n}
+ = n \M \F{2}{b_n}
+} In order this \(\to 0\), we would require \(b_n\) be of a order of magnitude larger than \(n\). 
+Besides, by being i.i.d., by its pmf, and by geometric sum, \EqGo{
+ \F{1}{b_n^2} \sum_{k=1}^n \E{X_{n,k}'^2}
+ = \F{n}{b_n^2} \E{X_1'^2}
+ = \F{n}{b_n^2} \sum_{k=1}^{\log_2 b_n} 2^{-k} \M (2^k)^2 
+ = \F{n}{b_n^2} \M 2b_n
+ = \F{2n}{b_n}
+ \to 0, 
+} Exactly as above. Here as was before, \(X_{n,k}' := X_{n,k} \I{X_{n,k} \leq b_n}\) (restriction to values less than \(b_n\)). \par
+We turn to \(a_n\), average of truncated r.v. in thm. 2.2.6., \EqGo{
+ a_n
+ = \sum_{k=1}^n \E{X_{n,k}}
+ = n \E{X_1}
+ = n \sum_{k=1}^{\log_2 b_n} 2^{-k} \M 2^k
+ = n \log_2 b_n.  
+} Finally by weak law of large numbers, \EqGo{
+ \F{S_n-a_n}{b_n}
+ = \F{S_n - n \log_2 b_n}{b_n}
+ \to 0.
+} Let's set \(b_n = n \M 2^{K(n)}\). Then, in probability, \EqGo{
+ \F{S_n}{n \M 2^{K(n)}} - \F{\log_2 n +K(n)}{2^{K(n)}} \to 0.
+} Observe we may set \(K(n) = \log_2 \log_2 n\) to let the latter term to \(\to 1\) and now, in probability, \(S_n \to n \log_2 n\). 
+We learn that although this game has \(\E{X} =\oo\), the sum is finite in probability: 
+in plain words, if we ignore some extremely small probability, a player earn (roughly) finite money, but it is exactly those events ignored here, that caused infinite expectation. 
+They are extremely rare, and in this setting, requires so long (say, billions of year) that it's wise to neglect. 
+
+\end{document}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%~%~%~%~%~%~%~%~%~%~%~%~%~%~%~%~%~%~%~%~%~%~%~%~%~%~%~%~%~%~
+Yay~below this line nothing is printed.

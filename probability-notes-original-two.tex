@@ -1,0 +1,541 @@
+\documentclass[12pt]{article}
+%
+\usepackage[T1]{fontenc}% the font used to be T1-encoding
+\usepackage{garamondx}% default font: Garamond. (urw-garamond is badly written)
+\usepackage[garamondx,cmbraces]{newtxmath}% math supporting package
+\renewcommand*\ttdefault{cmtt}% typewriter font: Computer Modern Teletype L
+\usepackage{cabin}% sans-serif font: Cabin
+%
+\usepackage{
+  amsmath,% facilitates math formulae typography
+  amssymb,% several other symbols
+  graphicx,% enables graphics insertion
+  color% enables colored text
+}
+\usepackage[
+ frak= esstix, scr= boondoxo, cal= cm, bb= boondox
+]{mathalfa}% do not alter the order of this line (for strange reasons)
+% available ones: (* has small cases)
+% frak: *esstix, *boondox, *pxtx
+% bb: ams, pazo, fourier, esstix, *boondox, px, txof.
+% cal & scr: rsfs, rsfso, zapfc, pxtx, *esstix, *boondox, *boondoxo, *dutchcal. 
+%
+% Formatting.
+\setlength{\parskip}{1.5ex}% vertical spacing between paragraphs
+\setlength{\parindent}{4ex}% indent in a paragraph
+\usepackage{titling}% controls typesetting the title
+\setlength{\droptitle}{-2cm}% decreases spacing over the title
+\usepackage[
+  top=2.1cm, bottom=1.9cm, left=1.8cm, right=1.8cm
+]{geometry}% sets page margins
+\usepackage[compact]{titlesec}% adjusts spacing of each sec.; used below.
+\titlespacing{\section}{8ex}{*0}{*0}% resp., left margin, vertical spacing, seperation to text following.
+\titlespacing{\subsection}{2ex}{*0}{*2}% see above
+\titlespacing{\subsubsection}{0pt}{*0}{*0}
+\titleformat{\subsection}[% modifies the title of a subsec.
+  runin% no new-line before subsequent text
+]{
+  \color{red}\large\bfseries\itshape %color, font, shape
+}{}{}{}[]% end \titleformat
+%\everymath{\displaystyle}% forces displaying in-text math w/ full height
+%
+% Custom shorthands.
+% lower case Greek alphabets w/ long name
+\newcommand\aG\alpha \newcommand\bG\beta  \newcommand\gG\gamma \newcommand\dG\delta \newcommand\eG\varepsilon \newcommand\zG\zeta \newcommand\tG\vartheta \newcommand\kG\kappa \newcommand\lG\lambda \newcommand\sG\sigma \newcommand\fG\varphi \newcommand\oG\omega 
+% upper case Greek alphabets
+\newcommand\GG\varGamma \newcommand\DG\varDelta \newcommand\TG\Theta \newcommand\LG\varLambda \newcommand\SG\varSigma \newcommand\FG\varPhi \newcommand\YG\varUpsilon \newcommand\OG\varOmega
+%
+% other symbols
+\newcommand{\oo}\infty% infinity, whose shape resembles "oo"
+\newcommand{\F}\frac% "F"raction
+\newcommand{\R}\sqrt% "R"oot
+\newcommand{\M}\cdot% "M"ultiply
+\newcommand{\N}\nabla% del sign
+\newcommand{\X}\times% cross, whose shape resembles "X"
+\newcommand{\Pt}\partial% "P"ar"T"ial differentiation
+\newcommand{\V}\boldsymbol% bold italic, e.g. "V"ectors
+\newcommand{\Ev}\forall% "Ev"ery
+\newcommand{\Ex}\exists% "Ex"ists
+\newcommand{\St}{\textsf{\large \: s.t. \:}}% "S"uch "T"hat
+\newcommand{\Eq}{\Leftrightarrow}% "Eq"ivelent
+\newcommand{\Ip}{\Rightarrow} % "I"m"p"lies
+\newcommand{\ii}{ \mathring{\imath} }% for imag. unit
+\newcommand{\jj}{ \mathring{\jmath} }% for imag. unit
+\newcommand{\dd}{ \BF{d} }% for differential
+\newcommand{\ee}{ \BF{e} }% for natural base
+%
+% brackets, customized fonts
+\newcommand{\Mod}[1]{ \;\; ( \mathrm{\texttt{mod}} \;\; #1 ) }
+\newcommand{\Rb}[1]{ \left( #1 \right) }% "R"ound "b"racket, or more commonly parenthesis
+\newcommand{\Sb}[1]{ \left[ #1 \right] }%("S"quare) "b"racket
+\newcommand{\Cb}[1]{ \left\{ #1 \right\} }%("C"urly) "b"race
+\newcommand{\Ab}[1]{ \left\langle #1 \right\rangle } %Chevrons, e.g. "A"ngle brackt
+\newcommand{\Nm}[1]{ \left| #1 \right| } %"N"or"m"
+\newcommand{\Bk}[2]{ \left\langle #1 \middle| #2 \right\rangle } %"B"ra-"K"et notation
+\newcommand{\Nb}[1]{ \quad \mbox{\color{blue}[#1]} \quad }%"N"ota "b"ene, i.e. note
+\newcommand{\Emph}[1]{ {\color{blue}\bfseries{#1}} }% my emphasis
+\newcommand{\BF}[1]{ \mathbb{#1} }% "B"lackboard "F"ont
+\newcommand{\CF}[1]{ \mathcal{#1} }% "C"ursive "F"ont
+\newcommand{\GF}[1]{ \mathfrak{#1} }% "G"othic "F"ont
+\newcommand{\SF}[1]{ \mathscr{#1} }% "S"cript "F"ont
+\newcommand{\Ss}[1]{\textsf{\bfseries{#1}}}% "S"ans-"s"erif
+\newcommand{\Tw}[1]{\texttt{\bfseries{#1}}}% "t"ype"w"riter font
+%
+% miscellaneous
+\renewcommand{\L}\label% "L"a"b"el
+\newcommand\Nt{\notag\\}% "N"o"t"ag
+\newcommand{\EqG}[1]{ \begin{gather}{#1}\end{gather} }% Eqn. Gather
+\newcommand{\EqGo}[1]{ \begin{gather*}{#1}\end{gather*} } % unnumbered
+\newcommand{\EqA}[1]{ \begin{align}{#1}\end{align} }% Eqn. Align
+\newcommand{\EqAo}[1]{ \begin{align*}{#1}\end{align*} }% unnumbered
+\newcommand{\Id}{\hspace{5em}}% "I"n"d"ent, esp. in multi-line formulae
+%
+\renewcommand{\P}[1]{ \CF P \Rb{#1} }% probability
+\newcommand{\E}[1]{ \Tw{E}\Rb{#1} }% expectation value
+\newcommand{\Var}[1]{ \Tw{Var}\Rb{#1} }% variance
+\newcommand{\I}[1]{ \BF I_{\{#1\}} }% indicator function
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+\title{\textit{\textbf{\huge Theory of Probability (I)}}: \\ Part 2 -- \textsc{B.C.-Lemma, \\ Strong Law, Random Seq.}}
+\date{}
+\author{}
+\maketitle
+\allowdisplaybreaks[4]% allows page breaks amid eqn. arrays.
+
+\vspace{-3.7cm} %removes vertical spacing 
+\hfill{\itshape lectured by prof. Zhi-Zhong Zhang} \par
+\hfill{\itshape organized by Tzu-Yu Jeng} \par
+\hfill{\itshape Oct. 20 to Nov. 12, 2015} \\
+\vspace{-0.7cm} 
+
+\setcounter{section}{4}
+\section{Borel-Cantelli lemma}
+\subsection*{(33) Def.} [Oct. 20] For events \(A_n\), define \EqGo{
+ \limsup_n A_n = \bigcap_{k=1}^\oo \bigcup_{n=k}^\oo A_n.
+} It's the collection of \(\oG\) that's \(\in\) infinitely many \(A_n\)'s, or \Ss{infinitely often} (i.o.). Also define \EqGo{
+ \liminf_n A_n = \bigcup_{k=1}^\oo \bigcap_{n=k}^\oo A_n.
+} It's the collection of \(\oG\) that's \(\in\) all but finitely many \(A_n\)'s, or \(\in A_n\) \Ss{ultimately}. 
+
+\subsection*{(34) thm. 2.3.1.} (First Borel-Cantelli lemma) If \(\sum_{k=1}^\oo \P{A_n} < \oo\), then \(\P{\limsup_n A_n} =0\). (there is almost no \(\oG\) in them infinitely often) \par
+\Ss{Proof.} By hypothesis, and Tonelli's thm.\ (stronger version than Fubini's thm., in which it's suffice to require the integrand is nonnegative; here, the special case of discrete sum.): \EqGo{
+ \oo > \sum_{k=1}^\oo \P{A_n} 
+ = \sum_{k=1}^\oo \E{ \I{A_n} } 
+ = \E{ \sum_{k=1}^\oo \I{A_n} }
+} That is to say, a.s., \(\sum \I{A_n}\) is finite; 
+then, for almost all \(\oG\), only finite events occur; or, almost no \(\oG \in A_n\) i.o. 
+
+\subsection*{(35) thm. 2.3.5.} If \(X_i\) are i.i.d. with \(\E{X_i} = \mu\), and \(\E{X_i^4} < \oo\), then \(S_n /n := (X_1 +\dotsb+ X_n)/n \to \mu\), a.s. \par
+\Ss{Proof.} While the proof of WLLN in weaker setting (thm.2.2.9) is a long, winding journey, with stronger assumptions this is easily proved. 
+We start by setting, w.l.o.g., \(\mu =0\). 
+\(\to \eG >0\), by Chebyshev's ineq., \EqGo{
+ \P{ \Nm{\F{S_n}{n} > \eG } }
+ \leq \F{ \E{S_n^4} }{ \eG^4 n^4 }
+} What is that? Notice \EqGo{
+ \E{(X_1+\dotsb+X_n)^4}
+ = n\E{X_1^4} + \F{n(n-1)}{2} \M \F{n(n-1)}{2} \M \E{X_1^2} +\dotsb
+ = \SF O(n^2) + 0,
+} in which all single appearances of \(X_i\) give rise to \(\E{X_i}\), which \(=0\). As a result, ultimately, \EqGo{
+ \P{ \Nm{\F{S_n}{n} > \eG } }
+ < \Tw{const} \M \F{n^2}{n^4}
+ < \oo. 
+} Add them together: \EqGo{
+ \sum_{n=1}^\oo \P{ \Nm{\F{S_n}{n} > \eG } }
+ < \Tw{const} \M \sum_{n=1}^\oo \F{n^2}{n^4}
+ = \Tw{const} \M \F{\pi}{6}
+ = \Tw{const}
+ < \oo. 
+} By 1st B-C lemma (item 34), \(\CF P\) that i.o., \(|S_n /n| > \eG\), is 0. 
+Since \(\eG\) is arbitrary, a.s., \(S_n /n \to 0\). 
+
+\subsection*{(36) thm. 2.3.2.} [Oct. 22] \(X_n \to X\) in prob., iff: 
+for every subsequence \(X_{m_i}\),there \(\Ex\) a further subsequence, \(X_{k_i}\), thereof --- i.e. subsubsequence --- where \(\{k_i\} \subset \{m_i\} \subset \BF N\), 
+that converges, a.s., to \(X\) as \(n \to \oo\). \par
+\Ss{Proof.} [\(\Ip\)] Assume \(X_n \to X\) in prob. 
+For \(2^{-i}\), find corresponding \(m_i\), so that: \EqGo{
+ \P{ \Nm{X_{m_i} -X} > \F{1}{i} } < \F{1}{2^{i}}. \\
+ \sum_{i=1}^\oo \P{ \Nm{X_{m_i} -X} > \F{1}{i} }  < 1.
+} By 1st B.-C. Lemma (item 34), the event \(\Nm{X_{m_i} -X}\) being i.o. has \(\CF P =0\), 
+i.e., almost no \(\oG\) yields that \(\Ev \eta\), i.o., \(\Nm{X_{m_i} -X} > \eta\). 
+It's equivalent to say, other than these \(\oG\)'s, \(X_{m_i} \to X\). \par
+[\(\Leftarrow\)] We prove the inverse proposition. 
+Supp \(X_n\) does not \(\to X\) in prob. 
+That's to say: \(\Ex \dG >0,\; \Ex \aG >0\), we may choose such \(X_{m_i}\) that \EqGo{
+ \P{ \Nm{X_{m_i} -X} > \dG } \geq \aG.
+} A moment's thought reveals it's impossible that for ``almost all'' \(\oG\), any subsubsequence \(X_{k_i}\) would be closer to \(X\) than \(\dG\). 
+
+\subsection*{(37) Remark.} In a topological space, such sequence \(x_n\) that any subsubsequence \(x_{k_i}\) of its subsequence \(x_{m_i}\) would converge, itself (\(x_n\)) converges. 
+However, it is another thing to state that \(X_n\) converges a.s. 
+Neither is the case that: a.s. convergence entails convergence in prob. 
+Almost convergence does not come from topology. 
+But exercise 2.3.8 ensures there always \(\Ex\) such metric \(d\) which makes \(d(X_n, X) \to 0 \Eq X_n \to X\) in prob. 
+
+\subsection*{(38) thm. 2.3.4.} If, in prob., \(X_n \to X\) and \(Y_n \to Y\), 
+then not only \Ss{(a)} \(X_n + Y_n \to X+Y\), and \Ss{(b)} \(X_n \M Y_n \to XY\); 
+but moreover, \Ss{(c)} if \(f\) be continuous, \(f(X_n) \to f(X)\) in prob.; 
+and, \Ss{(d)} if \(f\) be bounded, \(\E{f(X_n)} \to \E{f(X)}\). \par
+\Ss{Proof.} Choose any index set \(\{m_i\}\). 
+Find sub-indices \(\{k_i'\} \subset \{m_i\}\), so that, other than \(\oG\) that makes up measure 0, \(X_i \to X\). 
+It's possible because thm.2.3.2. (item 36).  
+Similarly find the counterpart \(\{k_i''\}\) for the case \(Y_n\). 
+For sub-indices \(\{k_i\} := \{k_i'\} \cap \{k_i''\}\), still, almost all \(\oG\)'s satisfies \(X_n+Y_n \to X+Y\). 
+Again by thm.2.3.2, part (a) is proved. \par
+Proof of (b) is similar. \par
+Also (c) follows similarly, by noting, after taking a continuous function, \(f(X_{k_i}) \to f(X)\). \par
+Finally, bounded convergence thm.\ (special case of lebesgue dominated convergence thm.\ by using constant function as the bound) entails \EqGo{
+ \lim_{i \to \oo} \E{f(X_{m_i})} 
+ = \E{ \lim_{i \to \oo} f(X_{m_i})}
+ = \E{f(X)}.
+} 
+
+\subsection*{(39) thm. 2.3.6.} (2nd Borel-Cantelli lemma) If \(A_n\)'s are indep., and \(\sum_{k=1}^\oo \P{A_n} = \oo\), 
+then \(\P{\limsup_n A_n} =1\). \par
+\Ss{Proof.} Explanation: resp. by de-Morgan Law, 
+by the fact \(\cup_{k=n}^\oo A_k^\Tw{c}\) is becoming larger, \EqGo{
+ 1- \P{ \bigcup_{n=1}^\oo \bigcap_{k=n}^\oo A_k }
+ = \P{ \bigcap_{n=1}^\oo \bigcup_{k=n}^\oo A_k^\Tw{c} } 
+ = \lim_{n \to \oo} \P{ \bigcup_{k=n}^\oo A_k^\Tw{c} }
+ = \lim_{n \to \oo} \lim_{m \to \oo} \P{ \bigcup_{k=n}^m A_k^\Tw{c} }
+} by \(A_k^\Tw{c}\) being indep.\ because so are \(A_k\)'s (the crucial assumption is used here), 
+by the well-known fact \(\ee^{-x} \geq 1-x\), \EqGo{
+ = \lim_{n \to \oo} \lim_{m \to \oo} \prod_{k=n}^m (1- \P{ A_k })
+ \leq \lim_{n \to \oo} \lim_{m \to \oo} \prod_{k=n}^m \exp\Rb{ -\P{A_k} }
+ = \lim_{n \to \oo} \exp\Rb{ -\lim_{m \to \oo} \sum_{k=n}^m \P{A_k} }
+} by summing the exponent, 
+by assumption that the exponent is \(-\oo\), \EqGo{
+ = \lim_{n \to \oo} \exp\Rb{ -\sum_{k=n}^\oo \P{A_k} }
+ = \lim_{n \to \oo} 0
+ =0.
+}
+
+\subsection*{(40)} (Borel zero-one law) If \(A_n\)'s are indep., then \begin{gather*}
+ \P{\limsup_n A_n} = \begin{cases}
+  0, & \sum_{k=1}^\oo \P{A_n} < \oo \\
+  1. & \sum_{k=1}^\oo \P{A_n} = \oo
+ \end{cases}
+\end{gather*} It's just restatements of 1st \& 2nd B.-C. lemmata (items 34 \& 39). 
+
+\subsection*{(41) thm. 2.3.7.} If \(X_i\)'s are i.i.d. and \(\E{X_i} =\oo\), 
+then (a) \(\P{|X_i| \leq n, \textrm{i.o.}} =1\). 
+(b) The \(\CF P\) that \(-\oo < \lim_{n \to \oo} (S_n /n) < \oo\) is 0. (where as before \(S_n := X_1 +\dotsb+ X_n\)) \par
+\Ss{Proof.} For the 1st claim, \EqGo{
+ \sum_{i=1}^\oo \P{|X_i| \geq i} 
+ = \sum_{i=1}^\oo \P{|X_1| \geq i} 
+ \geq \E{|X_1|} -1
+ = \oo.
+} by being i.i.d. by the fact is easily seen by noting the figure, and by assumption. \\
+\indent [Oct. 27] To show (b), begin with the identity \EqGo{
+ \F{S_n}{n} - \F{S_{n+1}}{n+1}
+ = \F{S_n}{n(n+1)} - \F{X_{n+1}}{n+1}. 
+} Now, lhs \(\to 0+0\), while \(S_n /n(n+1)\) also \(\to 0\). 
+This forces \(X_{n+1} /(n+1)\) would not \(\leq 1\) ultimately, and should in fact also \(\to 0\). 
+By part (a), this almost never happens. 
+
+\subsection*{(42) thm. 2.3.8.} If \(A_n\)'s are pairwise indep., and \(\sum_{k=1}^\oo \P{A_n} = \oo\), 
+then, a.s., \EqGo{
+ \Rb{ \sum_{k=1}^n \I{A_k} } \bigg/ \Rb{ \sum_{k=1}^n \P{A_k} } \to 1.
+} \indent \Ss{Proof.} Introduce \(X_k = \I{A_k}\). Then \(\Ev \eG\), 
+resp. by Chebyshev ineq., 
+by pairwise independence of \(X_n\), 
+by the fact \(\Var{X_i} = \E{X_i^2} - \E{X_i}^2 \leq \P{A_i} -0 = \E{X_i}\), 
+by assumption \(\sum_{k=1}^\oo \P{A_n} = \oo\) which \(=\sum_{k=1}^\oo \E{X_i}\), 
+we have \EqGo{
+ \P{ \Nm{ \F{S_n}{\E{S_n}} -1 } > \eG }
+ \leq \F{\Var{S_n}}{\eG^2 \E{S_n}^2}
+ = \F{\sum_{k=1}^n \Var{X_k}}{\eG^2 \E{S_n}^2}
+ = \F{\E{S_n}}{\eG^2 \E{S_n}^2}
+ \to 0
+} as \(n \to \oo\). In other words, \(S_n \to \E{S_n}\) in prob. \par
+To show the convergence is furthermore a.s., the crucial step is use B.-C. lemma to a sequence that turns out to converge a.s., and squeezes \(S_n\). 
+Now, introduce \(T_k\) to be the sum \(S_{n(k)}\) that just exceeds \(k^2\). By above, \EqGo{
+ \P{ \Nm{ \F{T_k}{\E{T_k}} -1 } > \eG }
+ \leq \F{1}{\eG^2 \E{T_k}}
+ \leq \F{1}{\eG^2 k^2}.
+} Add all equations together: \EqGo{
+ \sum_{k=1}^\oo \P{ \Nm{ \F{T_k}{\E{T_k}} -1 } > \eG }
+ \leq \F{\pi}{6 \eG^2}
+ < \oo.
+} By B.-C. lemma, i.o., \(T_k\) is arbitrarily close to \(\E{T_k}\). \par
+Finally, suppose index \(m\) lies just between \(n_k\) and \(n_{k+1}\),  \EqGo{
+ T_k = S_{n_k} \leq S_m \leq S_{n_{k+1}} = T_{k+1}. \\
+ \E{T_{k+1}} = \E{S_{n_{k+1}}} \geq \E{S_m} \geq \E{S_{n_k}} = \E{T_k}. \\
+ 1 \M 1 \leftarrow
+ \F{T_k}{T_{k+1}} \M \F{T_{k+1}}{\E{T_{k+1}}}
+ = \F{T_k}{\E{T_{k+1}}} 
+ \leq \F{S_m}{\E{S_m}} 
+ \leq \F{T_{k+1}}{\E{T_k}}
+ = \F{T_{k+1}}{T_k} \M \F{T_k}{\E{T_k}}
+ \to 1 \M 1
+} which follows by above result, and by the recalling \(T_k\) is just sum of \(i^2\). 
+Let \(m\) be so large that \(n_k\) is large, as both the left and the right are close to 1, a.s. 
+
+\section{strong law of large numbers}
+\subsection*{(43) def.} R.v.s \(X_n\) and \(Y_n\) are said \Ss{tail equivalent} if \(\sum_{k=1}^\oo \P{X_n \neq Y_n} <\oo\). \par
+By B.-C. lemma, this implies \(\P{X_i \neq Y_i, \textrm{i.o.}} =0\). 
+
+\subsection*{(44) thm.} (i)  \(\sum_{i=1}^\oo (X_i - Y_i)\) converges a.s. \par
+(ii) \(\sum_{i=1}^\oo (X_i)\) converges a.s.
+\(\Eq \sum_{i=1}^\oo (Y_i)\) converges a.s. \par
+(iii) if \(b_i \to \oo\), and \((1/b_i) \sum_{i=1}^\oo X_i\) converges a.s., 
+then \((1/b_i) \sum_{i=1}^\oo Y_i\) converges, a.s., to the same limit. \par 
+\Ss{Proof.} Of course, for almost all \(\oG\), \(X_n = Y_n\), hence (i); actually there are only finitely many terms. 
+For (ii), add sum of \(X_n\) to sum of \(X_n - Y_n\), or vice versa, to get convergence of the other. 
+Proof of (iii) is similar, and by noting finite difference \(X_n - Y_n\) if \(/b_n\) would certainly converge. 
+
+\subsection*{(45) thm. 2.4.1. SLLN.} (strong law of large numbers) [Oct. 29] Let \(X_i\)'s be pairwise indep., identically distributed, with \(\E{|X_i|} <\oo\), and \(\E{X_i} =\mu\), and as usual, \(S_n := X_1 +\dotsb+ X_n\). 
+Then \(S_n /n \to \mu\) a.s. \par
+\Ss{Partial proof.} Introduce \(Y_i = X_i \I{|X_i| \leq i}\) and \(T_n := Y_1 +\dotsb+ Y_n\). 
+Observe that, by def., 
+by being pairwise i.d., 
+and for last step see item 41, \EqGo{
+ \sum_{i=1}^\oo \P{X_i \neq Y_i}
+ = \sum_{i=1}^\oo \P{ |X_i| > i }
+ = \sum_{i=1}^\oo \P{ |X_1| > i }
+ \leq \E{X_1}
+ < \oo.
+} By B.-C. lemma (item 34), \(\P{X_i \neq Y_i, \mathrm{i.o.}} =0\) (tail-equivalent). 
+That's to say different terms are finitely-many, and thus \EqGo{
+ \F{1}{n} \sum_{i=1}^n (X_i - Y_i) \to 0.
+} Define \(a_i := \E{Y_i}\). By property of Ces\`aro mean and \(\E{Y_i} \to \E{X_i}\), \EqGo{
+ \F{1}{n} (a_1 +\dotsb+ a_n) \to \mu.
+} Hence if it be the case \EqGo{
+ \F{1}{n} \sum_{i=1}^n (Y_i - a_i) \to 0.
+} after adding three eqn.s, we are done. Before that, we need more results. 
+
+\subsection*{(46) Kronecker's lemma.} Given two sequences \(x_n\) and \(b_n\), where \(b_n \uparrow\) and (w.l.o.g.) \(b_n > 0\), 
+and assume \(\sum_{n=1}^\oo x_n / b_n\) converges. 
+Then \((1/ b_n) \sum_{k=1}^n x_k \to 0\). \par
+\Ss{Proof.} Manipulate in such manner: \EqAo{
+ &x_1 +\dotsb+ x_n \\
+ =& b_1 \Sb{ \Rb{ \F{x_1}{b_1} +\F{x_2}{b_2} +\dotsb } - \Rb{ \F{x_2}{b_2} +\F{x_3}{b_3} +\dotsb } } + \\
+  &\Id  b_2 \Sb{ \Rb{ \F{x_2}{b_2} +\dotsb } - \Rb{ \F{x_3}{b_3} +\dotsb } } +\dotsb+
+  b_n \Sb{ \Rb{ \F{x_n}{b_n} +\dotsb } - \Rb{ \F{x_{n+1}}{b_{n+1}} +\dotsb } } \\
+ =& b_1 \Rb{ \F{x_1}{b_1} +\dotsb } +
+  \Sb{ (b_2 - b_1) \Rb{ \F{x_2}{b_2} +\dotsb } +\dotsb+ (b_n - b_{n-1}) \Rb{ \F{x_n}{b_n} +\dotsb } } -
+  b_n \Rb{ \F{x_n}{b_n} +\dotsb } 
+} Find \(N\) so large, that \(|x_N / b_N +\dotsb| <\eG\), 
+and require \(n > N\). 
+Divide by \(b_n\), and recall \(b_n - b_{n-1} >0\): \EqAo{
+ &\F{1}{b_n} (x_1 +\dotsb+ x_n) \\
+ =& \F{b_1}{b_n} \Rb{ \F{x_1}{b_1} +\dotsb } +
+  \F{1}{b_n} \Sb{ (b_2 - b_1) \Rb{ \F{x_2}{b_2} +\dotsb } +\dotsb+ (b_{N-1} - b_{N-2}) \Rb{ \F{x_{N-1}}{b_{N-1}} +\dotsb } } - \\
+  &\Id  \F{1}{b_n} \Sb{ (b_N - b_{N-1}) \Rb{ \F{x_N}{b_N} +\dotsb } +\dotsb+ (b_n - b_{n-1}) \Rb{ \F{x_n}{b_n} +\dotsb } } -
+  \Rb{ \F{x_n}{b_n} +\dotsb } \\
+ =& \F{1}{b_n} \M (\Tw{const} + \Tw{const}) +
+  \F{\eG}{b_n} (b_n - b_{N-1}) - \eG 
+} they are all small as \(n\) is big. 
+
+\subsection*{(47) Kolmogorov's ineq.} Let \(X_1,\dotsc,X_n\) be indep.\ r.v.s with \(\E{X_i} =0\), and as usual, \(S_n := X_1+\dotsb+X_n\). 
+Then \(\Ev \dG >0\), \EqGo{
+ \P{ \max_{1 \leq k \leq n} |S_k| \geq \dG } 
+ \leq \F{\Var{S_n}}{\dG^2}.
+} \indent \Ss{Proof.} Disjoint events \EqGo{
+ A_k := \Cb{ \oG: |S_i| < \dG,\; 1 \leq i \leq k-1;\; |S_k| \geq \dG }
+} (i.e., it's not until \(k\) is \(|S_k| \geq \dG\)) splits \(A := \Cb{\oG: \max_{1 \leq k \leq n} |S_k| \geq \dG } \). \par
+Resp.: by def., 
+by \(\E{X_i} =0\), 
+by set inclusion, 
+by dropping term and def.\ of \(S_n\), 
+by def.\ of \(A_k\) and independence of \(X_i\): \EqAo{
+ \Var{S_n} +0
+ =& \Var{S_n} + \E{S_n}^2
+ = \E{S_n^2}
+ = \int_\OG S_n^2 \dd \CF P
+ \geq \int_A S_n^2 \dd \CF P \\
+ =& \sum_{k=1}^n \int_{A_k} (S_k + S_n - S_k)^2 \dd \CF P 
+ \geq \sum_{k=1}^n \int_{A_k} \Rb{ S_k^2 + 2(S_n -S_k) } \dd \CF P \\
+ \geq& \sum_{k=1}^n \Rb{
+   \int_{A_k} \dG^2 \dd \CF P + 
+   \int_{A_k} 2(X_{k+1} +\dotsb+ X_{n-1}) \dd \CF P
+ }
+ = \dG^2 \P{A} +0
+}
+
+\subsection*{(48) one series thm.} (Kolmogorov) [Nov. 3] Let \(X_n\)'s be indep.\ rv.s, with \(\E{X_i} =0\). 
+Suppose \(\sum_{n=1}^\oo \Var{X_n} <\oo \), 
+then \(\sum_{n=1}^\oo X_n\) converges a.s. \par
+\Ss{Proof.} For \(\Ev \eG >0\), apply Kolmogorov's max ineq. (item 47) to \(m>n\), \EqGo{
+ \P{ \max_{n \leq k \leq m} |S_k -S_n| >\eG} 
+ \leq \F{1}{\eG^2} \Var{S_m -S_n} 
+ = \F{1}{\eG^2} \sum_{j=n+1}^m \Var{X_j} 
+ \leq \F{1}{\eG^2} \sum_{j=n+1}^\oo \Var{X_j}. 
+} So if \(m \to \oo\) and afterwards \(n \to \oo\), \EqGo{
+ \lim_{n \to \oo} \P{\sup_{k \geq n} |S_k -S_n| >\eG} 
+ = \lim_{n \to \oo} \F{1}{\eG^2} \sum_{j=n+1}^\oo \Var{X_j} =0.
+} Let \EqGo{
+ S_n
+ = \sup_{m,k \leq n} |S_m -S_k|
+ \leq \sup_{m,k \leq n} (|S_m -S_n| +|S_n -S_k|)
+ \leq 2 \sup_{m,k \leq n} |S_m -S_n|.
+} It's clear that, a.s., \(S_n\) is Cauchy. 
+[T.-Y. J. --- I think a better way to explain this is to sum the \(\CF{P}\) that \(\sup |S_n-S_m|\) larger than \(\eG_n\) whose sum \(\to 0\), then conclude, by B.-C. lemma, that a.s.,  \(\sup |S_n-S_m| <\eG\) ultimately.]
+
+\subsection*{(49) two series thm.} as a corollary of one series thm.\ (item 48): let \(X_n\) be indep.. 
+If \\
+\indent (i) \(\sum_{n=1}^\oo \E{X_n}\) converges, \\
+\indent (ii) \(\sum_{n=1}^\oo \Var{X_n} <\oo \), \\
+then \(\sum_{n=1}^\oo X_n\) converges a.s. \par
+\Ss{Proof.} Apply one series thm.\ to \(X_n -\E{X_n}\) to get its infinite sum converge, and add up \(\sum X_n\) which converges too. 
+
+\subsection*{(50) one more step to SLLN.} (due to Kolmogorov) Refer to item 45. 
+By one series thm., \EqGo{
+ \sum_{n=1}^\oo \Var{ \F{Y_n -\E{Y_n}}{n} } <\oo
+ \Ip \sum_{n=1}^\oo \F{Y_n -\E{Y_n}}{n} <\oo.
+} which in turn implies \(S_n/n \to \mu\) (item 45). 
+It suffices, then (since \(\E{Y_n} /n \to 0\)), to show \(\sum_{n=1}^\oo \Var{Y_n} /n^2 <\oo\), which we do next. 
+
+\subsection*{(51) lemma 2.4.3.} Same as before, \(X_n\) being iid., and \(Y_n := X_n \M \I{X_n \leq n}\). Then \EqGo{
+ \sum_{n=1}^\oo \F{\E{|Y_n|}}{n^2}
+ \leq \Tw{const} \M \E{|X_1|} < \oo. 
+} \indent \Ss{Proof.} lhs is just \EqAo{
+ \sum_{n=1}^\oo \F{\E{|X_n|^2 \M \I{X_n \leq n}}}{n^2}
+ =& \sum_{n=1}^\oo \F{1}{n^2} \int_{y=0}^\oo 2y \P{|X_1|>y} \I{y \leq n} \dd y \\
+ =& \int_{y=0}^\oo \Rb{ 2y \sum_{n=1}^\oo \F{\I{y \leq n}}{n^2} } \P{|X_1|>y} \dd y
+} by lemma 2.2.8 (item 28), 
+then by discrete case of Fubini's theorem and premise that everything is positive. 
+If \((\dotsc) <\Tw{const}\), then this \EqGo{
+ \leq \Tw{const} \M \int_{y=0}^\oo \P{|X_1|>y} \dd y
+ = \Tw{const} \M \E{|X_1|} <\oo. 
+} The rest is easy because after some scrutiny, \EqAo{
+ 0 < y \leq 2 \Ip& (\dotsc) \leq 4 \Rb{\F{1}{1^2} +\F{1}{2^2} +\F{1}{3^2} +\dotsb} = 4 \M \F{\pi^2}{6}. \\
+ y >2 \Ip& (\dotsc) \leq 2y \int_{y-1}^\oo \F{\dd y'}{y'^2} \leq \F{2y}{y-1} \leq 4.
+} This completes the proof of SLLN!!
+
+\subsection*{(52) thm. 2.4.5.} Let \(X_n\) be iid., with \(\E{X_1^+} = \E{X_1 \I{X_1 \geq 0}} =\oo\), yet \(\E{X_1^-} = \E{X_1 \I{X_1 \leq 0}} =\oo\). 
+Then \(S_n/n =(X_1+\dotsb+X_n)/n \to \E{X_1} =\oo\). \par
+\Ss{Proof.} Let \(M>0\) and \(X_n^{(M)} = X_n \land M\) (the smaller of them) are iid.\ with \(\E{X_n^{(M)}} <\oo\). 
+We may then apply SLLN (item 45), to conclude that, a.s., \EqGo{
+ \F{1}{n}(X_1^{(M)}+\dotsb+X_n^{(M)}) \to \E{X_1^{(M)}}.
+} But as \(M \to \oo\), by monotone convergence thm.\ (text p.23), \(\E{X_1^{(M)}} \uparrow \E{X_1}\). 
+In combination we see, a.s.,  \EqGo{
+ \liminf \F{S_n}{n}
+ \geq \liminf \F{S_n^{(M)}}{n}
+ = \E{X_1^{(M)}}
+ = \E{X_1} = \oo.
+} This forces \(\limsup S_n/n =\liminf S_n/n =\lim S_n/n =\oo\). 
+
+\subsection*{(53) example 2.4.1: renewal theory.} [Nov. 5] Let \(X_1,\dotsc\) be iid., with \(0 <X_i <\oo\), and \(T(n) := X_1+\dotsb+X_n\) as before. 
+Introduce the new variable \(N_t = \sup_{n \geq 1}\{ T(n) \leq t \}\) defined for \(\Ev t >0\) 
+(It might be, say, the number of light bulbs burnt out at time \(t\)). This, we now investigate. 
+
+\subsection*{(54) thm. 2.4.6.} If \(0 < \E{X_1} =\mu \leq \oo\), then, a.s., \EqGo{
+ \F{N_t}{t} \to \F{1}{\mu},
+} as \(t \to \oo\) (with convention \(1/\oo =0\)). \par
+\Ss{Proof.} Observe that \(T(N_t) \leq t < T(N_t+1)\). 
+On the other hand, by SLLN, as \(n \to \oo\), \(T(n)/n \to \E{X_1} =\mu\) for \(\oG \in \OG_0\) whose \(\P{\OG_0} =1\). 
+Also it's clear that a.s., \(N_t(\oG) \to \oo\) as \(t \to \oo\) (otherwise some \(X_t\) is infinite, which has \(\CF{P}=0\)). \EqGo{
+ \mu \leftarrow \F{T(N_t)}{N_t} 
+ \leq \F{t}{N_t} < \F{T(N_{t+1})}{N_{t +1}} \F{N_{t +1}}{N_t} 
+ \to \mu \M 1,
+} as \(t \to \oo\); in other words, a.s., \(N_t /t \to 1/ \mu\). 
+
+\section{convergence of random series}
+Before showing the three series thm., we need two results. 
+\subsection*{(55) lemma (a).} [Nov. 10] Let \(Z_n\) be indep.\ rv.s, with \(\E{Z_n} =0\), and \(|Z_n| \leq M\). 
+Then, for \(\Ev \eG >0\), where as usual \(S_n:= Z_1+\dotsc+Z_n\), \EqGo{
+ \P{ \sup_{1 \leq k \leq n} |S_k| > \eG }
+ \geq 1- \F{(\eG +M)^2}{\Var{S_n}}
+} \indent \Ss{Proof.} As in proof of Kolmogorov's ineq., disjoint events \EqAo{
+ A_k :=& \Cb{ \oG: |S_i| < \eG,\; 1 \leq i \leq k-1;\; |S_k| \geq \eG }. \\
+ A :=& \Cb{ \oG: \max_{1 \leq k \leq n} |S_k| \geq \eG }. \\
+ \Ip A =& A_1 \cap\dotsb\cap A_n. 
+} On one hand, \EqGo{
+ \int_A S_n^2 \dd \CF{P}
+ = \int_{\OG} S_n^2 \dd \CF{P} -\int_{A^{\Ss{c}}} S_n^2 \dd \CF{P}
+ \geq \Var{S_n} -\eG^2 (1- \P{A}). 
+} by dropping the mean term, by def.\ of \(A^{\Ss{c}}\) that \(|S_n| \leq \eG\). On the other, \EqAo{
+ \int_A S_n^2 \dd \CF{P}
+ =& \sum_{k=1}^n \int_{A_k} (S_k +(S_n -S_k))^2 \dd \CF{P} \\
+ =& \sum_{k=1}^n \Rb{
+   \int_{A_k} S_k^2 \dd \CF{P} +
+   \int_{A_k} 2S_k (S_n-S_k) \dd \CF{P} +
+   \int_{A_k} (S_n-S_k)^2 \dd \CF{P}
+ }
+} \indent We investigate them each. \EqGo{
+ \int_{A_k} |S_k|^2 \dd \CF{P}
+ \leq \int_{A_k} (|S_{k-1}| + |Z_k|)^2 \dd \CF{P}
+ \leq (\eG +M)^2 \P{A_k}.
+} by triangle ineq., by def.\ of \(A_k\) and by assumption that \(Z_k\) is bounded. \EqAo{
+ \int_{A_k} 2S_k (S_n-S_k) \dd \CF{P}
+ =& 2\int_{\OG} \I{A_k} (Z_1+\dotsb+Z_k) (Z_{k+1}+\dotsb+Z_n) \dd \CF{P} \\
+ =& 2\Rb{ \int_{\OG} \I{A_k} (Z_1+\dotsb+Z_k) \dd \CF{P} } \Rb{\E{Z_{k+1}}+\dotsb+\E{Z_n}} =0.
+} by independence of \(Z_1+\dotsb+Z_k\) and \(Z_{k+1}+\dotsb+Z_n\), by their mean being zero. \EqAo{
+ & \int_{A_k} (S_n-S_k)^2 \dd \CF{P}
+ = \int_{\OG} \I{A_k} (S_n-S_k)^2 \dd \CF{P} \\
+ =& \P{A_k} \Var{Z_{k+1}+\dotsb+Z_n}
+ \leq \P{A_k} \Var{S_n}.
+} The result follows after simple arranging. 
+
+\subsection*{(56) lemma (b).} Same as lemma (a). If \(\sum_{n=1}^\oo Z_n\) converges a.s., 
+then \(\sum_{n=1}^\oo \Var{Z_n} <\oo\). \par
+\Ss{Proof.} A.s., partial sum \(\sum_{n=1}^k Z_n\) is Cauchy. 
+To be concrete, \(\Ev \eG >0\), there \(\Ex\) such \(N >0\), so that whenever \(n>N\), \EqAo{
+ \F{1}{2} >& \P{ \sup_{k \geq 1} |S_{n+k} -S_n| \geq \eG }
+ = \P{ \lim_{m \to \oo} \sup_{m \geq k \geq 1} |S_{n+k} -S_n| \geq \eG } \\
+ =& \lim_{m \to \oo} \P{ \sup_{m \geq k \geq 1} |S_{n+k} -S_n| \geq \eG }
+ \geq \lim_{m \to \oo} \Rb{ 1- \F{(\eG +M)^2}{\Var{S_n}} }.
+} Here, first by def.\ of sup, 
+then \(\CF{P}\) and lim are interchanged because \(\CF{P}\) is lower-continuous, a requirement for any measure. 
+Then lemma (a) above is used. 
+Finally, after arrangement, \(\sum_{n=1}^\oo \Var{Z_n}\) must be bounded. 
+
+\subsection*{(57) three series thm.} Suppose \(X_n\)'s are indep.\ rv.s. Set as usual, truncation \(Y_i = X_i \M \I{|X_i| \leq M}\), and \(M>0\) a constant. 
+Then, \(\sum_{n=1}^\oo X_n\) converges a.s., iff all the following hold: \\
+\indent (i) \(\sum_{n=1}^\oo \P{|X_n| >M} <\oo \). \\
+\indent (ii) \(\sum_{n=1}^\oo \E{Y_n}\) converges. \\
+\indent (iii) \(\sum_{n=1}^\oo \Var{Y_n} <\oo \). \par
+\Ss{Proof.} [\(\Leftarrow\)] Suppose \(\Ex M>0\) so that (i) holds; also (ii) and (iii) hold. \par
+By one series (item 48), \(\sum(Y_n -\E{Y_n})\) converges a.s., 
+and it follows from \(\sum \E{Y_n}\), that \(\sum Y_n\) converges a.s. 
+But notice \EqGo{
+ \sum_{n=1}^\oo \P{|X_n| >M} <\oo
+ = \sum_{n=1}^\oo \P{X_n \neq Y_n} <\oo 
+} so by B.-C. lemma (item 34), \(\sum X_n\) converges iff \(\sum Y_n\) does. 
+So, a.s., \(\sum X_n\) converges. \par
+[\(\Ip\)] Conversely, Suppose \(\sum X_n\) converges a.s. 
+Then, a.s., \(X_n <M\) ultimately, or \(\P{|X_n| >M, \mathrm{i.o.}}\). 
+Now that \(X_n\) is indep., Borel 0-1 law gives \(\sum \P{|X_n| >M} <\oo\). \par
+Before showing the rest, remark that we may assume the probability space so rich that \(\Ex\) sequence of indep.\ rv.s \(Y_n'\) with the same distribution as \(Y_n\) (indeed, Kolmogorov's thm.\ (item 20) tells us we may construct a series of rv.s c.t. given distribution functions, as if we can at will produce from time to time any indep. rv., not worrying about their measure and algebra). \par
+Now recall \(|Y_n| <M\), and hence so is \(Y_n'\). 
+\(\sum Y_n'\) converges a.s. since \(\sum Y_n\) does, so \(\sum (Y_n'-Y_n)\) converges a.s. 
+Again, with same distribution, \(\E{Y_n-Y_n'} =0\). 
+By lemma (b), \(\oo > \sum \Var{Y_n - Y_n'} = \sum 2 \Var{Y_n}\)
+so \(\sum \Var{Y_n} <\oo\), and one series thm.\ \(\Ip \sum (Y_n -\E{Y_n})\) converges a.s., 
+which in turn \(\Ip \sum \E{Y_n}\) converges. 
+
+\subsection*{(58) thm. 2.5.7} [Nov. 12] Let \(X_n\) be iid.\ rv.\ with \(\E{X_1} =0\), and \(\E{X_1^2} =\sG^2 <\oo\). Set as usual, \(S_n := X_1 +\dotsb+ X_n\). 
+Then \(\Ev \eG >0\), \(S_n n^{-1/2} (\log n)^{-1/2-\eG} \to 0\), a.s. \par
+\Ss{Proof.} Observe \EqGo{
+ \sum_{n=1}^\oo \Var{\F{X_n} {\R{n} (\log n)^{1/2+\eG}}}
+ = \sum_{n=1}^\oo \F{\sG^2} {n (\log n)^{1+2\eG}},
+} thus by one series thm.\ (item 48), \(X_n n^{-1/2} (\log n)^{-1/2-\eG}\) converges a.s. 
+Kronecker's lemma (item 46) completes the proof; indeed, the sum of numerator, \(X_n\), is just \(S_n\). 
+
+\subsection*{(59) thm. 2.5.8} Assumption same as thm.2.5.7 (item 58), and \(\E{|X_1|^p <\oo}\), for some \(1 < p < 2\). 
+Then \(S_n n^{-1/p} \to 0\), a.s. \par
+\Ss{Proof.} The proof is entirely the same as previous thm. 
+
+\subsection*{(60)} There is a function \(f(x_1,x_2,\dotsc)\), but is indep.\ with each of \(x_1\), \(x_1+x_2\), \(x_1+x_2+x_3,\dotsc\). 
+Is it constant? It may not be. 
+For if \(f=1\) if \(\lim_{n \to \oo} x_n\) exists, or \(=0\) if not. 
+It only relies on the tail, but not any function of \(x_1,\dotsc,x_n\). 
+
+\subsection*{(61) example.} Given a sequence of rv.s \(X_n\), let \(\SF{F}_n' = \sG(X_n,X_{n+1},\dotsc)\), and \(\SF{T} = \cap_{n=m}^\oo \SF{F}_n'\), called its \Ss{tail \(\sG\)-field} of \(X_n\). \par
+Note (cf. Exmp. 2.5.2) then event \(\{\lim S_n\) exists \(\} \in \SF{T}\), 
+however \(\{\limsup S_n >0\} \notin \SF{T}\), 
+And as of \(\{\limsup S_n/C_n >x\} \notin \SF{T}\), if \(C_n \uparrow \oo\) [the key is whether it only relies on the tail]. 
+
+\subsection*{(62) thm. 2.5.1} (Kolmogorov 0-1 law.) If \(X_1,X_2,\dotsc\) are indep.\  and \(A \in \SF{T}\), 
+then \(\CF{P}(A) =0\) or 1. \par
+\Ss{Proof.} Clearly, \(\sG(X_1,\dotsc,X_n)\) and \(\sG(X_{n+1},\dotsc,X_{n+k})\) are indep. 
+Also, \(\sG(X_1,\dotsc,X_n)\) and \(\cup_{k=1}^\oo \sG(X_{n+1},\dotsc,X_{n+k})\) are indep.\  \(\pi\)-system. 
+By property of \(\pi\)-system (item 15), \(\sG(X_1,\dotsc,X_n)\) and \(\sG(\cup_{k=1}^\oo \sG(X_{n+1},\dotsc,X_{n+k})) =\sG(X_{n+1},\dotsc)\) are indep. 
+Next, note \(\sG(X_1,\dotsc,X_n)\) and \(\SF{T} \subset \sG(X_{n+1},\dotsc)\) are indep.\ \(\pi\)-systems. 
+By the same reason as above, \(\sG(\cup_{n=1}^\oo \sG(X_1,\dotsc,X_n)) =\sG(X_1,\dotsc)\) and \(\SF{T}\) are indep. \par
+Now, any \(A \in \SF{T} \subset \sG(X_1,\dotsc)\) while itself \(A \in \SF{T}\); they are indep.\ by above. 
+So, \(\P{A \cap A} =\P{A}\P{A} =\P{A}^2\), and as a result \(\P{A} =\) 0 or 1. 
+
+\end{document}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%~%~%~%~%~%~%~%~%~%~%~%~%~%~%~%~%~%~%~%~%~%~%~%~%~%~%~%~%~%~
+Yay~below this line nothing is printed.
