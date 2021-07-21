@@ -1,0 +1,110 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+
+\title{Kepler problem}
+\author{Tzuyu Jeng}
+\date{Nov 15, 2018}
+
+\newcommand{\F}{\frac}
+\renewcommand{\S}{\sqrt}
+\newcommand{\Gb}{\beta}
+\newcommand{\Gg}{\gamma}
+\newcommand{\Gq}{\vartheta}
+\newcommand{\La}{\langle}
+\newcommand{\Ra}{\rangle}
+\newcommand{\Bd}{\cdot}
+\newcommand{\Ed}{\equiv}
+\newcommand{\Xqd}{\dot{\vartheta}}
+\newcommand{\Xqdd}{\ddot{\vartheta}}
+\newcommand{\Xs}{\sin \vartheta}
+\newcommand{\Xc}{\cos \vartheta}
+\newcommand{\Xss}{\sin^2 \vartheta}
+\newcommand{\Xcc}{\cos^2 \vartheta}
+\newcommand{\Tct}{\;\mathrm{const}\;}
+
+\begin{document}
+
+\maketitle
+
+We derive Newton's inverse square of distance law for gravitation, given Kepler's three laws.
+Whenever possible, we avoid using sophisticated vector analysis properties, and stick to basic calculus.
+
+Kepler's first law states the orbit, by which a planet revolves around the Sun, is an ellipse.
+We know the ellipse is confined within a plane, by Newton's third law.
+Without loss of generality, let the length be scaled so that the longer axis of ellipse along the \(x\) axis has length \(1\).
+And let the shorter axis of ellipse along the \(y\) axis has length \(\beta <1\), so that the focal point lies on the x-axis.
+The sun lies at \(\La \Gg, 0 \Ra\) the focal point of ellipse.
+Introduce the focal distance
+\begin{align}
+\Gg \Ed \S{1 - \Gb^2}
+\end{align}
+Define the position vector \(r\), velocity \(v\), acceleration \(a\).
+Vectors \(r\), \(v\), \(a\) are understood as a function of \(\Gq\), the angle originating from the sun, and \(\Gq= \Gq[t]\) is a function of time \(t\).
+\begin{align}
+r = &\La \Xc - \Gg, \Gb \Xs \Ra \\
+v = &\La - \Xqd \Xs, \Gb \Xc \Ra \\
+a = &\La -\Xqdd \Xs -\Xqd ^2 \Xc,
+\Gb \Xqdd \Xc -\Gb \Xqd^2 \Xs \Ra
+\end{align}
+% % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % 
+Meanwhile, Kepler's second law states that the area of the triangle swept by the line that passes through the planet and the sun, in unit time, is constant.
+To express that triangle's area, we invoke a
+vector identity below that gives the area spanned by two vectors.
+For simplicity, we actually consider the square of the area.
+\begin{align}
+\| r \| ^2 \| v \| ^2 - (r \Bd v) ^2 = \Tct
+\end{align}
+% % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % 
+The expressions for \(r\) and \(v\) yield a constraint on \(\Xqd\), namely,
+\begin{align}
+&(\Xcc - 2 \Gg \Xc + \Gg^2 + \Gb^2 \Xs^2)
+\Bd \Xqd (\Xss + \Gb^2 \Xcc) \\
+&\quad - \Xqd^2 (-\Xc \Xs + \Gg \Xs + \Gb^2 \Xs)^2 \\
+= &\Tct
+\end{align}
+By arranging, by \(\Xss + \Xcc = 1\), by absorbing \(\Gb^2\) into the constant, and by pulling out \(\Xqd^2\),
+\begin{align}
+\Xqd^2 \Bd (1 - \Gg \Xc)^2
+= &\Tct
+\end{align}
+Here \(1 - \Gg \Xc >0\), and if we agree \(\Gq\) revolves counterclockwise, \(\Xqd >0\) too.
+\begin{align}
+\Xqd \Bd (1 - \Gg \Xc)
+= &\Tct = K
+\end{align}
+Differentiation on both sides gives
+\begin{align}
+\label{constraint-angle-derivative}
+\Xqdd (1 - \Gg \Xc) +\Xqd^2 \Gg \Xs
+= 0
+\end{align}
+Still after some manipulation, we have, except perhaps at the point
+where both sides are singular,
+\begin{align}
+\frac {-\Xqdd \Xs -\Xqd^2 \Xc} {\Xc - \Gg}
+=\frac {\Xqdd \Xc -\Xqd^2 \Xs} {\Xs}
+\end{align}
+This indicates that the force exerted by the Sun is along the same line 
+of the Sun and the planet, but opposite direction.
+% % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % 
+From previous expression of \(a\),
+\begin{align}
+&\| r \| ^4 \| a \| ^2 \\
+=&(1 - \Gg \Xc)^4
+\Big(
+\Xqdd^2 (\Gb^2 \Xcc + \Xss) \\
+&\quad + 2 \Xqdd \Xqd^2 \Gg \Xc \Xs
++ \Xqd^4 (\Xcc + \Gb^2 \Xss)
+\Big)
+\end{align}
+It may be hard to believe, but by \(\Xss + \Xcc = 1\), \(\Gb^2 + \Gg^2 = 1\), and repeatedly using \eqref{constraint-angle-derivative},
+\begin{align}
+&\| r \| ^4 \| a \| ^2 \\
+=&(1 - \Gg \Xc)^2 \Bd \Xqd^4 \Gg^2 \Xss \Bd (\Gb^2 \Xcc + \Xss) \\
+&\quad +(1 - \Gg \Xc)^3 \Bd \Xqd^2 (-\Gg \Xs) \Bd 2 \Xqd^2 \Gg^2 \Xc \Xs \\
++&(1 - \Gg \Xc)^2 \Bd \Xqd^4 \Bd (\Xcc + \Gb^2 \Xss) \\
+=&K^2 \frac {(1 - \Gg \Xc)^2} {(1 - \Gg \Xc)^2} = K^2
+\end{align}
+
+\end{document}
