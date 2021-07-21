@@ -1,0 +1,789 @@
+\documentclass[12pt]{article}
+%
+\usepackage[T1]{fontenc}% the font used to be T1-encoding
+\usepackage{garamondx}% default font: Garamond. (urw-garamond is badly written)
+\usepackage[garamondx,cmbraces]{newtxmath}% math supporting package
+\renewcommand*\ttdefault{cmtt}% typewriter font: Computer Modern Teletype
+\usepackage{cabin}% sans-serif font:Cabin
+%
+\usepackage{
+  amsmath,% facilitates math formulae typography
+  amssymb,% several other symbols
+  graphicx,% enables graphics insertion
+  color% enables colored text
+}
+\usepackage[
+frak= esstix, scr= boondoxo, cal= cm, bb= boondox
+]{mathalfa}% do not alter the order of this line (for strange reasons)
+% available ones: (* has small cases)
+% frak: *esstix, *boondox, *pxtx
+% bb: ams, pazo, fourier, esstix, *boondox, px, txof.
+% cal & scr: rsfs, rsfso, zapfc, pxtx, *esstix, *boondox, *boondoxo, *dutchcal. 
+%
+% Formatting.
+\setlength{\parskip}{1.5ex}% vertical spacing between paragraphs
+\setlength{\parindent}{4ex}% indent in a paragraph
+\usepackage{titling}% controls typesetting the title
+\setlength{\droptitle}{-2cm}% decreases spacing over the title
+\usepackage[
+  top=2.1cm, bottom=1.9cm, left=1.8cm, right=1.8cm
+]{geometry}% sets page margins
+\usepackage[compact]{titlesec}% adjusts spacing of each sec.; used below.
+\titlespacing{\section}{8ex}{*0}{*0}% resp., left margin, vertical spacing, seperation to text following.
+\titlespacing{\subsection}{2ex}{*0}{*2}% see above
+\titlespacing{\subsubsection}{0pt}{*0}{*0}
+\titleformat{\subsection}[% modifies the title of a subsec.
+  runin% no new-line before subsequent text
+]{
+  \color{red}\large\bfseries\itshape %color, font, shape
+}{}{}{}[]% end \titleformat
+%\everymath{\displaystyle}% forces displaying in-text math w/ full height
+%
+% Custom shorthands.
+% lower case Greek alphabets w/ long name
+\newcommand\aG\alpha \newcommand\bG\beta  \newcommand\gG\gamma \newcommand\dG\delta \newcommand\eG\varepsilon \newcommand\zG\zeta \newcommand\tG\vartheta \newcommand\kG\kappa \newcommand\lG\lambda \newcommand\sG\sigma \newcommand\fG\varphi \newcommand\oG\omega 
+% upper case Greek alphabets
+\newcommand\GG\varGamma \newcommand\DG\Delta \newcommand\TG\Theta \newcommand\LG\varLambda \newcommand\SG\varSigma \newcommand\FG\varPhi \newcommand\OG\varOmega
+%
+% other symbols
+\newcommand\oo\infty% infinity, whose shape resembles "oo"
+\newcommand\F\frac% "F"raction
+\newcommand\R\sqrt% "R"oot
+\newcommand\M\cdot% "M"ultiply
+\newcommand\N\nabla% del sign
+\newcommand\X\times% cross, whose shape resembles "X"
+\newcommand\Pt\partial% "P"ar"T"ial differentiation
+\newcommand\V\mathbf% bold italic, e.g. "V"ectors
+\newcommand\Ev\forall% "Ev"ery
+\newcommand\Ex\exists% "Ex"ists
+\newcommand\Mp\mapsto% "M"a"p"
+\newcommand\St{\textsf{\large \: s.t. \:}}% "S"uch "T"hat
+\newcommand{\Eq}{\Leftrightarrow}% "Eq"ivelent
+\newcommand{\Ip}{\Rightarrow} % "I"m"p"lies
+\newcommand{\ii}{ \mathring{\imath} }% for imag. unit
+\newcommand{\jj}{ \mathring{\jmath} }% for imag. unit
+\newcommand{\dd}{ \BF{d} }% for differential
+\newcommand{\ee}{ \BF{e} }% for natural base
+%
+% brackets, customized fonts
+\newcommand{\Rb}[1]{ \left( #1 \right) }% "R"ound "b"racket, or more commonly parenthesis
+\newcommand{\Sb}[1]{ \left[ #1 \right] }%("S"quare) "b"racket
+\newcommand{\Cb}[1]{ \left\{ #1 \right\} }%("C"urly) "b"race
+\newcommand{\Ab}[1]{ \left\langle #1 \right\rangle } %Chevrons, e.g. "A"ngle brackt
+\newcommand{\Nm}[1]{ \left| #1 \right| } %"N"or"m"
+\newcommand{\Bk}[2]{ \left\langle #1 \middle| #2 \right\rangle } %"B"ra-"K"et notation
+\newcommand{\Nb}[1]{ \quad \mbox{\color{blue}[#1]} \quad }%"N"ota "b"ene, i.e. note
+\newcommand{\Emph}[1]{ {\color{blue}\bfseries{#1}} }% my emphasis
+\newcommand{\BF}[1]{ \mathbb{#1} }% "B"lackboard "F"ont
+\newcommand{\CF}[1]{ \mathcal{#1} }% "C"ursive "F"ont
+\newcommand{\GF}[1]{ \mathfrak{#1} }% "G"othic "F"ont
+\newcommand{\SF}[1]{ \mathscr{#1} }% "S"cript "F"ont
+\newcommand{\Ss}[1]{\textsf{\bfseries{#1}}}% "S"ans-"s"erif
+\newcommand{\Tw}[1]{\texttt{\bfseries{#1}}}% "t"ype"w"riter font
+%
+% miscellaneous
+\newcommand{\Nl}{\\ \indent} % "N"ew "Line", actually a narrower new-paragraph
+\renewcommand\L\label% "L"a"b"el
+\newcommand{\EqG}[1]{ \begin{gather}{#1}\end{gather} }% Eqn. Gather
+\newcommand{\EqGo}[1]{ \begin{gather*}{#1}\end{gather*} } % unnumbered
+\newcommand{\EqA}[1]{ \begin{align}{#1}\end{align} }% Eqn. Align
+\newcommand{\EqAo}[1]{ \begin{align*}{#1}\end{align*} }% unnumbered
+\newcommand{\Id}{\hspace{5em}}% "I"n"d"ent, esp. in multi-line formulae
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+\title{
+ \textit{Honours Introduction to} \\
+ \textit{\textbf{\Huge Algebra.}} \\
+ Notes, Part 2: \\
+ \huge\textsc{Rings}
+}
+\date{}
+\author{}
+\maketitle
+\allowdisplaybreaks[4]% allows page breaks amid eqn. arrays.
+
+\vspace{-3.3cm} %removes vertical spacing 
+\hfill{\itshape lectured by prof. Jing Yu} \par
+\hfill{\itshape organized by Tzu-Yu Jeng} \par
+\hfill{\itshape Oct. 14 to Nov. 30, 2015} \\
+\vspace{-0.2cm} 
+
+textbook: Dummit D.S. \& Foote R.M., Abstract Algebra (3rd ed.). Hoboken, New Jersey: John Wiley \& sons (2004). \par
+[Herstein I.N., Topic in Algebra (2nd ed.). Hoboken, New Jersey: John Wiley \& sons (2004).] \par
+[Fraleigh J.B., A First Course in Abstract Algebra (7th ed.). Boston, Massachusetts: Addison-Wesley (2003).]
+
+\setcounter{section}{13}
+\section{basic concepts}
+\subsection*{122. def.} [Oct. 16] \(R\) is a such a set said to be a \Ss{Ring}, with two composition laws, we call addition and multiplication, as: 
+It possess an additive identity denoted by 0, and a multiplicative identity denoted by 1. 
+It is abelian group w.r.t. addition, 
+While multiplication is only required to associative. 
+Also, distribution law holds: \(a(b+c) = ab+ac. (b+c)a = ba+ca,\; \Ev a,b,c \in R\). 
+
+\subsection*{123. def.} \(R\) is said to be a \Ss{commutative ring}, if its multiplication is commutative, i.e., \(ab=ba\). 
+From now on, unless otherwise stated, \(R\) is commutative. \par
+\(R\) is moreover said to be a \Ss{field}, if it's commutative, and every \(a \neq 0\) has multiplicative inverse \(a^{-1} \St aa^{-1} = a^{-1}a = 1\). 
+(Note however some authors do not require a ring to possess the multiplication identity)
+
+\subsection*{124. examples.} \(\BF Z\) is a ring under usual addition and multiplication. 
+\(\BF R = \BF Z /n \BF Z\) is a ring under usual modular operations. \par
+\(\BF Q, \BF R, \BF C\) under usual addition and multiplication are all fields. 
+\(\BF F_p := \BF Z / p\BF Z\), under usual modular operations, is a finite field. \par
+\(F[x]\), which is collection of all poly.s with coefficient in field \(F\), is a ring, under usual addition and multiplication of poly.s. 
+
+\subsection*{125. examples.} Let \(p(x) \in F[x]\) be a \Ss{monic polynomial}, that is, one that's with leading coefficient being unity, and irreducible in \(F[x]\). 
+One may form the \(F[x]/p(x)F[x]\), congruence class of it, just the way \(\BF Z / p \BF Z\). 
+
+\subsection*{126. def.} \Ss{Homomorphism} is defined the same way: \(f: R_1 \Mp R_2)\), wherever \[
+ f(a+b) = f(a)+f(b), f(ab) = f(a)f(b)
+\]. 
+\Ss{Isomorphism} is onto and 1-1 homomorphism, as before. \par
+Note \(F[x] / (x-a)F[x] \Mp F\) is isomorphic, under \((x-a)g(x) + a \Mp a\). 
+On the other hand \(R[x] / (x^2 +1)R[x] \Mp \BF C\) is isomorphic, under \((x^2+1)g(x) +ax +b \Mp ai +b\). 
+
+\subsection*{127. examples.} To show there's no integer solution of \(x^2 + y^2 = 3x^2\). \par
+Such questions may be attacked like this: if there be homomorphism \(R_1 \Mp R_2\), then, every solution in \(R_1\) is also solution in \(R_2\). 
+It suffices to show there's no solution in \(R_2\). \par
+Now in \(\BF Z / 4\BF Z\), \(r^2=\) either 0 or 1, \(\Ev r\). 
+A moment's thinking reveals the only possibility is \(0 + 0 = 0\). 
+While \(3z^2\) is multiple of 3, but \(x^2 + y^2\) is not. 
+This is impossible. 
+
+\subsection*{128.} In \(F[x]/p(x)F[x]\), because \Ss{Euclidean algorithm} is also valid, 
+choose any \(r(x), s(x) \in F[x]\), 
+and there may always \(f(x)\) be found, \(\St r(x)f(x) + s(x)p(x) = 1\) (\Ss{B\'ezout identity}) as was the case of natural numbers. 
+
+\subsection*{129. Chinese remainder thm.} (ca. 5th century, China). 
+To solve a congruence system: \EqAo{
+ x=& a_1 \;(\Tw{mod } m_1) \\
+ x=& a_2 \;(\Tw{mod } m_2) 
+} Find, by Euclid's algorithm,  \(rm_1 + sm_2 =1\), 
+and just let \(x = a_1 s m_2 + a_2 r m_1 \;(\Tw{mod } m_1 m_2)\). 
+This may be generalized to system of \(N\) congruence equations. \par
+Computer heavily uses Chinese remainder thm. 
+Indeed, it enables us to represent large numbers in terms of small ones. 
+Accordingly, \(
+\BF Z / (m_1 \dotsc m_N) \BF Z 
+= \BF Z / m_1 \BF Z \X \BF Z / m_2 \BF Z \X\dotsb\X \BF Z / m_1 \BF Z
+\). 
+
+\subsection*{130. Lagrange interpolation formula.} To see an application to Chinese Remainder, we take an example: 
+Find such \(y(x)\), that \(y(x_1)=y_1,\dotsc,y(x_4)=y_4\). \par
+We first construct \(f_i(x_i)=1\), while \(f_j(x)=0\) for all other indices \(j \neq i\). 
+Then the answer would be \(y_1 f_1(x) +\dotsb+ y_4 f_4(x)\). \par
+We view the situation in light of aforementioned ring theory. 
+There is modular system of eqn.s \(y(x)= y_i (\Tw{mod }{x- x_i}),\; i=1,2,3,4\), on \(\BF R[x]\). 
+How to find, say, \(f_2(x)\)? 
+We wish to find inverse of \(g(x):= (x-x_1)(x-x_3)(x-x_4)\) under modular \((x- x_2)\). 
+And we seek to arrive the result \(r(x)g(x) + s(x)(x-x_2) =1\). 
+This is trivial: to divide by \(x-x_2\) is to substitute \(x_2\). 
+We get the remainder \((x_2-x_1)(x_2-x_3)(x_2-x_4)\). 
+Divide by this, and we get the unity. 
+In conclusion, \EqGo{
+ f_2(x)= \F{x-x_1}{x_2-x_1} \M \F{x-x_1}{x_2-x_1} \M \F{x-x_1}{x_2-x_1}.
+} \par
+In general, given set of \(k+1\) data point \((x_0, y_0),\dotsc,(x_k, y_k) \in \BF R^2\), 
+to find \(q(x) \St q(x_n) = y_i, i=0,\dotsc,k\). 
+There is unique \(q(x) \in \BF R[x]\), where \(\deg q \leq k\), that satisfies this condition. 
+
+\section{integral domains}
+\subsection*{131.} \(I\) is said an \Ss{left ideal}, if: \(I \subseteq R\) is an subgroup under the addition, and \(rI \subseteq I,\; r\in R\). 
+Similarly defined is an \Ss{right ideal}. 
+In a commutative ring, left ideal are, obviously, equivalent to right ideal. \par
+Consider \(f: R_1 \Mp R_2\). 
+The \Ss{kernel} \(\Tw{ker} f\) is, as before, \(:= \{r_1: r_1 \in R_1, f(r_1) =0\}\). 
+The kernel is, clearly, an ideal.
+
+\subsection*{132.} Consider an ideal \(I\) that \(\neq \{0\}\) and is \(\subseteq R\). 
+One can form a \Ss{quotient ring}, \(R/I := \{r+I: r\in R\}\). 
+Note that it's just the set that's the quotient of that addition group. \par
+Because \EqGo{
+ (r_1 + I)(r_2 + I) = r_1 r_2 + r_1 I + r_2 I + II.
+} Thoughts reveal it's \(r_1 r_2 +I\). 
+So it has natural ring homomorphism \(R \Mp R/I\), defined by \(r \Mp r+I\). 
+
+\subsection*{133.} [Oct. 22] A \Ss{zero divisor} \(r\) has in association with it an \(r'\) where \(rr'=0\), and \(r'\) is nonzero. \par
+For example, in \(\BF Z /4 \BF Z\), 2 is a zero divisor, since \(2 \M 2 =4 =0\). \par
+\(R\) is said a \Ss{integral domain}, if no zero divisor is there in it. \par
+
+\subsection*{134.} Let \(R\) be a commutative ring. 
+And nonempty \(D \subseteq R\), contains neither 0 nor any zero-divisor. 
+Consider \(I := \{ (r,d): r \in R, d \in D \}\). 
+Introduce relation \((r,d) \sim (s,e)\) if it's the case \(re=sd\). 
+Please verify it's an equivalence relation. 
+
+\subsection*{135.} The field of fraction thus formed on \(R- \{0\}\), is an integral domain. 
+There is a canonical, injective homomorphism \(\fG: R \Mp R/Q,\; \fG(r) = (rd, d)\) for any \(d \in D\). 
+Indeed, if \(rd/d = 0/d \Ip rd^2=0 \Ip r=0\), because \(d\) is not zero divisor. 
+Thus, injective. 
+
+\subsection*{136.} When \(R := \BF Z,\; D := Z - \{0\}\), then\(Q = \BF Q\), the rational numbers. \par
+When \(F\) is a field, \(R = F[x]\), the poly.\ ring over \(F\). 
+Take \(D:= F[x] - \{0\}\). 
+Then \(Q =\) the field of rational functions with coefficient from \(F\). 
+
+\subsection*{137. Thm.} [text p.261] Let \(R\) and \(D\) be as in above. 
+Then there is a commutative ring \(Q \supseteq R \St\) every element of \(D\) is a unit in \(Q\). 
+Furthermore: for any \(S\) being a commutative ring, 
+wherever there is \(\fG: R \Mp S\), an injective homomorphism, 
+Then there is injective homomorphism \(\FG: Q \Mp S\), 
+and when restricted to \(R\)) is just \(\fG\). 
+In other words, \(Q\) is the smallest of such set. \par
+\Ss{Proof.} The construction of \(Q\), we've just saw. See text for detailed verification. \par
+Let \(\fG\) be such. 
+Now define \(\FG\) on \(Q\) as thus: \(\FG(r/d) := \fG(r) \fG(d)^{-1}\), which is in \(S\). 
+Clearly \(\FG_R (rd/d) := \fG(r)\). 
+
+\subsection*{138.} Let \(\OG \subseteq \BF C\) be a \Ss{domain} --- a connected, open set. 
+And \(R:= {f: \OG \Mp \BF C }\) be analytic, holomorphic function. 
+Then under addition and multiplication, functions are closed. 
+\(R\) hence makes up a commutative ring with 0 and 1 (they are const functions). \par
+Because Taylor series of every order exists, it may be seen: \((a_0 + a_1 x + a_2 x^2 +\dotsb) \M (b_0 + b_1 x + b_2 x^2 +\dotsb) = 0\), 
+then comparing coefficients, we see  
+Thus \(\OG\) is an integral domain. 
+the field of fractions are called the field of \Ss{meromorphic functions}
+
+\subsection*{139.} However on \(\BF R\), let \(\OG'\) be the collection of all differentiable functions, each of which maps from interval \((a,b)\) to \(\BF R\). 
+Then it's not a integral domain. 
+Indeed, it's easy to envisage two such functions that, at different intervals, either is zero, but joined such way as are differentiable. \par
+Because complex functions being analytic is the same as differentiable, 
+we again see that differentiability of complex functions is much more stronger than real functions. 
+
+\subsection*{140.} Denote \(Q(\R{d}) := { a + b \R{d} }\) and so on. 
+There is homomorphism \(Q[x]/(x^5-7) \Mp Q[7^{1/5}]\), 
+by associating \(x \Mp 7^{1/5}\). 
+Similarly, \(R[x]/(x^2+1) \cong \BF C = R[\ii]\). \par
+While \(Z/nZ\) is not field when \(n\) is composite (still a ring, having zero divisors). 
+\(F[x]/p(x)\) is a field, when \(p\) is irreducible, which then contains \(F\) as a subfield. 
+Such cases are said an \Ss{extension field} (or \Ss{finite extension} of \(F\). 
+
+\subsection*{141.} Later on, all we are about to do is generalize linear algebra over commutative rings. \par
+We remark the connection of poly.\ and vector space. Consider  \(m(x) = m_0 + m_1 x +\dotsb+ m_{d-1} x^{d-1} + x^{d}\). 
+Then \(F[x]/m(x)\) may be seen as a vector space. 
+The action of multiplying \(x\) sends \(f\) to \(xf\). 
+This linear operator in matrix form is: \begin{gather}
+ \begin{bmatrix}
+  0, &0, &\dots &0, &-m_0 \\
+  1, &0, &\dots &0, &-m_1 \\
+  0, &1, &\ddots &\vdots &\vdots \\
+  \vdots &\ddots &\ddots &0, &\vdots \\
+  0, &\dots &0, &1, &-m_{d-1}
+ \end{bmatrix}
+\end{gather} Its characteristic poly.\ \(= m\). 
+It's intuitive, for: let \(m(z_i)=0\), then \(m(x)/(x-z_i)\) when multiplied by \(x\), is equal to itself multiplied \(z_i\). 
+Also, minimal poly.\ \(= m\) too. 
+Indeed, the matrix plugged in \(m(x)\) just results \(f\) times \(m(x)\), which is 0. 
+
+\subsection*{142.} \(R\) is called an \Ss{Euclidean domain} if it's possible to associate with it a \Ss{division algorithm}. 
+If there be a positive norm function:\EqGo{
+ N: R \Mp \{0,1,2\dotsc\},\;
+ N(0) =0,\; 
+ N(a) >0,\; a \neq 0
+} 
+Then one way to do this is consecutive execution of \(a = qb + r\). It's okay to require \(N(r)<N(b)\), as in the familiar case. 
+Note any field \(F\) is an Euclidean domain
+
+\subsection*{143.} [Oct. 29] \(R= \BF Z[\ii]\) (called \Ss{Gaussian integers}) together with the usual norm, where for simplicity, \(N(a + b\ii) := a^2 + b^2\) --- it is a Euclidean domain. 
+The division algorithm is as thus: consider \(\aG = a + b\ii\) and \(\bG = c + d\ii\). 
+We want to find suitable \(p,\; q,\; \gG\) in \EqGo{
+ \aG = (p +q\ii) \bG + \gG.
+} How to do this? just compute \(\aG/\bG\) and find the Gaussian integer closest to it. 
+Surely \(N(\gG/\bG)\) is less than \((\R{2}/2)^2\). 
+
+\section{principal ideal domains}
+\subsection*{144. DVR.} Let \(K\) be a field. 
+A \Ss{discrete valuation} is such a function \(\nu: (K-\{0\}) \Mp\) onto \(\BF Z\), that: \(\nu(ab) = \nu(a)\nu(b)\) and \(\nu(x+y) \geq \Tw{min}(\nu(x), \nu(y))\). 
+The \Ss{discrete valuation ring} (DVR) is the collection of \(x \in K-\{0\}\) s.t. \(\nu(x) \geq 0\). \par
+With norm \(N:= \nu(x)\) if \(x \neq 0\) and otherwise 0, 
+this DVR is a Euclidean domain. 
+Indeed, for \(a,b \in R\), \(a= 0 \M b + a\) if \(N(a) < N(b)\), and \(a= (a/b) \M b + 0\) if \(N(a) > N(b)\) serves as division algorithm. 
+(in the latter case \(N(a/b) = N(a)-N(b)\), which is positive and hence in this DVR.) 
+
+\subsection*{145. examples.} Rational numbers in the form \(x= p^l \M m/n\) form a DVR, as is easily checked.  
+Here, \(p \nmid m\), \(\Tw{gcd}(m,n) =1\), and \(\nu(x):= l\). \par
+Another example is rational functions \(f(z)/g(z)\). 
+If in reduced form, \(\nu(f/g) =\) degree of \(f\). 
+Check it's a DVR. 
+
+\subsection*{146. PID.} A \Ss{principal ideal domain} (PID), \(R\), is a commutative integral domain in which every ideal, \(I\), is principal (is such that \(aR = I,\; \Ev a \in I\)). 
+
+\subsection*{147. Thm.} Every ideal, \(I\), that's \(\subseteq\) a Euclidean domain, \(R\), is principal. \par
+\Ss{Proof.} Find the least-normed \(d \in I\). 
+This is okay because the norm is integer-valued. 
+Choose \(\Ev a \in I\), and perform division \(a = qd + r\). 
+But \(d\) is least-normed and so \(r =0\). 
+It means \(d\) generates all of \(I\). 
+
+\subsection*{148.} For \(a,b \in R\), \(a\) is said to have \Ss{divided} \(b\) if, for some \(s\), \(b=as\). \par
+Euclidean algorithm may be applied, thus as is the case in \(\BF Z\), \(\Tw{gcd}(a,b) = ra + sb\) for some \(r,s \in R\). \par
+It is established that Euclidean algorithm only takes time \(\SF O\) of \(\log a\), \(\log b\); i.e., \(\propto\) number of their bits. 
+
+\subsection*{149. Thm.} Consider nonzero \(a,b\) that generates the ideal \(I\). 
+If \(\Ab{d}\) too \(=I\), 
+then \(d= \Tw{gcd}(a,b)\). \par
+\Ss{Proof.} \(\Ab{d} =I\), so any \(\Ab{d'}\) that \(\supseteq I\) contains \(\Ab{d}\). 
+Of course, \(a,b \in \Ab{d}\). 
+These are restatements of definition of gcd. \par
+[T.Y.J. --- the notation \(\Ab{r}\) (generation by operation on \(r\) and all other elements) is different with previous \(\Ab{g}\) in group theory (smallest group containing something). Text uses \((r)\), which I think is more easily confused.]
+
+\subsection*{150. def.} A \Ss{unit} \(u\) has multiplicative inverse \(v\) s.t. \(uv=1\). \par
+Note \(\Ab{d} = \Ab{du}\). 
+In fact, \(\Ab{du} \subseteq \Ab{d}\), while \(\Ab{du}v = \Ab{d}\). 
+In particular, \(\Ab{1} = R = \Ab{u}\). 
+
+\subsection*{151. def.} Element \(a\) is said \Ss{irreducible} if, \(\Ev b,c\), wherever \(a\) (not being a unit) \(=bc\) it's implied either of \(b,c\) is unit. 
+
+\subsection*{152. def.} A \Ss{prime} element \(p\) is nonzero and not a unit, and furthermore whenever \(p=bc\) it's implied \(p|b\) or \(p|c\). 
+
+\subsection*{153. def.} An ideal \(I \subseteq R\) is moreover said a \Ss{prime ideal} if \(\Ev a,b \in R\), it's always the case: \(ab \in I\) implies \(a \in I\) or \(b \in I\). 
+
+\subsection*{154. Thm.} Let \(M \subseteq R\) be an ideal. 
+Then \(M\) is maximal (makes sure no other ideal that \(\supseteq M\)) iff \(R/M\) is a field. \par
+\Ss{Proof.} If \(I\) is an ideal and contains \(M\), then \(I/M\) is clearly an ideal. 
+That \(M\) is maximal is to say that \(I/M\) contains no proper ideal. 
+This is entirely the same as to say \(I/M\) is a field. \par
+Indeed, suppose \(\Ev f \in F\) has inverse \(f^{-1}\), then fix \(I\), and \(f = ki\) for \(k = f/i\), \(\Ev i \in I\). 
+Conversely, if there is no proper ideal, 
+choose an set \(I'\) and \(\Ev f \in F\), there is \(k \in F\) s.t. \(ki' = f,\; \Ev i' \in I'\). 
+In other words \(\Ev f \in F\) has an inverse. \par
+In conclusion, it's \(\Eq\) \(R/M\) being a field. 
+
+\subsection*{155. Thm.} Let \(P \subseteq R\) be an ideal. 
+Then \(P\) is an prime ideal iff \(R/M\) is a integral domain. \par
+\Ss{Proof.} That \(R/P\) is an integral domain, is to say: \((a+P)(b+P) = 0+P\) indicates \(a+P \in P\) or \(b+P \in P\), 
+which translated into that either of \(a,b \in P\). 
+But this quotient is just \(ab+P\). 
+So, \(ab \in P\) requires either \(\in P\), i.e. \(P\) is prime, by def. 
+Every step above is equivalent. 
+
+\subsection*{156. Thm.} \(R\) being a PID, then \(p\) is irreducible iff it is prime. \par
+\Ss{Proof.} [\(\Leftarrow\)] If \(p=ab\) but \(p \Big| a\), wlog.; then cancel that factor \(p\). 
+Consequently, \(a\) is a unit times \(p\), and \(b\) is a unit. 
+We used cancellation law, which holds in any integral dom. \par
+[\(\Ip\)] Conversely, choose any \(p\) and create ideal \(\Ab{p}\). To claim \(\Ab{p}\) is maximal. 
+To see this, another ideal \(J\), which \(\supseteq \Ab{p}\). 
+Because \(R\) is PID, \(J =\Ab{m}\). 
+Now \(p= rm\). Either is a unit, for \(p\) is prime. 
+If \(r\) is a unit, then \(J= \Ab{m} = \Ab{rm} = \Ab{p}\) (see item 149). 
+If \(m\) itself is a unit, simply \(J=R\). \par
+Thus \(\Ab{p}\) is maximal. 
+By item 153, \(R/\Ab{p}\) is a field. 
+In particular, it's an integral domain. 
+By item 154, it's a prime ideal. 
+By def.\ of prime ideal, and the fact \(p\) generates \(I\), we see \(p|a\) or \(p|b\) whenever \(p|(ab)\). 
+
+\subsection*{157. UFD.} In a \Ss{unique factorization domain} (UFD), \(R\), for \(\Ev r \in R\), it may be written \EqGo{
+ r= u \M p_1^{e_1} \M \dotsb \M p_k^{e_k}
+} and \(p_i\)'s are unique up to permutation. 
+
+\subsection*{158. Thm.} A PID is a UFD (text p.287, thm.14). \par
+By item 154, a Euclidean domain is a UFD. 
+(In light of this, UFDs are more commonly seen, and PIDs rarer.)
+
+\subsection*{159. examples.} [T.-Y. J. --- they are questions professor raised; here answered by me.] Denote as \(F[[x]]\), the collection of formal power series (infinite-ordered poly.s) of coefficient \(\in F\). 
+And denote as \(F((x))\), the collections of formal Laurent series (fractions made of \(F[[x]]\))  of coefficient \(\in F\). 
+And, for \(F=\) either \(\BF{R}\), or \(= \BF{C}\), denote as \(T(x)\) all Taylor series of coefficients \(\in F\) having radius of convergence \(>0\). 
+And, for \(\OG\) an open, connected domain in the complex plane, denote as \(H_\OG(x)\) the collection of \(f: \OG \Mp \BF{C}\) which is furthermore holomorphic (analytic). 
+
+\subsection*{160.} Show \(F[[x]]\) is an integral domain. \Nl
+\Ss{Ans.} It's trivial that two non-identically-zero poly.s multiplied to a nonzero poly. 
+
+\subsection*{161.} Show \(F((x))\) is a field. \Nl
+\Ss{Ans.} Commutativity is clear, and unity is 1. 
+To explain there're no zero divisors, note the lowest-power term must be present and is product of resp. lowest power terms. 
+Lastly, consider any reciprocal \(1/g\). Clear out negative powers, and invoke formal identity \(1/(1-g) =1 +g +g^2 +\dotsb\) to cast it into canonical form: (\(a_0 \neq 0\) by construction)  \EqAo{
+ &\F{1}{a_0 +a_1 x +a_2 x^2 +\dotsb} \\
+ =& \F{1}{a_0 (1 +(a_1/a_0) x +(a_2/a_0) x^2 +\dotsb)} \\
+ =& \F{1}{a_0} \Sb{ 1 -\Rb{ \F{a_1}{a_0} x +\F{a_2}{a_0} x^2 +\dotsb} + \Rb{\F{a_1}{a_0} x +\frac{a_2}{a_0} x^2 +\dotsb}^2 +\dotsb}
+} 
+
+\subsection*{162.} Show \(T(x)\) is a sub-ring of \(F[[x]]\), and is also an integral domain. \Nl
+\Ss{Ans.} All ring axioms are straightforward, and in any case, previous discussion of poly.s may apply. \Nl
+To show there's no zero divisor. 
+The key is that \(\SF{Z}(f)\), the set of zeros of \(f\) has no accumulation point, in particular 0 is not an accumulation point. I now show why. 
+Suppose otherwise, \(\SF{Z}(f)\) had element \(\in\) any interval \((0,\eG)\) however small. 
+Since \(f\) is conti.\ at 0, use sequence consists of solely to \(\SF{Z}(f)\) arrive at conclusion \(f(0) =0\). 
+Then observe the Taylor expansion as such: \EqGo{
+ (a_1 x +a_2 x^2 +\dotsb +a_{n-1} x^{n-1}) +\F{1}{n!} \F{\dd^n f}{\dd x^n}(x=\xi),\; 0 <\xi <x.
+} As \(x \to 0\), running through all its zero points, then everything other than \(f^{(n)}(\xi)\) would \(\to 0\). 
+We know \(f^{(n)}(0)\) must \(\to 0\) also. 
+Now \(f^{(n)}\) is conti.\ at 0 (because may further be differentiated), that \(f^{(n)}(0) =0\) follows. 
+Hence, it's Taylor series is actually identically 0. \Nl
+Examine any \(f(x) =g(x)h(x)\). 
+According to above, we may shrink the radius, in question, of \(f\), so that no zero is in this interval. 
+Weierstrass factorization thm.\ asserts that entire functions can be represented by a product of exponential and linear factor each containing just one zero. 
+Apply this to \(f\), which clearly may be extended to all of \(\BF{C}\) in analytical manner. 
+Since every zero of \(gh\) corresponds to one zero of \(g\) or \(h\), we see if \(f\) has no zero within a certain radius, then neither \(g\) nor \(h=0\) identically. 
+
+\subsection*{163.} Show \(H_\OG\) is a ring under usual addition and multiplication of functions, and moreover is a integral domain. \Nl
+\Ss{Ans.} Same as discussion of \(T(x)\). 
+
+\subsection*{164.} What are units in them? \Nl
+\Ss{Ans.} In the case \(F[[x]]\), when const.-term \(a_0 \neq 0\), we may always invert \(1/g(x)\) in the manner \(1/(1-g) =1 +g +g^2 +\dotsb\) (item 161). \Nl
+Recall \(F((x))\) is a field, so every non-zero element is a unit. \Nl
+In the case \(T(x)\), note that we are essentially expanding according to origin 0. 
+Same as that of \(F[[x]]\), if 0 is a zero of \(f\), namely const.-term \(a_0 =0\), then clearly \(1/f \notin T\). 
+Also, if 0 isn't a zero of \(f\), now that zeros are not dense around 0, we may shrink the radius to avoid poles of \(f\) (item 162) so that \(1/f\) lies in \(T(x)\). 
+Thus \(f\) is a unit. \Nl
+Finally, in the case \(H_\OG(x)\), recall our definition of \(H_\OG(x)\) does not allow the shrink of function domain, and must consider the whole \(\OG\). 
+Then only units are functions without zero.
+
+\subsection*{165.} What are the irreducible elements in them? \Nl
+\Ss{Ans.} In the case \(F[[x]]\), they are such \(f =a_1 x +\dotsb\) (with nonzero lowest term \(x\)). 
+To see this, if \(f =gh\), but, suppose otherwise, neither \(g\) nor \(h\) were not unit, that is they have lowest power \(\geq 2\). \Nl
+In \(F((x))\), a field, every nonzero element may only be product of units. \Nl
+In the case \(T(x)\), units are of same form, and same discussion above applies. \Nl
+Finally, in the case \(H_\OG(x)\), consider \(f\) having exactly one zero. 
+If \(f =gh\), then either \(g\) or \(h\) has no zero. 
+In fact, if, by Weierstrass factorization thm., we 
+
+\subsection*{166.} What are ideals in them? \Nl
+\Ss{Ans.} In the case \(F[[x]]\), every ideal \(I\) takes the form \(x^k F[[x]]\). 
+To see this, suppose \(x^k\) is the lowest term throughout all elements of \(I\). 
+They by multiplying various constants, there would be elements starting with \(Cx^k +\dotsb\) for any \(C\). 
+Now, subtracting the \(x^k\) coefficient and continue the argument. We see there are elements like \(Cx^{k+1} +\dotsb\). 
+Eventually, the ideal is all of \(x^k F[[x]]\). \Nl
+That \(F((x))\) has no proper ideal is evident, for we just saw it's a field (item 161). \Nl
+The case \(T(x)\) is similar to \(F[[x]]\), because \(x^k\) is of course entire, and may be multiplied. \Nl
+Finally, the case \(H_\OG(x)\) is similar. 
+
+\subsection*{167.} Is \(F[[x]]\) a unique factorization domain? \Nl
+\Ss{Ans.} Yes. We just observed all ideals are generated by the lowest power (item 166), and every PID is an UFD. \par
+Is \(T\) a unique factorization domain? \Nl
+\Ss{Ans.} Yes. 
+Shrink the radius of convergence, as was just put (see item 162), to be so small that contains only finite-many zeros. 
+So the uniqueness of factorization follows from that of poly.s. 
+(Some authors, however, allow UFD's elements to have countably many factors. In this case, to well-define the uniqueness of factorization is no easy task, and beyond scope of present stage of this course.) \par
+Is \(H_\OG(x)\) a unique factorization domain? \Nl
+\Ss{Ans.} No. 
+Our definition of \(H_\OG(x)\) must consider the whole \(\OG\). 
+There exist functions with infinite zeros, for example sin and cos. 
+
+\subsection*{168.} [Nov. 12] Suppose fields \(F \subseteq E\). 
+\(E\) is said a \Ss{finite extension} if (as the field \(F\) considered a vector-subspace) \([E:F] =\Tw{dim}_{F}(E) <\oo\). \par
+Example: \(F = \BF{Q}\), one possible extension is: \(\BF{Q}(\R{2}) := \{r+\R{2}s: r,s \in \BF{Q}\}\). 
+In the general case, the number \(\aG\) is said an \Ss{algebra number} if \(\Ex f(x) \in \BF{Q}[x]\), for which \(f(\aG) =0\). 
+
+\subsection*{169.} Take \(\aG \in E-F\). Let \(F(\aG) := \{p(\aG)/q(\aG): p(x),q(x) \in F[x], q(\aG) \neq 0\}\). 
+Then \(F(\aG)\) must be a subfield. 
+Note \(F(\aG) = F[\aG]\) (to substitute \(\aG\)) \(:= \{p(\aG): p(x) \in F[x]\}\). \par
+Consider the monic, least-degree poly.\ \(F[x]\), say \(f(x)\), s.t. \(f(\aG) =0\), then \(f\) must be irreducible poly.\ (otherwise one of its factor is a zero). 
+So, for \(q(x) \neq 0\), \(\Tw{gcd}(q(x),f(x)) =1\). 
+Then find \(p(x)q(x) +s(x)f(x) =1\) for some \(p(x), s(x)\), 
+and as a result, \(p(\aG) = 1/q(\aG)\) exists in \(F[\aG]\). 
+
+\subsection*{170.} Suppose \(f(x)\), irreducible, have a root \(\aG\). 
+Then, as just explained, \(F[x]/f(x) \cong F[\aG] = F(\aG) \subseteq E\). 
+It's possible to continue: \(F \subseteq E_1 \subseteq E_2 \subseteq \dotsb\). 
+But such extension must stop at some point, since \(\Tw{dim}_{F}(E) <\oo\). 
+
+\section{irreducibility criteria}
+\subsection*{171. Eisenstein criterion.} [Nov. 12 -- Cont.] (text p.309, prop. 13) Let \(P \subseteq R\) be a prime ideal in an integral domain, \(R\). 
+If \(f(x) = a_0 +a_1x +\dotsb+ a_{n-1}x^{n-1} + x^n \in R[x]\), where \(n \geq 1\), and \(a_1,\dotsb,a_{n-1} \in P\), while \(a_0 \notin P^2\). 
+Then \(f(x)\) is irreducible. \par
+\Ss{Proof.} To prove the inverse statement, suppose the otherwise, that \(f(x)\) were \(= u(x) v(x) \in R[x]\), both being non-constant. 
+Consider canonical homomorphism denoted here by a tilde: \(R[x] \Mp (R/P)[x]\), that is to say coefficient reduced to its \(\Tw{mod} p\). 
+The resultant, \(\tilde{f}(x) := \tilde{u}(x) \tilde{v}(x)\) are, by hypothesis, both non-constant, since the only term that remains in \(\tilde{f}(x)\) is just \(\tilde{a}(n) x^n\). 
+Now each of \(\tilde{u}\) and \(\tilde{v}\) has zero constant. 
+But back to \(R[x]\), what is \(a_0\)? It must be multiple of \(p \M p\). \par
+\Ss{Corollary.} If \(f(x) \in \BF{Z}[x]\), \(p\) being prime, and divides each of \(a_1,\dotsc,a_{n-1}\), yet \(p^2 \nmid a_0\). 
+Then \(f(x)\) is irreducible. \par
+
+\subsection*{172. Mignotte criterion.} Consider two poly.s \(A(x) := a_0 +a_1 x^1 +\dotsb+ a_m x^m\) and \(B(x) := b_0 +b_1 x^1 +\dotsb+ b_n x^n\), both \(\in \BF{Z}[x]\). 
+Suppose \(B(x) \Big| A(x)\), then for \(\Ev j\), \EqGo{
+ |b_j| \leq \CF{C}_{j}^{n-1} |A| + \CF{C}_{j-1}^{n-1} |a_m|.
+} where \(\CF{C}_k^n\) is for binomial coefficient, and shorthand \(|A| := \R{\sum_{i=0}^m |a_i|^2}\) and so on. \par
+\Ss{Proof.} We begin by a trick: for any poly.\ \(Q(x)\), denote \(G(x) := (x -\aG) Q(x)\) and \(H(x) := (\aG^* x -1) Q(x)\). 
+Note that (each summation running over all indices) \EqAo{
+ |G|^2 
+ =& \sum_i |q_{i-1} -\aG q_i|^2 
+ = \sum_i \Rb{ |q_{i-1}|^2 + |\aG q_i|^2 + 2\GF{Re}(\aG q_i q_{i-1}^*) } \\
+ =& \sum_i \Rb{ |\aG^* q_{i-1}|^2 + |q_i|^2 + 2\GF{Re}(\aG q_i q_{i-1}^*) } 
+ = \sum_i |\aG^* q_{i-1} -q_i|^2
+} so it's seen that if we find its root and write \EqGo{
+ A(x) = a_m \prod_{j=1}^m (x-\aG_j),
+} then, after continuing this process,  \EqGo{
+ C(x):= a_m \prod_{j: |a_j| >1} (x- \aG_j) \prod_{j: |a_j| <1} (\aG_j^* x -1)
+} while \(|A|=|C|\) remains to hold. \par
+Define \(M(A) := \prod_{j: |a_j| <1} |\aG_j|\), and \(m(A) := \prod_{j: |a_j| <1}\). 
+The loose bound \EqGo{
+ |A(x)|^2 \geq |a_m|^2 (M(A)^2 + m(A)^2)
+} is obtained by dropping everything except const, 
+and evidently \(|M(A)| \leq |A|/|a_m|\). \par
+By the relation of root and coefficients, and after a moment's thought, \EqGo{
+ |a_j| = |a_m| \M \bigg| \sum_{\substack{ \textrm{all}\; (m-j)-\textrm{tuples} }} \aG_{i_1} \M\dotsb\M \aG_{i_{m-j}} \bigg| 
+} Since \(B(x) \Big| A(x)\), clearly \(b_n \Big| a_m\). Finally use the lemma below \(\Ev j\), \EqGo{
+ |b_j|
+ \leq |b_n| \Rb{ \CF{C}_{n-j-1}^{n-1} M(B) + \CF{C}_{n-j}^{n-1} }
+ \leq |a_m| \Rb{ \CF{C}_{j}^{n-1} M(A) + \CF{C}_{n-j}^{n-1} }
+ \leq \Rb{ |A| \CF{C}_{j}^{n-1} + |a_m| \CF{C}_{n-j}^{n-1} }
+}
+
+\subsection*{173. Lemma.} (for Mignotte criterion above) Let \(x_i \geq 1,\; i=1,\dotsc,m\) each be real, and \(M := \prod_{i=1}^m x_i\). 
+Then the \Ss{elementary symmetric function} \(\sG\) satisfies \EqGo{
+ \sG(m,k) 
+ = \sum_{\textrm{all}\; k-\textrm{tuples}} x_{i_1} \dotsb x_{i_k}
+ \leq \CF{C}_{k-1}^{m-1} M + \CF{C}_k^{m-1}.
+} \indent \Ss{Proof.} Consider symmetric sum of another set \EqGo{
+ (x_1,\dotsc,x_m) \leftarrowtail (x_1,\dotsc,x_{m-2},1,x_{m-1}x_m)
+} it results a different \(\sG(m,k)'\) which \EqAo{
+ =& \sG(m,k) + \sG(m-2,k-1) \M 1 + \sG(m-2,k-1) \M x_{m-1} x_m - \sG(m-2,k-1) \M x_{m-1} - \sG(m-2,k-1) \M x_m \\
+ =& \sG(m,k) + \sG(m-2,k-1) (x_{m-1} -1) (x_m -1).
+} What's this? They are new terms that cannot have been in \(\sG(m,k)\): that is, selection of first \(m-2\) elements and 1, or \(x_m\); 
+and subtract those that is in \(\sG(m,k)\), but now impossible: the selection of first \(m-2\) elements, but choosing either of \(x_{m-1}\) or \(x_m\). 
+Thus, every time \(x_{m-1} >1\), \(\sG(m,k)\) cannot have achieved maximum. 
+In fact, the maximum is achieved only in \((1,\dotsc,1,M)\), because such replacement as above can be done over and over. \par
+At this stage use \(\SF{C}_{k-1}^{m-1} M\) to bound \(k\)-ary product containing \(x_{m-1}\), where \(k\)-ary product is bounded by \(M\). 
+And then \(\SF{C}_{k}^{m-1}\), those not containing \(x_{m-1}\), after replacing \(x_{m-1}\) by 1. 
+
+\section{bases}
+\subsection*{174.} [Nov. 5] In summary, ED \(\subseteq\) PID \(\subseteq\) UFD. 
+Indeed, \(R = F[x,y]\) then \(R\) isn't a PID, yet still UFD. \par
+We now see why. Note that \(\Ab{r_1,r_2,\dotsc,r_n}\) is an ideal. 
+However, \(F[x,y]\), the two-variable poly.s taking coefficient in \(R\), is not principal. 
+Formally, \(f(x,y) = \sum a_{i,j} x^i y^j \in F[x,y]\). 
+Recall \(\deg f = \Tw{max}(\{i,j: a_{i,j} \neq 0\})\). 
+Now, formula \(\deg fg = \deg f + \deg g\) also follows. 
+So wherever \(f|g\), then \(deg f \leq deg g\). 
+To be able to generate, deg cannot be \(>1\), so \(f = ax +by +c\). 
+But still, \(ax+b\) cannot generate \(y\), and so forth. 
+Case other multiple-variable poly.s are entirely similar. 
+
+\subsection*{175. def.} A \Ss{basis} \((g_1,\dotsc,g_n)\) for ideal \(I\) is a finitely-many set which generates \(I\), that is to say \(\Ab{g_1,\dotsc,g_n} =I\). 
+(It need not be linear-independent. 
+In fact, if \(r=y\), and \(s=-x\), then \(rx+xy=0\), but \(\{x,y\}\) is generates \(I\).)
+
+\subsection*{176.} In a \Ss{Noetherian ring}, the \Ss{ascending chain condition} (ACC) is met: \(\Ev\) chain \(I_1 \subseteq I_2 \subseteq\dotsb\subseteq R\) (each an ideal), there \(\Ex N \St I_n =I_{N+1} =\dotsb\). \par
+Equivalently, every ideal is generated by a finite basis. 
+(Choose elements in a given \(I\) to find its basis; if not enough, add elements. This process must stop, because of ACC. 
+Converse part is completely straightforward.)
+
+\subsection*{177. Hilbert basis thm.} If \(R\) is Noetherian, then \(R[x]\) is also Noetherian. 
+(This important result is the foundation of commutative ring theory, and of algebraic geometry.) \par
+\Ss{Proof.} (This proof, due to Hilbert, was at first controversial, because it's only existential, not constructive.) 
+Consider an ideal \(I \subseteq R\). 
+For simplicity, denote as \(\Tw{LC}\Rb{\tilde{f}}\) the leading (highest-degree, non-zero term) coefficient of \(\tilde{f}\). 
+For example, \(\Tw{LC}(2x^{10}+6x^2+7) =2\). \par
+Denote \(L:= \{l: \Ex \tilde{f} \in I, \Tw{LC}(\tilde{f})= l\}\) (is leading coefficient of some polynomial). 
+Of course, if \(\Tw{LC}(f)=a\), and \(\Tw{LC}(f)=b\), then \(\Tw{LC}(fg)=ab\), and \(\Tw{LC}(f+g)=a+b\) wherever \(\Tw{deg}(f) = \Tw{deg}(g)\). 
+\(L\) is thus a ring. 
+Moreover, \(\Tw{LC}(rf) = r \Tw{LC}(f)\). 
+\(L\) is thus an ideal. 
+Choose finitely-many basis \(L= \Ab{l_1,\dotsc,l_{m_0}}\), since \(R\) is assumed to be Noetherian. 
+Let \(h_i\) be one of those whose \(\Tw{LC}(h_i) = l_i\). 
+Introduce \(N := \max(\Tw{deg}(h_1),\dotsc,\Tw{deg}(h_{m_0}))\). \par
+Let \(d\) run from \(=0,1,2,\dotsc,N-1\). 
+Here, by similar token, define \(J_d\) as \(\{k: \Ex \tilde{f} \in I, \Tw{deg}(\tilde{f}) =d, \Tw{LC}(\tilde{f})= k\}\). 
+It is, similarly, an ideal, and we may find a finitely-many basis \(\Rb{k_1^{(d)},\dotsc,k_{m_d}^{(d)}}\). 
+It corresponds to the set \(f_i^{(d)}\), for which \(\Tw{LC}\Rb{f_i^{(d)}} = k_i^{(d)}\) \par
+Produce the union of everything and generate \EqGo{
+ I'= \Ab{
+   \Cb{l_1,\dotsc,l_{m_0}} \cup
+   \Cb{k_1^{(1)},\dotsc,k_{m_1}^{(1)}} \cup 
+   \Cb{k_1^{(N-1)},\dotsc,k_{m_{N-1}}^{(N-1)}}
+ }.
+} Now choose the least-degree \(f \in I-I'\). 
+If \(\Tw{deg}(f) \geq N\), combination of \(\Cb{l_1,\dotsc,l_{m_0}}\) by elements \(\in R\) exists that \(=\Tw{LC}(f)\). 
+Multiply by \(x\) to adjust degree of \(f_i^{(d)}\) (for \(f\) has larger deg), so that they form a \(g(x)\) whose leading term is same as \(f(x)\). 
+At last, \(\Tw{deg}(f-g) < \Tw{deg}(f)\); it has even less degree, and is impossible. \par
+Or if \(\Tw{deg}(f) <N\), it's already generated by \(\Rb{f_1^{(d)},\dotsc,f_{m_d}^{(d)}}\), because it's \(\Tw{LC}(f)\) is some combination of \(\Rb{k_1^{(d)},\dotsc,k_{m_d}^{(d)}}\). 
+So one may similarly make \(g\) of the same LC, and show the existence of \(\Tw{deg}(f-g) < \Tw{deg}(f)\). \par
+So actually nothing lies in \(I-I'\), or that \(I =I'\). It means \(R\) is Noetherian. 
+
+\subsection*{178.} For example, a field \(F\) is clearly Noetherian. 
+Thus \(F[x]\) too is. So is \(F[x,y] = (F[x])[y]\). 
+
+\subsection*{179. Gr\"obner basis.} It's desirable to construct some sort of \Ss{non-linear algebra}. 
+Multi-variate equations with mixed-terms are frequently met. Is it possible to generalize \Ss{division algorithm} and \Ss{Gaussian elimination}? \par
+In order to efficiently compute poly.s, a computer must express it in terms of some basis. 
+Newton attempted this, but did not further pursuit the question. 
+Nowadays, \textit{Mathematica}, or other softwares, does this all the time. 
+
+\subsection*{180.} (For clarity, introduce notation \(\V{x}^{\pmb{\aG}} =x_1^{\aG^1} \M\dotsb\M x_n^{\aG^n}\), where \(n\) is fixed.) 
+We must think of some way to impose an order of mixed terms, and before that, in particular, \Ss{monomial} terms \(m= a \V{x}^{\pmb{\aG}}\). 
+They're expected to follow the requirement that whenever two monomials \(m_1 \geq m_2\), we'd have \(am_1 \geq am_2\). 
+And that a tuple \(m_1+\dotsb+m_n \geq m_1+\dotsb+m_n\) implies \(m_1+\dotsb+m_n +r \geq m_1+\dotsb+m_n +r\). 
+
+\subsection*{181.} The \Ss{lexicographic ordering} is one such possibility: monomials are orders as if the way dictionary entries are. 
+Put precisely, \(\V{x}^{\pmb{\aG}_1} \geq \V{x}^{\pmb{\aG}_2}\) implies \(\V{x}^{\pmb{\aG}_1 +\pmb{\bG}} \geq \V{x}^{\pmb{\aG}_2 +\pmb{\bG}}\). \par
+Infinitely many orderings other than that are possible. 
+For instance, we may compare the total degree \(|\pmb{\aG}|\), 
+or to compare a weighted degree \(\pmb{\aG} \M \V{c}\). \par
+Thus, the selection of the leading term is possible: since \(\Ev \V{x}^{\pmb{\aG}}\) is isomorphic to \(\pmb{\aG} \in (\BF{Z})^n\), they're well-ordered. 
+Choose, then, max. \(\aG\) which \(> \Ev \bG\), and define \(\Tw{LT}(f) =\V{x}^{\pmb{\aG}}\). 
+
+\subsection*{182.} If \(I \subseteq F[\V{x}]\) (where \(\V{x}\) is finite), by Hilbert thm., a basis \(\{g_1,\dotsc,g_l\}\) may be found. 
+For ease of division, we are inclined to find basis with property \(\Ab{\Tw{LT}(g_1),\dotsc,\Tw{LT}(g_l)} =\Tw{LT}(I)\) (whose ideals of LT generates the whole ideal). 
+Such case is said to be a \Ss{Gr\"obner basis}. 
+
+\subsection*{183.} A poly.\ \(f\), then, is multiple of \(g_1\) so that it's leading term (LT) is eliminated by \(q_1 g_1\). 
+Do the same for \(f -q_1 g_1\) again with \(g_2\), and again for \(f -q_1 g_1 -q_2 g_2\) with \(g_3\), and so on. 
+Finally, LT of the remainder is less than either of LT of \(g_i\). \par
+Consequently, in order to decide whether \(f \in I\), we have merely to find the Gr\"obner basis of \(I\), and check whether \(f\) is divided by them.
+
+\subsection*{184.} [Nov. 30] One can take minimal bases, but different choice may possess unequal cardinality. 
+Thus we may consider the minimal cardinality, which turns out to be an invariant of the ideal \(I\). 
+
+\subsection*{185.} A set \(\{g_i\}\) being a basis for an ideal \(I\), means \(\Ev f \in I \Ip f = \sum_i q_i g_i\). 
+The set \(\Cb{g_1,\dotsc,g_l}\) is just a generator set of \(I\), and is in general, not free (there exist relations among them). 
+This is vastly different from the case in linear algebra. 
+
+\subsection*{186.} With poly.\ map \(f\) given, and known to be invertible, can we compute its inverse map \(g\)? 
+Necessary condition for invertibility of \(f\) turns out to be that Jacobian \EqGo{
+ \Rb{\F{\Pt f_i}{\Pt x_j}}_{i,j} \in \CF{GL}_n(\BF{R}[x_1,\dotsc,x_n]).
+} That whether it's sufficient is a long-studied, but still open, question. 
+
+\subsection*{187.} There's algorithm that produces inverse poly.; validity to be shown later. 
+Let vector function \(\V{f}\) be given. 
+Consider \(\BF{R}[\V{x},\V{y}]\) with variables \(x_i, y_i\)'s. 
+Fix monomial ordering method, s.t. \(y_i >x_j\). 
+Set ideal \(I := \Ab{y_i -f_i(\V{x})}\). 
+Compute reduced Gr\"obner basis \(G\). 
+Then \(\V{f}\) is invertible in \(G\), iff \(G= \{x_i - g_i(\V{y})\} \in \BF{R}[\V{y}]\). 
+
+\subsection*{188.} Consider a system \(\{f_i(x_1,\dotsc,x_n) =\V{0}\}\) with solution set \(S \subseteq F^n\). 
+Consider the ideal \(I =\Ab{\V{f}}\), with Gr\"obner basis \(G\). 
+Buchberger showed: \\
+\indent (i) Given system is inconsistent (i.e., \(S =\varnothing\)), iff \(1 \in G\). \\
+\indent (ii) There \(\Ex \pmb{\aG}\) so that \(\V{x}^{\pmb{\aG}}\) \\
+\indent (iii) When the system has infinite solution set, how to describe the solutions? \par
+Towards this end, introduce the concept of \Ss{dimension}. 
+When \(S =\varnothing\) (\Ss{inconsistent systems}), define \(\Tw{dim}(S) =-\oo\) [to facilitate formula \(\Tw{dim}(\Ab{S_1 S_2}) =\Tw{dim}(S_1) +\Tw{dim}(S_2)\)]. 
+When \(S\) is finite, define \(\Tw{dim}(S) =0\). 
+Otherwise, \(\Tw{dim}(S) =n\), since by Hilbert basis thm., there is always a finite basis generating \(S\).
+
+\subsection*{189.} [Nov. 19] Consider \(E\) a finite extension of \(F_p := \BF{Z}_p\), with dimension \(d := [E:F] <\oo\). 
+Now, \(|E| =p^d\). 
+In a field, any poly.\ of \(\Tw{deg}\) to be \(m\) has at most \(m\) roots; 
+indeed, we can factor out \(x-x_i\) one by one. 
+So, consider \(F^\X = F_p -\{0\}\) as a multiplication group. 
+Use the fundamental theorem of abelian groups, to guarantee it may be factored as \(F^\X \cong \BF{Z}/n_1 \X \BF{Z}/n_2 \X\dotsb\X \BF{Z}/n_1\). \par
+And wlog., \(n_i \Big| n_j\) where \(n_i <n_j\) (text p.158, thm. 3). 
+But this is no good, since everyone \(\in \BF{Z}/n_i\) is a sol. of \((x^{n_i}-1)\), and there are \(n_i\) elements in \(\BF{Z}_{n_j}\) also satisfying that. 
+There are hence \(2n_i\) solutions; 
+it's impossible, as what just've been said. \par
+Thus, \(F^\X\) is cyclic, and \(=\Ab{\aG}\) for some \(\aG\). 
+Incidentally, this yields \Ss{Fermat's little theorem}: that \(p \Big| (p^d -1)\). 
+
+\section{irreducible poly.s in a finite field }
+\subsection*{190.} Problem: to describe, for given prime \(p\), the irreducible poly.s in \(F_p[x]\). 
+For every degree \(d\), are there irreducible poly.s? 
+
+\subsection*{191. lemma (a).} For some \(a>0\), \((a^l-1)|(a^m-1) \Eq l \Big| m\) (all being natural numbers). \par
+\Ss{Proof.} [T.Y.-J. --- [\(\Ip\)] Observe \((a^l -1) =(a-1)(1+a+a^2+\dotsb+a^{l-1})\) and similar for \(m\). 
+Cancel \((a-1)\). 
+This forces, for some \(q\), \((1+a+\dotsb+a^m) \Big| a^r (1+a+\dotsb+a^s)\), where \(r,s \leq m\). 
+But \((1+a+\dotsb+a^m)\) doesn't \(\Big| a\), and \((1+a+\dotsb+a^s)\) (being smaller) for \(s \neq 0\) is neither its multiple. 
+We conclude \(l \Big| m\). \par
+[\(\Leftarrow\)] Conversely, set \(b=a^l\); then of course, \((b-1)|(b^{m/l}-1)\). ]
+
+\subsection*{192. lemma (b).} Let \(F\) be a field. 
+Then \((x^l -1) \Big| (x^m -1) \in F[x] \Eq l \Big| m\). \par
+\Ss{Proof.} [\(\Ip\)] If \(l|m\) then \((x^l-1) \Big| (x^m-1)\) for all \(x\), by lemma (a). \par
+[\(\Leftarrow\)] Conversely, write \(m= ql +r\), where \(0 \leq r \leq l\). 
+Note in the quotient \EqGo{
+ \F{x^m-1}{x^l-1} = x^r \F{x^{ql}-1}{x^l-1} +\F{x^r-1}{x^l-1},
+} because \(r<l\), we conclude \(r=0\). 
+
+\subsection*{193.} \Ss{Derivative} of a poly.\ may be simply defined formally as exactly the same as usual case: \((\sum a_n x^n)' = \sum(n a_n x^{n-1})\). 
+
+Laws like \((f(x)+g(x))'\), \((f(x)g(x))'\), Leibniz rule regarding \([(f(x)+g(x))^n]'\), are all valid. 
+Note the coefficient is abbreviated as, \(n := 1+\dotsb+1\) (for \(n\) times).
+
+\subsection*{194.} We will use the fact that if \(\Tw{gcd}(f(x),f'(x)) =1\), then \(f(x)\) has no multiple roots. 
+
+\subsection*{195. product of all irreducible poly.s.} Let \(d>0\). Then \EqGo{
+ \prod_{\substack{ f \mathrm{irred.} \\ \Tw{deg}(f)|d }} f(x) = x^{p^d} -x.
+} Where \(F_n(x) :=\) the product of all monic, irreducible poly.s \(\in F_p[x]\) that has \Tw{deg} to be \(n\). \par
+\Ss{Proof.} Note that \(x^{p^d}-x\) has no root with multiplicity. 
+Why so? As just remarked (item 185), take \(f(x)= x^{p^d} -x\), yet \(f'(x)= p^d x^{p^d-1} -1 =-1 = 0 \M x^{p^d-1} -1 = -1\). 
+They have \(\Tw{gcd} =1\). \par
+For \(f(x)\) is irreducible and has \Tw{deg} to be \(n\), where \(n \Big| d\), now claim that: \(f(x) \Big| (x^{p^d}-x)\). 
+Let \(\aG\) be the root of \(f(x) =0\). 
+Thus, in \(K =F_p[x]/f(x)\) (where \([K:F_p[x]] =n\)), \(\aG\) is isomorphic to \(x\). 
+By that \(p \Big| (p^n-1)\) due to Fermat little thm. and that \(\aG^p =1\), we know \(\aG^{p^n} =\aG\). 
+Hence \(f(x) \Big| (x^{p^n -1} -1)\). 
+Resp. by lemma (a) and lemma (b) above, \(n|d \Ip (p^n -1)|(p^d -1) \Ip (x^{p^n-1} -1)|(x^{p^d-1} -1)\) which in turn \(|(x^{p^d} -x)\). 
+Thus, \(\prod f(x) \Big| (x^{p^d} -x)\). \par
+Conversely, suppose deg-\(n\), irreducible \(f(x) \Big| (x^{p^d} -x)\). 
+Define (because being irreducible) \(K =F_p[x]/f(x)\) (where \([K:F_p[x]] =n\)). 
+If \(n\) would \(\Big| d\), then the proof is done. We now show why. \par
+Before proceeding, note that for \(a,b \in F\), it's always the case \((a+b)^p =a^p +b^p\), 
+because every \(p \Big| \CF{C}_i^p)\) (binomial coefficient). 
+Since moreover, of course, \((ab)^p = a^p b^p\), 
+here it's seen that \(a \Mp a^p\) is an automorphism of the field \(F\). \par
+In light of this, for any \(\bG\) one may write (to use the viewpoint of \(F_p[\aG]\) to expand in the \(\aG\) basis) that \(\bG= \sum_{i=1}^M b_i \aG^i\), 
+it follows \(\bG^p= \sum_{i=1}^M b_i (\aG^p)^{n-i}\), 
+which in turn implies \(\bG^{p^n}= \sum_{i=1}^M b_i (\aG^{p^n})^i\), and so on. 
+But this is just \(\sum_{i=1}^M b_i \aG^i =\bG\). 
+To translate, every element of \(F_p[\aG]\) (that is to say \(K\)) is a root of \(x^{p^n} -x\). 
+Similarly, they are roots of \(x^{p^d} -x\). \par
+By above that \((x^{p^n} -x)\) has no multiplicity, \((x^{p^n} -x)\) must \(\Big| (x^{p^d} -x)\) (though the latter being also irreducible). 
+But by lemma (b), \((p^n -1)|(p^d -1)\). 
+Finally by lemma (a), \(n|d\), and the proof is done. 
+
+\section{excursion to number theory}
+\subsection*{196. Wilson's thm.} As a corollary, multiply all irreducible poly.s in \(F_p\), divide by \(x\), and set \(x=0\). \EqGo{
+ \prod_{i \in F_p} (x-i) = x^p -x
+ \Ip \prod_{i \in F_p^\X} (x-i) = x^{p-1} -1
+ \Ip (-1)^{p-1} \prod_{i \in F_p^\X} i =-1. 
+} If \(p \neq 2\) (so is odd), in particular, \EqGo{
+  \prod_{i=1}^{p-1} i =-1 \;\;(\Tw{mod } p).
+} 
+
+\subsection*{197. Prop.} Let \(N_n\) (where \(n=1,2,\dotsc\)) be the number of monic, irreducible poly.s in \(F_p[x]\). Claim: \EqGo{
+ p^d = \sum_{n: n \Big| d} n N_n 
+ \Ip n N_n = \sum_{d: d \Big| n} \mu\Rb{\F{n}{d}} p^d
+} where \(\mu(n')\) is the M\"obious function: \begin{gather*}
+ \mu(n')= \begin{cases}
+  0, &n' \textrm{ contains square factors} \\
+  (-1)^l, &n' = \textrm{distinct product } p_1 \dotsb p_l
+ \end{cases}
+\end{gather*}
+
+\subsection*{198.} Denote \(F(n) := \sum_{d:d|n} f(d)\) (sum of \(f\) of all factors).
+
+\subsection*{199. Prop.} For an \Ss{arithmetic function} (that which expresses an arithmetic property) \(f: \BF{Z} \Mp \BF{C}\). 
+Then in general one has \EqGo{
+ f(n) := \sum_{d:d|n} \mu(d) F\Rb{\F{n}{d}}
+ = \sum_{d:d|n} \mu\Rb{\F{n}{d}} F(d) 
+}
+
+\subsection*{200.} Define, for arithmetic function \(f,g\), the \Ss{Dirichlet product} (or \Ss{convolution}) \EqGo{
+ (f*g)(n) := \sum_{d_1 d_2 =n} f(d_1)g(d_2).
+} \indent Check \(*\) satisfies associativity. 
+
+\subsection*{201. def.} \(\BF{I}(1) :=1\), and \(\BF{I}(n) :=0, \Ev n \neq 1\). \par
+Check \(f *\BF{I} =\BF{I} *f =f\), for \(\Ev f\). 
+
+\subsection*{202. def.} \(I(n) :=1\), for \(\Ev n\). \par
+Check \(f *I =I *f =F\), for \(\Ev f\). 
+
+\subsection*{203.} Check \(\mu *I =I *\mu =\BF{I}\). 
+[T.Y.-J. --- observe \(\mu\Rb{p_1^5 p_2^8 p_3} =\mu(p_1 p_2 p_3) =(1+(-1)) \M (1+(-1)) \M (1+(-1)) =0\) and so forth.]
+
+\subsection*{204.} Thus \(F *\mu =(F *I) *\mu =f *(I *\mu) =f *\BF{I} =f\), proving item 189. 
+
+\subsection*{205. def.} [Nov. 30 (no class was on Nov. 23 \& 26)] For a group \(G\) and a communicative ring \(R\), define a \Ss{group ring} \(RG =\Cb{ \sum_{g \in G} a_g g } \) where \(a_g =0\) for all but finite terms. 
+
+\subsection*{206.} Define multiplication \EqGo{
+ \Rb{ \sum_{g \in G} a_g g } \Rb{ \sum_{g \in G} b_g g }
+ = \sum_{h \in G} \sum_{\substack{g,g' \in G: \\ gg' =h}} a_g b_{g'} h.
+} Please verify associative law holds; also verify distributive law holds. 
+
+\subsection*{207.} [Dec. 3] A field is said \Ss{algebraically closed} if \(\Ev\) poly.\ \(p(x) \in F[x]\) has at least one solution \(\in F\). \par
+For example, \(\BF{C}\) is algebraically closed. 
+
+\subsection*{208.} It is established that any field is embedded in an algebraically closed field, that's to say isom. to a sub-field of some field. 
+Up to isom., \(\Ex\) the smallest algebraically closed field (i.e. intersection of all of them, if any).
+
+\subsection*{209.} (As an excursion, in showing existence of it we would use Hausdorff maximal principle, which is known to be equivalent to the Axiom of Choice. 
+Recall, in showing any vector space has a basis, we've used maximal principle, and also used in making sure any ring has a maximal sub-ring --- every time replace given ring by a superset of it, if not maximal.)
+
+
+\end{document}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%~%~%~%~%~%~%~%~%~%~%~%~%~%~%~%~%~%~%~%~%~%~%~%~%~%~%~%~%~%~
+Yay~below this line nothing is printed.

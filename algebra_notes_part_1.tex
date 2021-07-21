@@ -1,0 +1,1040 @@
+\documentclass[12pt]{article}
+%
+\usepackage[T1]{fontenc}% these specify the font used
+\usepackage{garamondx}% default font: Garamond 
+\usepackage[garamondx,cmbraces]{newtxmath}
+\renewcommand*\ttdefault{cmtt}% specifies typewriter font
+\usepackage{cabin}% specifies sans-serif font
+%
+\usepackage{
+  amsmath,% facilitates math formulae typography
+  amssymb,% several other symbols
+  graphicx,% enables graphics insertion
+  color% enables colored text
+}
+\usepackage[
+frak= boondox, scr= boondoxo, cal= cm, bb= boondox
+]{mathalfa}% do not alter the order of this line (for strange reasons)
+% available ones: (* has small cases)
+% bb: pazo, fourier, esstix, *boondox, px, txof.
+% frak: *esstix, *boondox, *pxtx
+% cal & scr: rsfs, rsfso, pxtx, *esstix, *boondox, *boondoxo, *dutchcal. 
+%
+% Formatting.
+\setlength{\parskip}{1.5ex}% vertical spacing between paragraphs
+\setlength{\parindent}{4ex}% indent in a paragraph
+\usepackage{titling}% controls typesetting the title
+\setlength{\droptitle}{-2cm}% decreases spacing over the title
+\usepackage[
+  top=2.1cm, bottom=1.9cm, left=1.8cm, right=1.8cm
+]{geometry}% sets page margins
+\usepackage[compact]{titlesec}% adjusts spacing of each sec.; used below.
+\titlespacing{\section}{8ex}{*0}{*0}% resp., left margin, vertical spacing, seperation to text following.
+\titlespacing{\subsection}{2ex}{*0}{*2}% see above
+\titlespacing{\subsubsection}{0pt}{*0}{*0}
+\titleformat{\subsection}[% modifies the title of a subsec.
+  runin% no new-line before subsequent text
+]{
+  \color{red}\large\bfseries\itshape %color, font, shape
+}{}{}{}[]% end \titleformat
+%\everymath{\displaystyle}% forces displaying in-text math w/ full height
+%
+% Custom shorthands.
+% lower case Greek alphabets w/ long name
+\newcommand\aG\alpha \newcommand\bG\beta  \newcommand\gG\gamma \newcommand\dG\delta \newcommand\eG\varepsilon \newcommand\zG\zeta \newcommand\tG\theta \newcommand\kG\kappa \newcommand\lG\lambda \newcommand\sG\sigma \newcommand\fG\varphi \newcommand\oG\omega 
+% upper case Greek alphabets
+\newcommand\GG\Gamma \newcommand\DG\Delta \newcommand\TG\Theta \newcommand\LG\Lambda  \newcommand\SG\Sigma \newcommand\OG\Omega
+%
+% other symbols
+\newcommand\oo\infty% infinity, whose shape resembles "oo"
+\newcommand\F\frac% "F"raction
+\newcommand\R\sqrt% "R"oot
+\newcommand\M\cdot% "M"ultiply
+\newcommand\N\nabla% del sign
+\newcommand\X\times% cross, whose shape resembles "X"
+\newcommand\Pt\partial% "P"ar"T"ial differentiation
+\newcommand\V\boldsymbol% bold italic, e.g. "V"ectors
+\newcommand\Ev\forall% "Ev"ery
+\newcommand\Ex\exists% "Ex"ists
+\newcommand\Mp\mapsto% "M"a"p"
+\newcommand\St{\textsf{\large \: s.t. \:}}% "S"uch "T"hat
+\newcommand{\Eq}{\Leftrightarrow}% "Eq"ivelent
+\newcommand{\Ip}{\Rightarrow} % "I"m"p"lies
+\newcommand{\ii}{ \mathring{\imath} }% for imag. unit
+\newcommand{\jj}{ \mathring{\jmath} }% for imag. unit
+\newcommand{\dd}{ \BF{d} }% for differential
+\newcommand{\ee}{ \BF{e} }% for natural base
+%
+% brackets, customized fonts
+\newcommand{\Rb}[1]{ \left( #1 \right) }% "R"ound "b"racket, or more commonly parenthesis
+\newcommand{\Sb}[1]{ \left[ #1 \right] }%("S"quare) "b"racket
+\newcommand{\Cb}[1]{ \left\{ #1 \right\} }%("C"urly) "b"race
+\newcommand{\Ab}[1]{ \left\langle #1 \right\rangle } %Chevrons, e.g. "A"ngle brackt
+\newcommand{\Nm}[1]{ \left| #1 \right| } %"N"or"m"
+\newcommand{\Bk}[2]{ \left\langle #1 \middle| #2 \right\rangle } %"B"ra-"K"et notation
+\newcommand{\Nb}[1]{ \quad \mbox{\color{blue}[#1]} \quad }%"N"ota "b"ene, i.e. note
+\newcommand{\Emph}[1]{ {\color{blue}\bfseries{#1}} }% my emphasis
+\newcommand{\BF}[1]{ \mathbb{#1} }% "B"lackboard "F"ont
+\newcommand{\CF}[1]{ \mathcal{#1} }% "C"ursive "F"ont
+\newcommand{\GF}[1]{ \mathfrak{#1} }% "G"othic "F"ont
+\newcommand{\SF}[1]{ \mathscr{#1} }% "S"cript "F"ont
+\newcommand{\Ss}[1]{\textsf{\textbf{#1}}}% "S"ans-"s"erif
+\newcommand{\Tw}[1]{\texttt{\textbf{#1}}}% "t"ype"w"riter font, e.g. quoting codes
+%
+% miscellaneous
+\renewcommand\L\label% "L"a"b"el
+\newcommand{\EqG}[1]{ \begin{gather}{#1}\end{gather} }% Eqn. Gather
+\newcommand{\EqGo}[1]{ \begin{gather*}{#1}\end{gather*} } % unnumbered
+\newcommand{\EqA}[1]{ \begin{align}{#1}\end{align} }% Eqn. Align
+\newcommand{\EqAo}[1]{ \begin{align*}{#1}\end{align*} }% unnumbered
+\newcommand{\EqAS}[1]{ \begin{align}\begin{split}{#1}\end{split}\end{align} }% numbered only once
+\newcommand{\Id}{\hspace{5em}}% "I"n"d"ent, esp. in multi-line formulae
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+\title{
+ \textit{Honours Introduction to} \\
+ \textit{\textbf{\Huge Algebra.}} \\
+ Notes, Part 1: \\
+ \huge\textsc{Groups}
+}
+\date{}
+\author{}
+\maketitle
+\allowdisplaybreaks[4]% allows page breaks amid eqn. arrays.
+
+\vspace{-3.3cm} %removes vertical spacing 
+\hfill{\itshape lectured by prof. Jing Yu} \par
+\hfill{\itshape organized by Tzu-Yu Jeng} \par
+\hfill{\itshape Sep. 14 to Oct. 12, 2015} \\
+\vspace{-0.1cm} 
+
+textbook: Dummit D.S. \& Foote R.M., Abstract Algebra (3rd ed.). Hoboken, New Jersey: John Wiley \& sons (2004). \par
+[Herstein I.N., Topic in Algebra (2nd ed.). Hoboken, New Jersey: John Wiley \& sons (2004).] \par
+[Fraleigh J.B., A first Course in Abstract Algebra (7th ed.). Boston, Massachusetts: Addison-Wesley (2003).]
+
+\section{hello everyone} 
+\subsection*{1.} \Ss{Algebra} concerns objects such as numbers, polynomials, matrices, functions, sequences, all introduced in terms of \Ss{variables}.
+
+\subsection*{2.} This science  originates with the book ``Algebra'' Persian mathematician \Ss{al-Khwarizmi} wrote (ca. 830 CE). 
+His name if latinized, gives the etymology of ``Algorithm''!
+
+\section{composition laws} 
+\subsection*{3.} A \Ss{composition law}, or \Ss{binary operation}, is a map \(G \X G \Mp G\), which maps \((a, b)\) to a new number we denote as \(a \M b\).
+
+\subsection*{4. examples.} Fix \(n>0\), the set of \(n \X n\) matrices \(a_{ij} \in \BF Z\). 
+Multiplication reads \( (AB)(i,j) = \sum_l a_{il} b_{lj} \). 
+
+\subsection*{5.} Consider \Ss{permutations} of the finites set \(\OG := \{1,2,\dotsc,n\}\). 
+The composition law is given by just the composition of those functions: \( \sG \M \rho \Mp \sG \circ \rho \).
+
+\subsection*{6.} The operation: \(P_1  P_2 = P_4\), where \(P3\) is the 3rd point of the secant line of \(P_1, P_2\) to the \Ss{elliptic curve} \EqGo{
+ y^2 = x^3 - n^2 x,\quad x,y \in \BF{R}
+} and \(P_4\) is its mirror w.r.t. \(x\)-axis. \\
+
+\subsection*{7.} With an \Ss{equivalence relation} \(a \sim b\) given on \(S\), 
+equivalent classes are thus defined: \( a,b \in \CF{C}, \Ip a \sim b \). 
+They are mutually exclusive, and collectively exhaustive: \(S = \cup_g \CF{C}(g),\; \CF{C}(g) \cap C(g') = \varnothing\).
+
+\subsection*{8.} For example, \( a \sim b \Eq n|(a-b) \) gives \Ss{partition} \( \CF{C}(a) = \{a+kn: k \in \BF Z \} \). 
+
+\subsection*{9.} We are inclined to define \( \CF{C}(a) + \CF{C}(b) := \CF{C}(a+b) \) and that \( \CF{C}(a) \M \CF{C}(b) := \CF{C}(ab) \), 
+but every time this is done it must be checked that these are well-defined: \begin{gather*}
+ a' \sim a \land b' \sim b \Ip 
+ \begin{cases}
+  a' + b' \sim a+b, \\
+  a' \M b' \sim a \M b. 
+ \end{cases}
+\end{gather*}
+
+\section{groups}
+\subsection*{10. def.} A set \(G\), together with a composition law \(\M\), is called a \Ss{group}, if it be the case that, \(\Ev a,b,c \in G\):
+\indent (i) \Ss{associativity}:  \( (a \M b) \M c = a \M (b\M c) \) \\
+\indent (ii) \Ss{existence of identity}: \( \Ex e \in G, \St e\M a = a\M e = a\) \\
+\indent (iii) \Ss{existence of inversion}: \( \Ex a^{-1} \in G, \St a\M a^{-1} = a^{-1} \M a = e \).
+
+\subsection*{11. prop.} The identity \(e\) is unique. \par
+\Ss{Proof.} Let \(e, e'\) be both identities. 
+Then \(e = ee' = e'\), 
+since resp., \(e'\) is identity, and \(e\) is identity.
+
+\subsection*{12. prop.} \(\Ev a \in G\), the inverse of \(a\) is unique. \\
+\indent \Ss{Proof.} Let \(b, b'\) be both inverses of a. 
+Then \(b' = b'e = b'(ab) = (b'a)b = eb = b\), 
+since resp., the nature of \(e\), that \(a,b\) are inverse of each other, that too are \(a,b'\), and the nature of \(e'\). 
+
+\subsection*{13. remarks.} \( (a^{-1})^{-1} = a \). It's left to the reader.
+\( (ab)^{-1} = b^{-1}a^{-1} \). It's left to the reader.
+
+\subsection*{14.} \( a_1 a_2 \M \dotsb \M a_n \) is independent of how it is bracketed.  It's left to the reader. [Use math induction.]
+
+\subsection*{15. def.} \(G\) is said \Ss{abelian}, or \Ss{commutative}, when \( ab = ba,\; \Ev a,b \in G \). \par
+A \Ss{finite group} \(G\) has finite cardinality \(|G|\). \par
+\Ss{Convention}: When \(G\) is abelian, denote as \(a+b\) the operation in question, and denote as 0 the identity. 
+We also write \(na := a+a+\dotsb+a\), repeated \(n\) times; 
+\(a^n := a \M a \M\dotsb\M a\), repeated \(n\) times; 
+where \(n=1,2,3,\dotsc\). 
+
+\subsection*{16. examples.} \( \BF{Z, Q, R, C} \) under addition, are groups. \par
+Usual vectors in \( \BF R^n \) under addition, is a group. \par
+Matrices with nonzero determinant, \(\CF {GL}(\BF R) = \{ A: A_{ij} \in \BF R \}\), are groups. \par
+Permutation \( S_n \) under composition operation, is a group.
+
+\subsection*{17. def.} When \(H \subseteq G\), \(H\), together with the operation \(\M\) of \(G\), is said to make a \Ss{sbgp}, if \(H\) so-considered is a group. 
+
+\subsection*{18. cancellation law.} [Sep. 17] Let \(G\) be a group. Then \[ \begin{cases}
+au=av \Ip u=v, \\
+ub=vb \Ip u=v
+\end{cases} \] for all \(a,b,u,v \in G\). \par
+So, equation such as \(ax=b\) or \(ya=b\) has unique solutions. 
+
+\Ss{Proof.} \( au=av \Ip a^{-1}au = a^{-1}av \Ip u=v \). 
+The other one is similar. 
+
+\subsection*{19. examples} Trivial group \(G={e}\) is the example in which \(|G|=1\). 
+A group of size 2, \(G= \{ p,n \}\) where \EqGo{
+ pn=np=n, \quad pp=nn=p,
+} may represent positive (\(p\)) or negative (\(n\)) under usual multiplication, or even (\(p\)) and odd (\(n\)) class of natural numbers under addition. 
+
+\subsection*{20.} we have just seen an example of \Ss{isomorphism}. 
+In fact, all groups of size 2 is isomorphic. 
+Why is that? Let's call the identity \(p\), and we know \(pn = np = n, pp =p\). 
+Also, \(nn\) must not be \(n\), because \(n \neq p\). So \(nn=p\). 
+
+\subsection*{21.} Let's call \Ss{finite cyclic group}, and denote as \(\BF Z /p \BF Z\), the group which is isomorphic to mod \(p\) classes. 
+In other words, \(0+1=1, 1+1=2, 2+1=3,\dotsc,p+1=0\) and so on. 
+
+\subsection*{22.} \(G_1 := \BF Z \X \BF Z = \{p,n\} \X \{p,n\}\) and \(G_2 := \BF Z /4 \BF Z = \{0,1,2,3\}\) are not isomorphic. \par
+To see this, examine any \(h: G_2 \Mp G_1\). 
+But \( h(1 + 1) = h(2) = h(1) \M h(1) = p \), the identity, while of course, \(h(0) = p\) also. 
+So \(h\) is not an isomorphism. \par
+We denote \(|g|\), called the \Ss{order} of \(g\), to be the least number \(k\) so that \(g^k=1\). 
+
+\subsection*{23. classes.} Introduce, for \(g,h \in G\), such relation: \( g \sim h \Eq gh^{-1} \in H \). 
+It's easy to see that \(g \sim g\); 
+that \(g \sim h \Eq h \sim g\) because \(hg^{-1}\) is just \((gh^{-1})^{-1}\); 
+and that \(g_1 \sim g_2 \land g_2 \sim g_3 \Ip g_1 \sim g_3 \). 
+So it's an equivalence relation. 
+
+\subsection*{24.} Introduce the notation \(gH :=\) the equivalence class containing \(g\), 
+which is called \Ss{left coset} of \(H\). 
+In other words \( g_1 H = g_2 H \Eq g_1 \sim g_2 \Eq g_1 g_2^{-1} \in H\). 
+
+\subsection*{25.} More examples of Isomorphism. The exp or log maps \(\BF R\) under +, to \((0,\oo)\) under \(\M\), and log does conversely. 
+And \(\Tw{hom}(V,V)\), the set of all linear transformations from \(V\) to \(V\), is \(\cong M_n\), the set of all \(n \X n\) matrices. 
+
+\subsection*{26.} [Sep. 21] We state the definition of a \Ss{ring} at this stage for reference. 
+A \Ss{ring} \(R\) has on it two groups, w.r.t. resp. addition ``+'' and multiplication ``\(\M\)'', 
+so that \((R, +)\) is an abelian group, while \((R, \M)\), while also contains a identity and subject to association law, is not required to be commutative; 
+moreover, there is the distribution law \( c(a+b) = (a+b)c = ac + bc \), and there is a multiplicative identity 1, which \(\neq 0\). 
+
+\subsection*{27.} The \Ss{quaternions} \(Q\) form a ring. 
+A \(q \in Q\) is pair \(a +b\SF{i} + c\SF{j} + d\SF{k}\), where \(a,b,c,d \in \BF R\), 
+under usual addition as in 4-space, 
+and that \EqGo{
+ \SF{i}^2\ = \SF{j}^2 = \SF{i}^2 =-1, \\
+ \SF{ij} = -\SF{ji} = \SF{k}, \\
+ \SF{jk} = -\SF{kj} = \SF{i}, \\
+ \SF{ki} = -\SF{ik} = \SF{j}.
+}
+
+\subsection*{28.} Choose some elements in \(R\), which has multiplicative inverse, and the collection \(R^\X\) is a ring. For example, \(\{1,-1\} \subseteq \BF Z\) under usual \(+\) and \(\M\). \par
+Also, when \(F\) is a field, \(F^\X = F -\{0\}\) is a group under multiplication. \par
+\((\BF Z/N\BF Z)^\X\) is a ring under usual modular addition, and modular multiplication. 
+The inverse elements are found by the familiar Euclid algorithm. 
+
+\subsection*{29.} Denote \(Q= \{\pm 1, \pm \SF{i}, \pm \SF{j}, \pm \SF{k}\}\), the quaternion group, which is non-abelian. 
+It is claimed that any non-abelian group \(G \St |G| = 8\), is isomorphic to either \(D_8\), the dihedral group, or to \(Q\). It's left to the reader to verify. 
+
+\subsection*{30.} Let us turn to permutations \(S_n\). Define \[
+\DG := \prod_{1 \leq i < j \leq n} (x_i - x_j), 
+\] where \(x_i\)'s are all independent variables. 
+And define \[ 
+\sG(\DG) := \prod_{1 \leq i < j \leq n} ( x_{\sG(i)} - x_{\sG(j)} ).
+\] It's left to the reader to verify that \( \eG(\tau \sG) = \eG(\tau) \eG(\sG)\). 
+
+\subsection*{31.} It's easy to see \(S_1 \cong \{e\}, S_2 \cong \BF Z_2, S_3 \cong D_6\). \par
+Notice \(\BF Z_3 \leq S_3\), and that \(\BF Z_4 \leq S_4\). 
+Their orders are resp. \(|S_3| = 6, |S_4| = 24, |A_4| = 12\). \par
+In general, we have the \Ss{Sylow's thm.}: 
+If \(p^l\) divides \(|G|\), and is the highest of such powers. 
+Then \(G\) has a sbgp.\ of order \(p^l\). (more on this later!)
+
+\section{action, classes, counting}
+\subsection*{32. group action.} A \Ss{group action} is a map \(G \X A \Mp A\). 
+\(S_{|A|}\) the symmetric group of \(A\), acts on \(A= \{1,2,\dotsc,n\}\). 
+The \(D_{2n}\) rotates or mirrors the set of n-gons. 
+Thus motivated, we define the \{group action\} to be a map \(\rho: G \X A \Mp A\), which does something on the group. 
+
+\subsection*{33.} [Sep. 24] \(Gs := {gs: g \in G}\) is called the \Ss{orbit} of \(s\). 
+\(G_s := {g: gs =s, g \in G}\) is called \Ss{stabilizer}. \par
+\(G\) is partitioned into disjoint orbits. 
+Why is that? Denote \(s_2 \sim s_1\) if \(s_2 = gs_1\) for some \(g \in G\). 
+it's easy to verify that it's an equivalence relation, 
+thus it must have partitioned \(G\) into mutually exclusive classes. 
+
+\subsection*{34. Lagrange's thm.} Consider groups \(H \leq G\), with \(|G|<\oo\). Then \(|G| = |H| |G/H|\). 
+Denote by \(G/H\) the collection of all \Ss{left cosets} of \(H\) inside \(G\). 
+We just saw that \(gH\)'s are disjoint and (clearly) of the same order, and the result follows. 
+
+\subsection*{35.} Multiplication by some \(g \in G\) gives, we see, another \(gH\). 
+\(G\) may be viewed to have acted thus: \(G \X G/H \Mp G/H\). 
+Let us view the equation \(|G| = |H| |G/H|\) in another way. 
+Because the stabilizer of \(H\) is just \(H\), 
+and that, for fixed \(gH\), its orbit is all of \(G/H\). So, \EqGo{
+ |G| = |\textrm{stabilizers of}\; H| \M |\textrm{orbits of}\; gH|
+}
+
+\subsection*{36.} Let us, then, generalize this for any group \(P\) that acts on any set \(X\): \[
+|P| = |P_x| \M |Px|. 
+\] This is intuitive by just counting. 
+[Fraleigh 7e p.158.] Why is that? Suppose \(p\) carries \(x\) to be \(px\). 
+Then \(p\) may be broken into two parts, namely one that does not change \(x\), and another one that carries \(x\) to what it is, that is \(px\). 
+The product of two sets makes up the set of all actions, \(|p|\), just the way \(G\) is broken, by \(H\), into cosets \(gH\)'s. 
+
+\subsection*{37. centers, conjugation classes.} Another example is that: consider G that acts on itself [See also Fraleigh 7e p. 328]. 
+Here the action in question is the \Ss{conjugation} action, \(G \X G \Mp G\). 
+Its order is just \(|G|\). 
+That is to say, \((g,x) \Mp gxg^{-1}\). 
+Notice how orbits of a certain \(x\), called the conjugation class of \(x\) and denoted by \(:= \Tw{conj}_G (x)\), takes the form \(\{x: gxg^-1, g \in G\}\). 
+They are (clearly) sbgp.s. 
+As such, \(G\) is split into many conjugation. \par
+Consider one of them, \(\Tw{conj}_G (x_i)\). What are those stabilizers? Well, they are such elements that \(gxg^{-1} = x\), or such one as commutes with x, and are called \Ss{centralizers}. 
+Every coset, \(g \M \Tw{conj}_G (x_i)\), has order \(|C_i| / |\Tw{conj}_G (x_i)|\). 
+
+\subsection*{38.} Now again, number of all conjugation actions \[
+|G| = \sum_{i} \Tw{conj}_G (x_i)
+\] where sum is taken through all distinct conjugation classes, \(C_i\). 
+Let's further define the \Ss{center} of \(G\) to be \(Z_G := \{z: zg = gz,\; \Ev g \} \). 
+Notice \(Z \leq C_G(x),\; \Ev x \in G\). 
+Together with above observations, we rewrite the above explicitly to be: \EqGo{
+ |G|
+ = |Z_G| + \sum_{i} |\Tw{conj}_G (x_i)|
+ = |Z_G| + \sum_{i} \F{|G|}{|C_G(x_i)|}
+} and sum is taken through all non-trivial conjugation classes. 
+
+\section{Sylow theory}
+\subsection*{39. def.} \(G\) is said a \Ss{\(p\)-group}, if \( |G| = p^k \) for some prime, \(p\). \par
+
+\subsection*{40. first part.} Let any finite group \(G\), and prime \(p\) that divides \(|G|\), be given, and \(|G| = mp^k\), \(p\) not dividing \(m\). 
+Then there exists at least a sbgp.\ \(H\) which \(\leq G\), with \(|H| = p^k\). \par
+\(H\) is called a \Ss{Sylow-\(-\)-sbgp}. Call the set \(\Tw{syl}_p(G)\) which is the collection of all \(p\)-sbgp.s, and suppose there are \(s:=|\Tw{syl}_p(G)|\) such ones. 
+(``Sylow'' is pronounced, roughly in IPA, ``sylov''; ``y'' as in German ``\"u''.) \par
+
+\subsection*{41. second part.} All Sylow \(p\)-sbgp.s are conjugate to each other. 
+That is to say, \(\Ex g \St g H g^{-1} = J,\; \Ev H, J \in \Tw{syl}_p(G)\). \par
+Moreover, \(\Ev K\) which is \(\leq G\) and is of order \(|K| = p^i\), 
+we have \(K \leq\) some \(H \in \Tw{syl}_p(G)\). \par
+
+\subsection*{42. third part.} Not only does \(s\) divide \(m\), but \(s =1\) (mod \(p\)). 
+In particular, if \(s =1\), so that \(H\) is the only Sylow \(p\)-sbgp.\ of \(G\), 
+it follows that \(H\) must be normal in \(G\). \par
+We shall present the proof the Sylow theorems by largely using only counting technique, which we shall see to be powerful. 
+
+\subsection*{43. corollary.} Still let \(G\) be a \(p\)-group. 
+Then \(Z_G \neq {e}\), that is \(G\) contains a non-trivial sbgp. \par
+\Ss{Proof.} [Fraleigh 7e p.329] Refer to the class equation. 
+All \(|\Ss{conj}_G (x)|\) are non-trivial, and, for they are sbgp.s, divisible by \(p\). 
+Thus \(|Z_G|\) must have been divisible by \(p\) also.
+
+\subsection*{44. corollary.} if \(|G| = p^2\), then \(G\) is abelian. \par
+\Ss{Proof.} [Fraleigh 7e p.329] Pick up sbgp.\ \(A\) and \(B\), each of order \(p\), as requested by Sylow 1st thm. 
+They are cyclic, because of Lagrange's thm. 
+Moreover they are normal, as Sylow 3rd thm. said. 
+This enables we write \(G\) as the product \(\Ab{a} \X \Ab{b}\), where \(a, b\) are resp. their generator. \par
+But does \(a^h b^k\) = \(b^k a^h\)? 
+Consider any \((a^h b^k a^{-h}) b^{-k}\), which is \(\in B\), a normal group of \(G\). 
+But, if written \(a^h (b^k a^{-h} b^{-k})\), it's similarly in \(A\). 
+If \(A \neq B\), the only possibility is that \(a^h b^k a^{-h} b^{-k} = 1\). 
+
+\subsection*{45. lemma (a).} Let nonempty \( V \subseteq G \). 
+Here \(G\) is considered to have acted on \(V\) by right-multiplication \(gV\). 
+Then \(G_V\), the stabilizer of \(V\) has order \(|G_V|\) that must divide \(|V|\). \par
+\Ss{Proof.} \( G_V = \{g: g\in G, gV = V\} \) by definition. 
+A coset \(gV\) consists of elements of \(V\). 
+However, we may well say \(G_V\) (being a group) produces cosets by being right multiplied by \(V\), 
+and \(V\) is partitioned into \(|G_V|\) orbits. 
+So \(|G_V|\) divides \(|V|\). \par
+
+\subsection*{46. lemma (b).} Binomial coefficient \( M := \CF C_{p^l}^n \) is not divisible by \(p\). (Recall \(n=|G|=mp^l\)) \par
+\Ss{Proof.} Just expand \EqGo{
+ M = \F{ n(n-1)\dotsb(n-p^l+1) }{ p^l(p^l-1)\dotsb1 },
+} and consider some \(k= p^i l\), where \(i<l\), and \(p\) doesn't divide \(l\). 
+Notice if such \(k\) is met in some factor in the numerator, \(n-k = p^l m - p^i l = p^i (p^{l-i} m - l)\), 
+while in the denominator \(p^l - k = p^i (p^{l-i} - l)\). 
+So the \(p^i\) factors just exactly cancel! 
+
+\subsection*{47. proof of the first part.} Let \(\SF S\) be the collection of such subsets of \(|G|\), as with cardinality \(p^l\), i.e., \(\SF S := \{ V: |V|=p^l, V \subseteq G\}\). 
+Consider \(G\) to have acted on \(\SF S\). 
+This way, \(\SF S\) is divided into orbits. 
+Since, as what we've saw in lemma (b) (item 46), \(p\) doesn't divide \(N\), we may well choose some \(V \in S\), whose orbit has cardinality not divisible by \(p\). 
+(otherwise \(p\) would have divided \(|\SF S|\)) 
+But \(|G| = mp^l = |G_V| |GV|\) (see item 35). 
+Moreover by lemma (a) (item 45), \(|G_V|\) has factor that' power at most \(p^l\). 
+Hence \(|G_v|\) is not only power of \(p\), but, in fact, multiple of \(p^l\). 
+
+\subsection*{48. proof of the second part.} Same settings. 
+Let \(H\) be a Sylow \(p\)-sbgp, here fixed. 
+Let \(\SF H\) be the collection of \(gH\), namely left cosets of \(H\). 
+\(G\) acts on \(\SF H\) by left multiplication. \par
+Note \(G_{H}\), the stabilizer of the coset \(gH\), is \(H\) itself. 
+Why? Certain \(g \in G_{H}\), which sends \(\Ev h_1\) to another \(h_2\), would be in \(H\); 
+also, clearly, \(H \subseteq G_{H}\). 
+So \(K_{H} =H\). 
+Then \(|\SF H| = mp^l/ p^l =m\) (see item 35), and \(p\) doesn't divide \(m\). \par
+On the other hand, pick \(K\) which is any p-sbgp.\ of G, and now consider it also to have acted on cosets \(gH\)'s. 
+Then \(\SF H\) is the sum of orders of disjoint orbits, \(|KgH|\)'s. 
+But \(p^l = |K| = |K_{gH}| \M |KgH|\), 
+therefore \(p\) divides every non-trivial \(|KgH|\). 
+But we just saw \(|\SF H|\) would not divide \(m\). 
+How can it be? It must be the case that at least one \(|KgH|\) is trivial, and \(|K_{gH}|\) is all of \(K\). \par
+In other words, \(kgH \subseteq gH \Ip kgh = gh',\; \Ev h\). 
+That is to say, \(k= gh'h^{-1}g^{-1} \in gHg^{-1}\). 
+So we found that \(K_{gH} \leq gHg^{-1}\), which is also a \(p\)-group (since its order is preserved), as was asserted. \par
+If moreover, \(J\) is another Sylow \(p\)-sbgp, 
+the very same argument forces \(J\) to be all of \(gHg^{-1}\). 
+
+\subsection*{49. example.} We investigate the case of \(S_3\), and set \(p=\) 2 and 3, resp. 
+\(|S_3|=6\), so there are three Sylow-2-sbgp.s, namely ones formed by the identity and, resp., \((1,2),\; (1,3),\; (2,3)\). 
+And one Sylow-3-sbgp, namely one that generated by \((1,2,3)\). 
+
+\subsection*{50. def.} \(G\) and \(H\) are groups, and \(H\), which \(\leq G\) is said to be a \Ss{normal sbgp}, if \(gHg^{-1} = H,\; \Ev g \in G\). This, we denote by \(H \lhd G\).
+
+\subsection*{51. proof of the third part.} Consider the conjugation action acted on \(G\), by \(G\) itself. 
+The \Ss{normalizer}, \(|N_G(H)|\) (the set in which \(H\) is normal), being (clearly) a sbgp, has order dividing \(|G|\). 
+Again let \(H \in \Tw{syl}_p(G)\), 
+and recall \(m= |G|/|H|\). 
+By 2nd part, all \(H' \in \Ss{Syl}_p(G)\) are conjugate to \(H\), and so is, in other words, the orbit of \(H\) by conjugation. 
+We conclude \(s= |\Tw{syl}_p(G)|= |G| / |N_G(H)|\) (see item 35). 
+These relations indicates \(s\) divides \(m\). \par
+Fix \(H \in \Tw{syl}_p(G)\), that now acts on \(\Tw{syl}_p(G)\) by conjugation, that is to send \(J\) to \(hJh^{-1}\). 
+We claim that the orbit of \(H\) is just \(H\), 
+and that other orbits of \(H\) has cardinality being multiple of \(p\). 
+If these be the case, then \(s = 1 + lp = 1\) (mod \(p\)). \par
+The former is easy, for if \(hjh^{-1} \in H, h \in H\), it's seen that \(j \in H\); also, conjugation is injective. 
+As of the latter, we investigate whether \(H_K\), where also \(H \neq K \in \Tw{syl}_p(G)\), can have been all of \(H\). 
+By def., \(h H_K h^{-1} \subseteq H_K\); 
+but by Sylow's 2nd thm., \(h H_K h^{-1}\) also \(\subseteq H\). 
+Because conjugation action is injective, it's implied that \(H=K\). \par
+So we just choose some \(K \neq H\), 
+so that \(H_K\) cannot have been \(H\). 
+Together with the fact that \(|H|= |H_K| \M |HK|\), 
+we know \(|HK|\) is not unity and contain factor \(p\), 
+and the proof is finally complete. \par
+Remark that when \(n_p\) is just 1, conjugation carries \(H\) onto itself, or \(H \lhd G\). 
+
+\subsection*{52.} [Oct. 1] We have already encounters families of group of many sorts, for instance cyclic groups \(Z_n, n \geq 1\), 
+dihedral group \(D_{2n}, n \geq 3\), symmetric groups \(S_n, n \geq 1\). \par
+Inside a symmetric group, \( \sG, \tG \in S_n \), what does conjugation by \( \tG: \tG \sG \tG^{-1} \in S_n \) look like?
+After \(\tG\sG\), it becomes \( (\tG(a_1) \dotsb \tG(a_1)) (\tG(b_1) \dotsb \tG(b_1)) \) and so forth.
+Last, \(\tG^{-1}\) just operates on elements, and observe the length of cycles does not change. \par
+In conclusion, two elements in \(S_n\) are conjugate, if and only if they have the same type of cycle partition length. \par
+
+\subsection*{53. corollary.} For \(n \geq 3\), \(Z(S_n)\), center of \(S_n\), must have been merely trivial and \(=\{1\}\). 
+proof: Choose some element \(\sG\), which we may well call \((1,\dotsc,n)\). 
+Just take conjugate of \(\tG=\) (1,(n+1)): clearly \(\tG \sG \tG^-1\) mixed two cycles and exhibit different partition. 
+We see \(\sG\) just cannot have commuted with all elements. 
+Such examples can always be found. \par
+Notice that just by observing \(\SF S_n\) we have found many things!
+
+\section{isomorphism}
+\subsection*{54. def.} For homomorphism \( f: G_1  \Mp G_2 \), 
+we call \(\Tw{ker}(f) := \{ g: g \in G_1 , f(g) =1 \}\). \par
+Remark that: \(\Tw{img}(f) = f(G_1) \leq G\). \par
+And \(\Tw{ker}(f) \leq G_1\), because \(f(g_1 g_1') = f(g_1)f(g_1') = 1\). 
+And in fact \(\Tw{ker}(f) \lhd G_1\), because \(f(g_1 h g_1^{-1}) = f(g_1) h f(g_1^{-1}) = f(g_1 g_1^{-1}) = 1 \).
+
+\subsection*{55. thm.} Consider \(N \leq G\). These are equivalent:
+(i) \(N \lhd G\). 
+(ii) \(N_G(N) = G\). 
+(iii) \(gN = Ng,\; \Ev g \in G\). 
+(iv) \(G/N\) has a natural group structure, namely \(g_1 N g_2 N = g_1 g_2 N\).
+(v) \(gNg^{-1} \leq N\) \par
+\Ss{Proof.} They are all straightforward. 
+
+\subsection*{56.} \Ss{1st Isomorphism theorem.} (due to E. N\"other) Let \(\fG: G \Mp H\) be a bijection, with \(K:= \Tw{ker}(\fG)\). 
+Then \(G / K \cong H\). \par
+\Ss{Proof.} Define \(\psi(g K) = \fG(g)\). 
+If \(\fG(g_1) = \fG(g_2)\), 
+then \(\fG(g_1)^{-1} \fG(g2) = \fG(g_1^{-1} g_2) = 1 \), 
+and that \(g_2 = g_1 k\) for some \(k\). 
+Thus, well defined. \par
+Remark \(\{1\} \leq G\), and \(G \leq G\) (trivial sbgp.s).
+
+\subsection*{57. def.} a group \(G\) is said \Ss{simple} if it possesses no non-proper normal sbgp. 
+We will see later that alternating groups \(A_n, n \geq 5\) are simple. 
+And that all group with prime numbers are cyclic, and thus simple. \par
+It is a difficult task, called \Ss{H\"older Program}, to get \(G\) from known normal \(N\) and \(G/N\). 
+
+\subsection*{58. examples.} Every group action is isomorphic to some sbgp.\ of symmetric \(S_n\). \par
+Consider \(S_3\), which has 3 Sylow 2-sbgp.s, namely \(A := \{(12), (13), (23)\}\). 
+\(G= S_3\) itself acts on \(A\) via conjugation. \par
+As another example, \(D_2n\) acts on regular \(n\)-gon. 
+\(D_6 \cong S_3\), while in general, \(D_2n \Mp\) something \(\leq S_n\). 
+
+\subsection*{59.} Let us investigate example: \(|G| = 12\). How many Sylow 3-sbgp.\ are there? either only 1, or 4 which is = 1 (mod 3). 
+Now suppose G has 4 mutually-conjugated Sylow 3 sbgp.s. 
+We claim: \(G \cong A_4\), where \(|A_4| = 12\) is the alternating group (sbgp.\ of \(S_4\) that can be written as even alternations).
+
+Why is that? \(G \X \Tw{syl}_3 \Mp \Tw{syl}_3\) by conjugation. 
+Thus considered as permutation, \(G \Mp\) something \(\leq S_4\), c.t. four Sylow groups. 
+Inside \(G\) there are 8 elements of order 3, namely those in 4 order-3 Sylow groups other than 1. 
+Note \(|f(G)| > 8\), and \(|f(G)| = 12\) that divides 24. 
+The only possibility of such order is \(A_4\). 
+
+\subsection*{60. examples.}  \(p\) being prime, \(\neq 2\). 
+\(G := S_{2p}\), the symmetric group. 
+Let us choose \(p\) elements among \(A\) on which \(S\) acts. 
+There are \(\SF C_p^{2p})\) choices. 
+Clearly such \(\sG\) is of order \(p\). 
+and the other \(p\) elements permutes among themselves also. 
+This sbgp.\ c.t. such choice \(\cong Z_p \X Z_p\). 
+
+\subsection*{61. thm.} Suppose both \(H, K \lhd G\), and \(H \cap K = \{1\}\). 
+Then  \(G \geq HK \cong H \X K\). \par
+\Ss{Proof.} Closure follows easily from \(H, K\) being normal. 
+Now every element in \(HK\) can be written uniquely as \(hk\). 
+Indeed, \(h_1 k_1 = h_2 k_2 \Ip h_2 h_1^{-1} = k_1 k_2^{-1} = 1\) by assumption, so \(h_1 = h_2, k_1 = k_2\). 
+
+\subsection*{62. corollary.} Given \(|G| < \oo\), with distinct prime divisor, and suppose that there is only 1 Sylow-\(p\) sbgp.\ for every \(p\) being prime that's a factor of \(|G|\). 
+Then, by above, and that all Sylow groups are normal in \(G\), their direct product make up a group, and is all of \(G\) --- there certainly is no other possibility of their order. 
+
+\subsection*{63.} Suppose \(H,K \leq G\), while \(H \lhd G\), but K not necessarily normal, and \(H \cap K = 1\). 
+Observe: \(HK := \{ hk: h\in H, k\in K \} \leq G\), 
+because, as above, closeness follows: \(h_1 k_1 h_2 k_2 = k_1 k_1^{-1} h_1 k_1 h_2 k_2 = k_1 h_1' h_2 k_2\)
+
+\section{automorphism, semidirect product}
+\subsection*{64. def.} The collection said a \Ss{automorphism} is defined \(\Tw{aut}(G) := \{f: G \Mp G\}\), where \(f\)'s are isomorphisms. 
+Its product is just composition of function. 
+Clearly it's a group. 
+It is (loosely put) the symmetric group that manipulates the group in question. 
+
+\subsection*{65.} For example, \(\BF Z / n \BF Z \cong \BF Z_n\). 
+\(\Tw{aut}(\BF Z_n) \cong (\BF Z / n \BF Z)^\X\).
+In this regard \(|\Tw{aut}(\BF Z_n)| \cong \fG(n)\), where \(\fG\) is Euler totient function. 
+A difficult problem that interests many is that, given particular group \(G\), to compute \(\Tw{aut}(G)\). \par
+
+\subsection*{66. def.} Let a function \(\fG: k \Mp \Tw{aut}(G)\) be known. 
+A \Ss{semi-direct product} sends elements in the set formed by cartesian product \(H \X K\) to the new set --- which now is a group --- denoted as \(G := H \rtimes K\), 
+in such a manner: \((h_1, k_1) \M (h_2, k_2) := (h_1 (\fG(k_1))(h_2), k_1 k_2)\). \par
+
+\subsection*{67. remarks.} If \(k\) is mapped to conjugation, then \((h_1, k_1) \M (h_2, k_2) := (h_1, k_1 h_2 k_1^{-1}, k_1 k_2)\). \par
+If \(khk^{-1} = h\), that is \(K\) and \(H\) commute, the semi direct product is just direct product, for the product reduces to \((h_1 h_2, k_1 k_2)\). 
+It has inverse element \((h,k)^-1 \in H \rtimes K\) which is \(\fG(k^{-1})(h^{-1}), k^{-1})\), as readily verified. 
+
+\subsection*{68. examples.} Notice \(D_{2n} \cong (Z_n \rtimes Z_2)\) where the mapping rule is \(\fG(s): r^m \Mp r^{-m} \in \Tw{aut}(Z_n)\), as can be verified. 
+Thus, \(\BF Z_n \lhd D_{2n}\) (easy to verify this in general). 
+One of the other possibility, like \((\fG(s))(r) = r\), makes up a direct product. 
+
+\subsection*{69. examples.} Another example: the \Ss{infinite dihedral group}, on the other hand, is formed in this manner: \(\BF Z \rtimes \BF Z_2 := D_\oo\). 
+Notice \(\BF Z\) may be considered here as an infinite cyclic group. 
+
+\subsection*{70.} [Oct. 5] Recall that group action on \(G\) acts thereon by left multiplication. 
+Consider finite \(|G|\). Thought reveals that homomorphism \(G \Mp S_{|G|}\), and moreover is 1-1. 
+That is, G is isomorphic to a sbgp.\ of \(S_n\). \par
+Note there is a natural injective homomorphism \(S_n \Mp \CF{GL}(n,F)\), the collection of all invertible \(n \X n\) matrix. 
+Why so? Take \(F^n\) as vector space over \(F\), and take a basis of \(F^n\), then elements in \(\CF{GL}(n,F)\) invertible linear transform \(F^n\) to \(F^n\). 
+Then permutation is represented by permutation matrices over \(F\). 
+Such \Ss{linear representations} will be studied in some detail in later of the course. 
+
+\subsection*{71.} We investigate: if \(H \leq G\), and \(G = H \cup aH\) are disjoint, i.e., with \(a \notin H\). 
+Now \([G:H] =2\) (so 2 divides \(|G|\)), 
+hence \(\Ev g \in G, gHg^{-1}\) must be back into \(H\). In general, we have the result ---
+
+\subsection*{72. thm.} Given group \(G\), let \(p\) be the smallest prime dividing \(|G|\), then any sbgp.\ \(H\) of index \(p\) must be normal in \(G\). \par
+\Ss{Proof.} \(G\) is considered to have acted on left cosets of \(H\) according to left multiplication: \(G \X (G/H) \Mp (G/H)\). 
+Naturally, there is a correspondence \(\pi_H: G \Mp S_{G:H} = S_p\). \par
+\(\Tw{ker}(\pi_H)\) is \(\in H\). Why so? If when multiplied by some \(k\), no coset \(gH\) shifts. 
+Then every \(h\) is sent to another one within \(H\), 
+and then \(k \in H\). 
+Suppose \([H: \Tw{ker}(\pi_H)] =l\). 
+Counting gives \(|G: \Tw{ker}(\pi_H)| = |G:H| \M |H: \Tw{ker}(\pi_H)| := pl\). \par
+However, we just saw all non-identity actions is \(<\) all permutations. 
+By 1st isomorphism thm., \(G / \Tw{ker}(\pi_H) \Mp S_p\). 
+\(\Ip pl | p! \Ip l | (p-1)!\). But, by above, \(l\) is a divisor of \(|G|\), and every prime factor, if any, of \(l\) divides \(G\) also. Therefore \(l=1\). 
+Now that \(H\) is a kernel of homomorphism, we know it's normal. 
+
+\subsection*{73. def.} For \(A < G\), the smallest sbgp.\ of \(G\) containing \(A\) is denoted by \(\Ab{A} = \cap \{H: A \leq H \leq G \}\). 
+In other words, this is the sbgp.\ generated by \(A \leq G\). 
+If \(A={x}\), then \(\Ab{A} =\) cyclic sbgp.\ generated by \(A\). 
+
+\subsection*{74.} Application: let's compute centralizers in \(D_8\). 
+Recall it's defined as \(\CF C_{D_8}(s) = \{g \in D_8: gs = sg\} \leq D_8\). 
+It's seen: \(r^2 \in \CF C_{D_8}(s), r \notin \CF C_{D_8}(s)\), and that \(s \in \CF C_{D_8}\). \(\Ip \Ab{s,r^2} \leq \CF C_{D_8}(s) \Ip \Ab{s,r^2} = \CF C_{D_8}(s)\). 
+Why? Refer to the tree figure. We see that no bigger group may contain them. \\
+\indent We may similarly determine the centralizers of \(D_{16}\), by referring the tree: \\
+
+\section{composition series}
+\subsection*{75. 2nd isomorphism thm.} (due to E. Noether) 
+Let \(A, B \leq G\) and \(A \leq N_G(B)\)
+Then \(AB \leq G\), and \(B \lhd AB\), and \(A \cap B \lhd A\), 
+and above all there is isomorphism \(AB/B \cong A/A\cap B\). \par
+\Ss{Proof.} The natural mapping \(\fG: g \Mp G/N\), when applied on \(H\), gives \(J:= \{hN: h \in H\}\), which \(\subseteq G/N\). 
+It is a group since \(N\) is normal. 
+The kernel is \(N\). \par
+Now \(\fG(HN) =\) all of \(J\), while \(\fG(H)\) alone is also all of \(J\). 
+Their kernel are, resp., \(N\) which \(\subseteq HN\), and \(H \cap N\) which \(\subseteq H\). 
+Use 1st isomorphism theorem twice, so both of them is \(\cong \{hN: h \in H\}\). 
+
+\subsection*{76. 3rd isomorphism thm.} (due to E. Noether) 
+Suppose \(H, K \lhd G\), and \(H \leq K\). 
+Then \(K/H \lhd G/H\) and \((G/H)/(K/H) \cong G/K\). \par
+\Ss{Proof.} \(K/H \lhd G/H\), and I now show why. 
+Introduce \(\fG: G/H \Mp G/K\) by \(\fG(gH) = gK\). 
+To check it's well defined: consider \(gH = g'H\), then \(gk = ghh^{-1}k = g'h'h^{-1}k\), for some \(h'\). 
+Since \(h'h^{-1}k \in K\), we see \(gK \subseteq g'K\), and similarly \(g'K \subseteq gK\). 
+What's its kernel? It send \(gH\) to just \(K\), so \(g \in K\), and \(\Tw{ker}(\fG) = K/H\). 
+It is normal in the domain \(G/H\). \par
+Canonical homomorphism sends \(G\) to \(G/H\), forming cosets of \(H\). 
+Another canonical homomorphism sends \(G/H\) to \((G/H)/(K/H)\) (we just checked normality), forming cosets of \(K/H\). 
+The kernel of composition is of course \(K\). 
+To see \((G/H)/(K/H) \cong G/K\), just apply 1st isomorphism thm. 
+
+\subsection*{77. thm.} Consider \(A, B \leq G\), and \(N \lhd G\), and \(N \leq A\), and \(N \leq B\). Then: \par
+(i) \(A \leq B \Eq A/N \leq B/N\). \par
+(ii) \(A \leq B \Eq |B:A| = |B/N : A/N|\). \par
+(iii) \(\Ab{A,B}/N = \Ab{A/N, B/N}\) and \(\subseteq G/N\). \par
+(iv) \((A \cap B)/N = (A/N) \cap (B/N)\). \par
+(v) \(A \lhd G \Eq A/N \lhd G/N\). \par
+\Ss{Proof.} (i) is straightforward. 
+(ii) follows from just finding group order. 
+For (iii), notice \(aNbN = abNN = abN\), and this is true in any combination of \(a,b\). 
+For (iv), that lhs \(\subseteq\) rhs is obvious; conversely suppose \(an = bn'\) for any \(a,b\), then, noting \(n \in A\), \(b\) must be in \(A\). 
+For (v), the canonical map forming cosets preserves normality.
+
+\subsection*{78. def.} \Ss{Composition series} of G is a sequence in which not only \(1 = N_0 \leq N_1 \leq N_2 \dotsc\leq N_k = G\), 
+but also \(1 = N_0 \lhd N_1 \lhd N_2 \dotsb\lhd N_k = G\), 
+and moreover \(N_{i+1} / N_i\) are simple
+
+\subsection*{79. Jordan H\"older theorem.} [Nov. 2] If \(G\) has a composition series \EqGo{
+1 \lhd N_0 \lhd \dotsb \lhd N_r = G \\
+1 \lhd M_0 \lhd \dotsb \lhd M_r = G,
+} then \(N_i\) and \(M_i\) are same sets, up to permutation and isomorphism. 
+As a result, \(r\) is an invariant of \(G\). \par
+\Ss{Proof.} This follows from refinement thm., which we study below. \par
+[T.Y.J. --- for a simpler proof, see p.106 ex.9 \& 10. 
+Namely, we first show the simplest case \(\{1\} \lhd \dotsb \lhd N_1 \lhd G\) and \(\{1\} \lhd M_1 \lhd G\). 
+Because \(M_1 \leq N_G(N_1)\), by 2nd isom. thm., \(N_1 M_1 / M_1 \cong N_1 / N_1 \cap M_1\). 
+But \(N_1\) is simple; 
+so \(N_1 \cap M_1 = \{1\}\), 
+and \(N_1 M_1 / M_1 \cong N_1\). 
+For \(\Ev n_1,n_1'\), this implies \(n_1 m_1 M_1 n_1' m_1' M_1 = n_1 n_1' M_1\), 
+or after a moment's thought, \(M_1 \lhd N_1\), 
+which forces \(M_1 = N_1\), again by simplicity. \par
+[If \(\{1\} \lhd \dotsb \lhd N_k \lhd G\) and \(\{1\} \lhd M_1 \lhd M_2 \lhd G\), where wlog., \(k \geq 2\), 
+note that \(M_2 \cap N_k \lhd M_2 \lhd G\), while at the same time \(M_2 \cap N_k \lhd N_k \lhd G\). 
+A moment's thought reveals that \(M_2 / M_2 \cap N_k\) must be simple: 
+this fact follows from that conjugation orbits of \(M_1\) must coincide entirely several of its cosets or not, 
+and that \(M_2 / M_1\) is assumed simple. 
+Finally, one may use previous result to conclude \(N_k = M_2\), 
+and by induction that all other \(N_i = M_i\).]
+
+\subsection*{80. Butterfly lemma.} (Zassenhaus) This is a generalization of 2nd isom. thm. of Noether. \par
+Let \(B \lhd A\) and \(D \lhd C\), all being sbgp.s of \(G\). 
+Then \EqGo{
+ \F{(A \cap C)B}{(A \cap D)B} \cong \F{(A \cap C)D}{(B \cap C)D}
+}
+\indent \Ss{Sketch of Proof.} The homomorphism \(\phi(x) = x(A \cap D)B\) maps \(A \cap C \Mp B(A \cap C)/B(A \cap D)\). 
+By 1st isom. thm., and the fact that \(\Tw{ker}(\phi) = (A \cap D)(B \cap C)\), \EqGo{
+ \F{A \cap C}{(A \cap D)(B \cap C)} \cong \F{(A \cap C)B}{(A \cap D)B}
+} Similarly, repeat the argument with \(A\) and \(C\) interchanged, and \(B\) and \(D\) interchanged, \EqGo{
+ \F{A \cap C}{(A \cap D)(B \cap C)} \cong \F{(A \cap C)D}{(B \cap C)D}
+} \indent [T.Y.J. --- Introduce shorthand \(X := A \cap C\) and \(Y := A \cap D\). 
+First check \(BY \lhd BX\). In fact, \(xbYB =xbBY =xBY =xYB =YxB =YBx =YBbx =BYbx\). 
+The key is to note that \(BY = YB\) (since \(B \lhd A\)) and \(xY = Yx\) (since \(D \lhd C\)). 
+Similarly, this being borne in mind, that \(\phi(x)\phi(x') = \phi(xx')\) is completely straightforward. \par
+[Finally, \(\Tw{ker}(\phi)\) should be everything that lies in \(YB\), i.e., \(X \cap Y\). 
+Let \(z= yb\), which is also \(\in X\). 
+Since \(y \in X\), it suggests \(b \in X\), and hence \(z \in (A \cap D)(B \cap C)\).]
+
+\subsection*{81. Schreier refinement thm.} Let \(G\) be a finite group, and \EqGo{
+ \{1\} = H_0 \lhd H_1 \lhd\dotsb\lhd H_m =G. \\
+ \{1\} = K_0 \lhd K_1 \lhd\dotsb\lhd K_n =G.
+} are two normal series (not necessarily composition series, i.e., quotient being simple). 
+Then in each case a new series must exist, which is a refinement of both, \EqGo{
+ \{1\} = H_0' \lhd H_1' \lhd\dotsb\lhd H_{m'}' =G. \\
+ \{1\} = K_0' \lhd K_1' \lhd\dotsb\lhd K_{n'}' =G.
+} and furthermore \(\Ev i\), \(\Ex j\) s.t. \(H_{i+1}' / H_i' \cong K_{j+1}' / K_j'\). \par
+\Ss{Proof.} Define \(G_{rm+s} = (G_{r+1} \cap H_s) G_r\), and similarly \(H_{rm+s} = (H_{r+1} \cap G_s) H_r\). 
+It's easy matter to see they are each a new normal series, and moreover a refinement of the original one. 
+Furthermore, by def., by Butterfly lemma and premises \(G_r \lhd G_{r+1}\) and \(H_s \lhd H{s+1}\), and finally by def. \EqGo{
+ \F{ G_{um+v+1} }{ G_{um+v} }
+ = \F{ (G_{u+1} \cap H_{v+1}) G_u }{ (G_{u+1} \cap H_v) G_u }
+ \cong \F{ (H_{v+1} \cap G_{u+1}) H_v }{ (H_{v+1} \cap G_u) H_v }
+ = \F{ H_{vn+u+1} }{ H_{vn+u} }.
+}
+
+\section{free groups}
+\subsection*{82. def.} [Oct. 8] Consider \Ss{words} consisting of \Ss{alphabets}. 
+On them, multiplication is defined as just composition. 
+For example, \(aa \M bb =aabb\). 
+A word is said \Ss{reduced}, if all possible cancellation are carried out. 
+For example, \(acbb b^{-1}b^{-1} c^{-2}e =ac^{-1}e\).
+
+\subsection*{83.} It's easy to explain (but perhaps laborious to write symbolically and rigorously), by induction, that the reduced form is unique. 
+Words with the same reduced form comprise a equivalence class. 
+And exactly the same way we composite words also becomes a well-defined operation of (now reduced) words. 
+
+\subsection*{84.} It may be viewed as a group, and is called \Ss{free group}. 
+All alphabets together generate it. 
+Empty word is an identity. 
+There is no relation between any elements. \par
+For example, \(\BF Z\) under usual addition is infinite cyclic free group \(\Ab{g}\). 
+
+\subsection*{85.} Suppose \(S\) generates a group \(G\), but the free group \(F(S)\) thus made basing on \(S\) invokes a natural, onto, homomorphism: \(g_1 g_2 \in \CF F(S)\) is mapped to \(g_1 \M g_2 \in G\). 
+
+\subsection*{86.} Let \(G\) be a group, \(R \subseteq \CF F(S)\), then there exists a unique smallest normal sbgp.\ \(N_R \lhd G\), with \(N_R \supseteq R\), which is \(\{g \Ab{R} g^{-1}\}\). \par
+With \(S\), \(R\) given, can the word game be proved not to collapse, that is to say every word is the identity? 
+This is proved, by Alan Turing, to be impossible. 
+
+\subsection*{87.} In dihedral group, relations \(r^n = 1, s^2 = 1, rsrs = 1\) sufficiently defines it. 
+Now we define a group G in general, by a set of relations \(R\), and symbols \(S\). 
+Here, \(r \in R\) is in the form \(\cdot=1, \dotsc \cdot=1\), so \(N_R\) should be 1. \par
+If that be the case, under homomorphism \(h: \CF F(S) \Mp G\), and \(N_R = \Tw{ker}(h)\), and, therefore by 1st homomorphism thm., that \(\CF F(S) / N_R \cong G\). 
+
+\section{solvability}
+\subsection*{88.} Another fundamental problem : given groups \(G_1, G_2\), both finitely presented, can one write down non-trivial homomorphisms? \par
+We have only to check that the relation hold for generators. For example, to check that \(D_6 \Mp D_{12}\) can be done, 
+we assign \(s \Mp s'\) and \(r \Mp r'\), 
+and check: \EqGo{
+ \fG( s^2 ) = 1, \fG(r^3) = 1, \fG(rsrs) =1
+}
+
+\subsection*{89.} A set \(S\) is given, which have free group \(\CF F(S)\). Question: is any sbgp.\ \(S'\) of free group a free group? 
+The answer is yes, known as \Ss{Schreier's thm}. 
+But the generating set of \(S'\) may come with larger cardinality than that of \(S\).
+
+\subsection*{90.} \(G\) is said \Ss{solvable}, if it has a series of sbgp.s \EqGo{
+ \{1\} = G_0 \lhd G_1 \lhd \dotsb \lhd G_s = G, 
+} where \(G_{i+1}/G_i\) is abelian. 
+For prime number \(p_i\), they is thus \(\cong \BF Z_{p_i}\) 
+\Ss{Simple groups} are not solvable, i.e. without proper normal sbgp.s. 
+For example, \(\BF Z_p\) are simple, and so are alternating group \(A_n\). 
+
+\subsection*{91.} Suppose \(|G| = p^3\), where \(p\) is odd prime and \(x^p = 1,\; \Ev x \in G\). 
+If \(G\) is furthermore non-abelian, then G must \(\cong \CF H(\BF F_p)\) (left to the reader). 
+
+\subsection*{92.} Recall that by class equation, any \(p\)-group \(G\) has non-trivial center \(\SF Z(G)\). 
+ex: \(|\SF Z(\CF H(\BF F_p))| = p\). \(|\SF Z(Q_8)| =2\). \(\SF Z(D_8)| =2\). 
+
+\subsection*{93. examples.} Recall if prime number \(p\) divides \(|G|\) and \(|G:H| = p\), then \(H \lhd G\). 
+For example, \(Q_8\) has sbgp.s \(\Ab{\Tw i}, \Ab{\Tw j}, \Ab{\Tw k}\), each of index 4. 
+In general, there may've been many sbgp.s of index p inside a p group; they do not conjugate to each other. 
+
+\subsection*{94. Theorem.} [p.188 thm.1(iv)] \(|P|=p^a\). 
+If \(H < P\) strictly, then \(H < N_P(H)\) strictly. \par
+\Ss{Proof.} If \(P\) is abelian, it's of course normal. 
+Otherwise suppose it's non-abelian. 
+If \(H < P\) strictly, as assumed, we have once noted, from class equation, that \(\SF Z(G)\) is nontrivial. 
+If \(\SF Z(G) - H \neq \varnothing\), the sbgp.\ generated from \(\SF Z(G)\) and itself (\(H\)) would \(\rhd H\). 
+Let \(\SF Z(G) \leq H\). 
+Then, too, \(\SF Z(G) \lhd P\). 
+\(P/ \SF Z(G)\) is of smaller order, since \(\SF Z(G)\) is nontrivial. 
+Thus motivated, we may well have used induction in advance w.r.t. \(|P|\). 
+Owing to assumption, a certain \(H'/\SF Z(G) < H/\SF Z(G)\). 
+Finally \(H' < H\). 
+
+\subsection*{95.} [p.188 thm.1(v)] \(|P|=p^a\). Every maximal normal sbgp, say \(M\), of \(P\) has index \(p\) and normal. \par
+\Ss{Proof.} For proper, maximal \(M\), it follows from item 94 that \(M < N_P(M)\). 
+Now \(N_P(M)\), being a larger sbgp, is then all of \(P\). 
+So \(P/M\) exist, with natural operation endowed. 
+It cannot possess proper sbgp.\ (otherwise \(M\) is not maximal). 
+But \(|M|=\) some \(p^b\), and in part (iii) we saw it has sbgp.s of all powers of \(p\). 
+The only possibility is that \(|P/M| =p\). 
+Suppose \(P\) is non-abelian. 
+\(H < P\) by hypothesis. 
+
+\subsection*{96.} [p.188 thm.1(ii)] \(|P|=p^a\) and \(1< H \lhd P\). 
+Then \(H \cap \SF Z(P) \neq 1\). 
+In particular, every normal sbgp.\ of order \(p\) lies inside \(\SF Z(P)\). \par
+\Ss{Proof.} From class equation, where \(\CF C\) denotes centralizer, \EqGo{
+ |H|= |H \cap \SF Z(P)| + \sum_i \F{|P|}{|\CF C(h_i)|}.
+} Here, every element in \(H \cap \SF Z(P)\) is, by commutativity, a trivial orbit, 
+and every non-trivial orbit of \(H\) (which is a sbgp.\ of \(p\)-group \(P\)) is multiple of \(p\). 
+So \(|H \cap \SF Z(P)|\) is multiple of \(p\), 
+and hence is nontrivial. 
+Especially, if \(|H|\) is so small as \(=p\), then the nonempty \(|H \cap \SF Z(P)|\) must be all of \(H\). 
+
+\subsection*{97.} [p.188 thm.1(iii)] \(|P|=p^a\) and \(H \lhd P\). 
+Then \(\Ev p^b\) that divides\(|H|\), there is a normal sbgp.\ of \(H\) that has order \(p^b\). 
+Note that in particular, \(P\) has normal sbgp.\ of order \(\Ev p^b\). \par
+\Ss{Proof.} By item 96, \(H \cap \SF Z(P) \neq \{1\}\). 
+It, being sbgp.\ of \(P\), has order at least \(p\). 
+Divide by it, and use induction; 
+by virtue of canonical isomorphism that sends set to coset, the result follows. 
+
+\subsection*{98. def.} Let \(Z_1(G) = \SF Z(G)\), the center of \(G\). 
+We form \(\SF Z(G/Z_1) \Mp Z_2\) by natural isomorphism, and so forth. 
+Clearly, \(Z_1 \lhd G\), so are \(Z_i\) that follows. 
+The \Ss{upper central series} consists of \(1= Z_0(G) \leq Z_1(G) \leq  Z_1(G) \leq\dotsc\). 
+
+\section{finite abelian groups}
+\subsection*{99.} \(G\) is called a \Ss{nilpotent group} if \(Z_l(G) = G\) for some \(l \in N\). 
+The smallest \(l\) is called the \Ss{nilpotent class} of \(G\). \par
+
+\subsection*{100.} Observe: (i) All \(Z_l(G)\) are characteristic sbgp.s of \(G\). 
+[T.Y.J. --- Indeed, if \(Z_l\) is so, the same is \(G/Z_l\), and its center \(\SF Z(G/Z_l)\), which is \(Z_{l+1} / Z_l\), 
+and by canonical isomorphism, so (characteristic) is \(Z_{l+1}\). 
+Starting with the identity, in this manner go all the way to \(G\).] 
+In particular, when applied to conjugacy action, it's seen \(Z_j(G) \lhd G,\; \Ev j\). 
+In this regard, when \(Z_{l+1}(G) / Z_l(G)\) are abelian groups, the nilpotent groups, by def., are solvable groups. 
+
+\subsection*{101.} Dihedral group \(D_{2^n},\; n=3,4,5\dotsc\), is nilpotent of class \(n-1\) --- it's left to the reader. 
+If \(n\) is not power of 2, \(D_{2n}\) is not nilpotent. 
+These are solvable groups, but not nilpotent. 
+(Because dividing by its center gives cyclic \(\BF Z_n\)). \par
+
+\subsection*{102. thm.} Let \(|P| = p^a\) where \(a = 2,3,\dotsc\). 
+Then \(P\) is nilpotent of class \(\leq a-1\). \par
+\Ss{Proof.} For \(i= 0,1,\dotsc\), \(|P/Z_i(P)| >1\) which implies \(\SF Z(P/Z_i(P) \neq 1\). 
+This, also being a \(p\)-group, has non-trivial center \(:= Z_{i+1}(P)/Z_i(P)\), 
+Here \(|Z_{i+1}(P)| \geq p|Z_i(P)| \geq p^{i+1}\). 
+Continue the process, until finally \(|Z_a(P)| \leq p^a\), which is just \(P\). 
+But \(P\) cannot have class \(a\). 
+Why so? When we arrived \(Z_{i-2}(P)\) which has index \(p^2\) in \(P\), 
+we see \(P/Z_{i-2}(P)\) to be abelian, and its center is all of it. 
+Thus \(Z_{i-1}(P) =P\). 
+Since \(i-2 \leq a-2\), \(i-1 \leq a-1\). 
+
+\subsection*{103. thm.} Let \(G\) be a finite group, \(p_i\)'s are distinct primes, \(i=1,\dotsc,s\), that each divides \(|G|\). 
+Let \(P_i \in \Tw{syl}_{p_i}(G)\) be one of the Sylow \(p_i\)-sbgp.s. 
+Then all of these are equivalent: 
+(i) \(G\) is nilpotent. 
+(ii) If \(H < G\), then \(H < N_G(H)\). 
+(iii) \(P_i \lhd G\) for all \(i\), i.e., Sylow sbgp.s are all normal. 
+(iv) \(G \cong P_1 \X\dotsb\X P_s\). \par
+\Ss{Proof.} To show (i)\(\Ip\)(ii). Note that \(G/\SF Z(G)\) is nilpotent as \(G\) is nilpotent --- 
+indeed, we just divide, by \(\SF Z(G)\), each of the upper central series. 
+Then we argue inductively and assume \(H/\SF Z(G) < G/\SF Z(G) \Ip H/\SF Z(G) < N_{G/\SF Z(G)}(H/\SF Z(G))\). 
+By canonical isomorphism, \(H < N_G(H)\). \par
+To show (ii)\(\Ip\)(iii). 
+Consider some Sylow sbgp.\ \(P_i\). 
+Sylow thm. says it \(\lhd G\). 
+Textbook Corollary 4.20 says it's characteristic in \(N_G(P)\). 
+But \(N_G(N_G(P)) > N_G(P)\), and since conjugacy maps the characteristic \(P\) to itself, and also \(N_G(P)\) to itself, 
+we have \(P \lhd N_G(P)\), 
+and hence \(N_G(P) < N_G(N_G(P))\) (by def. of \(N_G(P)\)). 
+In conclusion, \(N_G(N_G(P)) = N_G(P)\). 
+
+\subsection*{104.} [Oct. 19] Every finite \(p\)-group, \(A\), is a product of cyclic groups. \par
+\Ss{Proof.} Consider elementary abelian \(p\)-group (i.e. \(\Ev g \in A,\; g^p = 1\)). 
+Then \(A \cong \Ab{x} \X M\), and we show inductively by inspecting instead on \(M\). 
+Find maximal \(M \leq A\). 
+If \(|M:A| \neq p\), which must < p
+consider \(x' \in A' := A/M\). 
+There exists \(y' \in A', y' \in A' - \Ab{x}\). 
+Because induction assumption and \(A'\) has smaller order than \(A\), so \(y'\) has order \(p'\). 
+Then generate \(\Ab{y'}\); its preimage \(\leq A\) has order at least \(p|M| > |M|\). 
+This is a contradiction. \par
+Consider general \(A\), and induction in terms of \(|A|\). 
+Consider homomorphism \(\fG: A \Mp A,\; \fG(x) = x^p\). 
+\(K = \Tw{ker}(\fG)\) is, by def., elementary abelian. 
+So is \(A/H\), where \(H = \Tw{img}(\fG)\). 
+Indeed, every \(a\) when taken \(p\)-th power becomes inside \(H\). 
+By above, \(H = \Ab{h_1} \X\dotsb\X \Ab{h_r}\). 
+\par
+If \(K \subseteq H\), then \(K \cap H = K\), 
+then \(H \cap K\) is also product of cyclic group: \(\Ab{h_1}^{s_1} \X \Ab{h_r}^{s_r}\) where \(h_i^{s_i p} = 1\). 
+And \(\Ab{g_1} \X\dotsb\X \Ab{g_r}\) (where \(\fG(g_i) = h_i\), every preimage exists) has order same as \(A\), by isomorphic theorem. \par
+If \(K - H \neq \varnothing\), find \(x\) in it. 
+To apply the result in the beginning of the proof, \(A/H\) is the product of some \(M\) and \(\Ab{x}\). 
+By induction assumption, \(M\) is product of cyclic groups. 
+
+\subsection*{105.} Every finite abelian group, \(A\), is a product of cyclic groups. \par
+\Ss{Proof.} Because abelian, divide by Sylow sbgp, and so on; 
+it becomes direct product of Sylow sbgp.s. 
+But we just saw they are direct product of cyclic groups. \par
+Note that, accordingly, abelian groups, up to isomorphism, corresponds to partition (several numbers whose sum is some number, that is the order). 
+
+\subsection*{106.} One may check \(\BF Z_4 \rtimes \BF Z_4\) homomorphic to quaternions \(Q_8\). 
+Here \(\fG_a(q) = q^{-1}\), where \(a\) is the generator of (the latter) \(\BF Z_4\), and \(\Ev q \in Q_8\). 
+Please verify all rules in \(Q_8\) are valid. 
+
+\subsection*{107. Group determinants.} [Nov. 2] The \Ss{group determinant}, \(\tG(G;x_g)\), of \(G\) is, informally, the determinant consisting of the multiplication table with each entry \(g\) being replaced by an free variable \(x_g\) (below for an example). 
+Also recall [see text. p.167] that, for finite abelian group \(G\), its \Ss{dual}, \(\hat{G}\), is defined as the group of all homomorphism from \(G\) into the group generated by roots of unity in \(\BF{C}\). \par
+\Ss{Dedekind's theorem} states \EqGo{
+ \tG(G;x_g) = \prod_{\chi \in \hat{G}} \sum_{g \in G} \chi(g) x_g
+} This way, the study of group \(G\) done on its det and is broken up into factors. 
+
+\subsection*{108.} A special case is that of a cyclic group, say \(H = \Ab{x_0}\), where \(|H|=N\), which the reader may verify explicitly. It reads (\(\xi = \ee^{2\pi \ii/N}\) \begin{gather*}
+ \det \begin{bmatrix}
+  x_0, &x_1, &x_2, &\cdots, &x_{N-1} \\
+  x_1, &x_2, &x_3, &\cdots, &x_0 \\
+  x_2, &x_3, &x_4, &\cdots, &x_1 \\
+  \vdots, &\vdots, &\vdots, &\ddots, &\vdots \\
+  x_{N-1}, &x_0, &x_1, &\cdots, &x_{N-2}
+ \end{bmatrix}
+ = \prod_{j=0}^{N-1} \sum_{k=0}^{N-1} \xi^{jk} x_k
+\end{gather*} The special case for \(N=3\), (\(\oG = \ee^{2\pi \ii/3}\) \begin{gather*}
+ \det \begin{bmatrix}
+  x_0, &x_1, &x_2 \\
+  x_1, &x_2, &x_0 \\
+  x_2, &x_0, &x_1
+ \end{bmatrix}
+ = (x_0 +x_1 +x_2) (x_0 +\oG x_1 +\oG^2 x_2) (x_0 +\oG^2 x_1 +\oG x_2)
+\end{gather*} To show this, Vandemonde determinant formula is used (see p.619). 
+
+\section{more on simplicity}
+\subsection*{109.} [Nov. 9] Simple group \(G\) satisfies (i) \(G = [G,G]\), since a derived group is normal [see text sec. 5.4]. 
+(ii) \(G\) acts on S non-trivially, \(G \Mp S_{|S|}\) which = all permutations of \(S\). 
+[Why? consider cosets of \(H < G\). It induces a map that permutes cosets. But it has no kernel, which is normal.]
+
+\subsection*{110.} \(A_5\) is simple. It has no centre, so by counting conjugacy classes, actually \(60 = 1 + 12 + 12 + 15 + 20\) (though it's not easy task to find them). 
+
+\subsection*{111. Simplicity of \(A_n\).} To show \(A_n\) is simple, \(n \geq 5\). 
+Use math induction. 
+Stabilizer of \(i\) is \(G_i\), permutations fixing \(i\), is just \(= A_{n-1}\). 
+If \(H \lhd A_n\), then clearly \(H \cap G_i \lhd G_i\). 
+Either \(H \cap G_i =1\), or \(H \cap G_i = G_i\), because \(A_{n-1}\) is simple. \par
+Recall identity \(\sG \tG \sG^{-1} = \tG_{\sG(i)}\) (\(\tG\) permutes instead on indices permuted by \(\sG\)). 
+If any \(G_i \leq H\), then all \(G_j \leq H\), and (clearly) \(H\) is just all of \(A_n\). 
+Otherwise, no non-identity fixes any elements. 
+Now, \(\tG'(i)=\tG(i)\) indicates \(\tG'\tG^{-1}(i)=i\) for some \(i\). 
+This element, also being in \(H\), must \(=e\). 
+So no two permutations move any index to the same one. \par
+Again use \(\sG \tG \sG^{-1} = \tG_{\sG(i)}\), and it's easy to construct elements, whatever their composition cycle is, that keep fixed some of them. For example, \EqGo{
+ (1,2,3)(4,5) \Mp (1,2,4)(5,3)
+} Then both 1 and 2 are fixed. See text p.150 for details. 
+
+\subsection*{112.} A \Ss{block} \(B\) is either invariant or mapped to something disjoint with it. 
+That is, \(g(B)=B\) or \(g(B) \cap B = \varnothing\). 
+So the way group \(G\) acts on \(B\) is homomorphic to \(S_n\), if there are \(n\) blocks. 
+
+\subsection*{113.} \(G\) acts \Ss{doubly transitive}, if \(\Ev G_a\) is transitive (there is only one orbit). 
+It easy to show, doubly transitive \(G\) forces there to be no block, or \Ss{primitive}. 
+
+\subsection*{114. examples.} in vector space \(F^n\) (\(F\) is a field), there is an (clearly) equivalence relation \(b \sim a \Eq \V{b} = \aG \V{a}\), for some \(\aG \neq 0\). 
+The projection on \(F^{n-1}\), which is \(P^{n-1}(F)\), parametrize 1-d space \(F\). 
+There is natural action of \(\CF{SL}_n(F)\) (isometric matrices) on \(P^{n-1}(F)\). \par
+Then it is always possible to find a matrix that fixes \(n\)-th axis, but permutes \(y_1\) to be \(y_2\), for \(\Ev y_1, y_2 \in P^{n-1}(F)\) [it just determines a basis transformation]. 
+In other words, \(\CF{SL}_n(F)\) is doubly transitive on \(P^{n-1}(F)\). 
+
+\subsection*{115. Iwasawa lemma.} Let \(G\) be a perfect group (\(=[G,G]\)) that acts transitively, primitively, and non-trivially on \(S\). 
+Suppose at \(x \in S\), the stabilizer \(G_x\) has normal abelian sbgp.\ \(A\) whose conjugates generate \(G\). 
+Then \(G\) must be simple. \par
+\Ss{Proof.} Suppose \(\{1\} \neq H \lhd G\). 
+Consider stabilizer \(G_x\). 
+Now, \(H - G_x \neq \varnothing\). [otherwise \(H \subseteq G_x\), that's to say normal \(H\) fixes some \(x \in S\). This cannot be: \(G\) is transitive, so faithful, and if \(g(y) \neq y\), then \((ghg^{-1})y \neq h(y)\).] 
+By exercise (4.1.7d), \(G_x\) is maximal (no sbgp.\ containing it). 
+So, \(G_x H\) is all of \(G\). \par
+Claim \(A \lhd AH\): indeed, choose some element \(y\) of \(AH\) and find the form \(y= g_x h\) by just above, 
+and check \(h^{-1} g_x^{-1} A g_x h = h^{-1} A h = Ah'h^{-1} \subseteq HA\), by \(A\) being normal. 
+Also, by assumption \(gAg^{-1}\) union to be \(G\), 
+it follows \(G \subseteq AH\), 
+and since of course \(AH \subseteq G\), in fact \(G = AH\). 
+So \(A \lhd G\). \par
+Use 3rd isomorphism thm. to get \(G/H \cong AH/H \cong A / A \cap H\). 
+Now \(A\) is abelian and hence \(A / A \cap H\) is abelian, and so is \(G/H\). 
+By property of \([G,G]\) (see sec.5.4, pro.7(4)), we have \(H \geq [G,G]\), which (being perfect) \(= G\). 
+Of course \(H \leq G\). 
+This forces \(H=G\). 
+So \(G\) has no proper normal sbgp. 
+
+\subsection*{116.} Application to \(\CF{PSL}_n(F) := \CF{SL}_n(F) / \SF{Z}(\CF{SL}_n(F))\). 
+Let \begin{gather}
+ a= \begin{bmatrix}
+  1, &0, &0, &\cdots, &0 \\
+  a_1, &1, &0, &\cdots, &0 \\
+  a_2, &0, &1, &\ddots, &\vdots \\
+  \vdots, &\vdots, &\ddots, &1, &0 \\
+  a_n, &0, &\cdots, &0, &0 \\
+ \end{bmatrix}
+\end{gather} and \(A\) be the collection of such \(a\). 
+Easy to show, it \(\cong F_n\), and is abelian. 
+And \begin{gather}
+ g= \begin{bmatrix}
+  1, &0 \\
+  \V{v}, &g'
+ \end{bmatrix}
+\end{gather} where \(\det{g'}=1\), to write in a block matrix --- these comprise stabilizer of \(\hat{\V{e}}_1\), as can be verified. 
+Similar one may find stabilizer for other \(\hat{\V{e}}_i\). 
+Also one may check \(A \lhd G_x\). \par
+The key is whether \(A\) has conjugate orbits cover all of \(G\). 
+To quote the result, \(\CF{PSL}_n(F)\) is simple, whenever \(n \leq 3\), or for \(n=2\), whenever \(|F| >3\). 
+
+\section{miscellaneous examples}
+\subsection*{117. generalized quaternion.} [Oct. 26] (p.178, example 3) Let us define \(Q_{2^n} := Z_{2^{n-1}} \rtimes Z_4 / \Ab{(2^{n-2},2)}\), with automorphism defined by \((a,b)(c,d) = (a+(-1)^b c, b+d)\). 
+Clearly \(\Ab{2^{n-2},2} \in Q_{2^n}\) has order 2  
+So \(|Q_{2^n}| = 2^{n-1} \M 4 /2 = 2^n\). \par
+In other words: \(Q_{2^n} = \Ab{ x,y: x^{2^{n-1}} =1 =y^4, x^{2^{n-2}} =y^2, yxy^{-1} =x^{-1} }\). 
+The 1st relation comes from \(Z_{2^{n-1}}\) and \(Z_4\). 
+The 2nd comes from dividing \(\Ab{(2^{n-2},2)}\). 
+The 3rd from our def. of automorphism: that maps \(x\) to \(-x\). 
+It has generator \(x := (1,0) + \Ab{2^{n-2},2},\; y := (0,1) + \Ab{2^{n-2},2}\). 
+\(\Ab{x}\) is an sbgp.\ of index 2 inside \(Q_{2^n}\). 
+Every element not in \(\Ab{x}\) has order 4 (as \(yxy^{-1} =x^{-1}\)). \par
+In particular, please check \(Z4 \rtimes Z4 /\Ab{(2,2)} \cong Q_8\). 
+
+\subsection*{118.} Back to linear algebra. 
+\(V\) being finite-dimensional vector space over \(F\). 
+Given, on \(V\), a symmetric bilinear form, \(B: V \X V \mapsto F\), which is denote as \(B(u,v) := \Ab{u,v}\), 
+and such that: \(B(u,v) =0,\; \Ev v \Ip u=0\). \par
+It is a generalization of usual inner product. 
+
+\subsection*{119.} Collection of transformations \(A\) into \Ss{orthogonal bases} forms a group, denoted \(\CF{O}(n,\BF R)\). 
+Recall they satisfy \(A^\Tw{t} A = I\), hence \(\Tw{det} A = \pm 1\). 
+Pick up those for which \(\Tw{det} A = 1\); it's denoted as \(\CF{SO}(n,\BF R)\).
+
+\subsection*{120. Platonic solids.} (for detailed discussion, see M. Artin's \textit{Algebra}) 
+Indeed, for every group object inherit with some symmetry, action on it forms a group. 
+We've seen cyclic groups, dihedral groups, and now we may well define tetrahedral, cubic, octahedral, dodecahedral, and icosahedral rotation groups. \par
+Consider \(G \subseteq \CF{SO}_3, |G| < \oo\), acting on a polyhedron. 
+A set of point is said \Ss{poles} of \(g\), whenever they are fixed point. 
+Because we discuss \(\CF{SO}_3\), there are always 2 poles only. \par
+Let \(P\) be the set of all poles corresponding to all elements \(g \in G\), possibly repeated. 
+\(G\) acts on \(P\). 
+If \(p\) is a pole, then \(g(p)\) too is a pole. 
+Consider stabilizer \(G_P(g)\) and disjoint orbitals \(|O_i|\)'s of \(hgh^{-1}\) acting on poles, where \(g,h \in G\). 
+For simplicity, \(r_i := |G_P(g_i)|\), and \(s_i := |\CF O_i|\). \par
+All poles are as many as \(2(|G|-1)\). 
+And the number is also \(\sum_i s_i (r_i -1)\), where  and \(r_i\)'s are number of stabilizers. 
+It just accounts the fact that all poles (corresponding to every non-identity action) comprise the union of orbits, 
+and is counted \(r_i -1\) times by different \(g\) action that leaves it invariant. 
+Meanwhile, recall \(s_i r_i =|G|\). 
+Thus, \EqGo{
+ \sum_i s_i (r_i -1) = 2(|G| -1). 
+ \Ip \sum_i \Rb{ 1- \F{1}{r_i} } = 2 - \F{2}{|G|}. 
+} \indent If there be only 1 orbit, \(1 - 1/r_1 = 2 - 2/|G|\), which is impossible. \par
+If there be 2 orbits, \(1 - 1/r_1 + 1 - 1/r_2 = 2 - 2/|G|\). 
+Only possibility: \(r_1 = r_2 = |G|\), 
+so \(G\) is cyclic. \par
+Consider case that there are 3 orbits. 
+Possibilities are \EqGo{
+ (r_1, r_2, r_3) = (2,3,3),\; (s_1, s_2, s_3) = (6,4,4),\; |G|=12; \\
+ (r_1, r_2, r_3) = (2,3,4),\; (s_1, s_2, s_3) = (12,8,6),\; |G|=24; \\
+ (r_1, r_2, r_3) = (2,3,5),\; (s_1, s_2, s_3) = (30,20,12),\; |G|=60;
+} In the 1st case: orbit \(O_3\) is faces of tetrahedron (3 edges for every triangle), 
+or (may well be seen as) vertices of tetrahedron (4 vertices). 
+In the 2nd case: orbit \(O_3\) is faces of a cube (6 edges for every square), 
+or vertices of octahedron (6 vertices). 
+In the 3rd case: orbit \(O_3\) is faces of a dodecahedron (5 edges for every pentagon), 
+or vertices of icosahedron (12 vertices).
+
+\subsection*{121. homotopy.} To define group law on homotopy classes of closed curves starting and ending at the same point. [see Ahlfors, \textit{Complex Analysis}, chap.8, sec.1.5, p.292 to 294]. \par
+Put precisely, let \(\gG_1, \gG_2 : [a,b] \Mp X\) be two closed curves in a topological space, \(X\). 
+We say \(\gG_1\) is \Ss{homotopic to} \(\gG_2\), when \(\gG_1(a) =\gG_2(a) =\gG_2(b) =\gG_1(b) =z_0\in X\), 
+and there exists continuous function \(H\) from \([a, b]\times[0, 1]\) to \(X\), for which: \(H(t,0) =\gG_1(t)\), \(H(t,1) =\gG_2(t)\) for \(\Ev t\in [a,b]\) and \(H(a,u) =z_0 =H(b,u)\) for \(\Ev u \in [0,1]\). \par
+Given two closed curves \(\gG_1\) and \(\gG_2\) in \(X\) with the same initial and terminal point \(z_0\), define the composition law \((\gG_1, \gG_2) \Mp \gG_1\gG_2\). 
+Here \(\gG_1\gG_2\) is the curve obtained from tracing first \(\gG_1\) then followed by \(\gG_2\), as a closed curve defined on the interval \([a, 2b -a]\) which is associated with interval \([a, b]\) by means of a strictly increasing function. \par
+Verify this is a group law on homotopic classes of closed curves. \\
+\indent 1. Check it is well-defined, if \(\gG_1\) is homotopic to \(\beta_1\), and \(\gG_2\) is homotopic to \(\bG_2\), then \(\gG_1 \gG_2\) is homotopic to \(\bG_1\bG_2\). \\
+\indent 2. Check the associativity. \\
+\indent 3. What is the identity for this composition law? \\
+\indent 4. Given closed curve \(\gG\) on \(X\), write down a closed curve whose homotopy class is the inverse of the class represented by \(\gG\). \par
+This group of homotopy classes is called the \Ss{fundamental group of} \(X\) \Ss{with base point} \(z_0\). 
+It is an (algebraic) invariant of the point topology space \((X, z_0)\). \par
+\indent [T.-Y. J. --- This is fairly trivial, once one grasps the main idea. 
+[Easy to verify being homotopy is an equivalence relation. 
+Trivial \(H\) connects \(\gG\) to itself. 
+Reverted \(H\) connects \(\gG\) to \(\bG\), whenever \(H\) connects \(\bG\) to \(\gG\). 
+If \(\aG\) and \(\bG\) are homotopic, and too are \(\bG\) and \(\gG\), then concatenate two \(H\) in parameter \(u\) to see \(\aG\) and \(\gG\) are homotopic. \par
+[Now, concatenation of \(\gG_1\) and \(\gG_2\) clearly may be mapped, by virtue of a map concatenated in parameter \(t\), to concatenation of \(\bG_1\) and \(\bG_2\); of course, a shrink of domain is needful, so as to fit \([0,1]\).  
+Choose representatives \(\aG\), \(\bG\) and \(\gG\); then, concatenation in parameter \(t\) is obviously associative. \par
+[Identity is the (trivial) class consisting solely of constant function that remains always at \(z_0\). \par
+[Finally, consider a curve \(\gG\), and another one \(\tilde\gG\) with same path but opposite sense of rotation. 
+Then \(\tilde\gG\) represents a class that consists of inverse of \(\gG\), for their multiplication is the identity.]
+
+\end{document} 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%~%~%~%~%~%~%~%~%~%~%~%~%~%~%~%~%~%~%~%~%~%~%~%~%~%~%~%~%~%~
+Yay~below this line nothing is printed.

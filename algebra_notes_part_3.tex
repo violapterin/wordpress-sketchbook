@@ -1,0 +1,591 @@
+\documentclass[12pt]{article}
+%
+\usepackage[T1]{fontenc}% the font used to be T1-encoding
+\usepackage{garamondx}% default font: Garamond. (urw-garamond is badly written)
+\usepackage[garamondx,cmbraces]{newtxmath}% math supporting package
+\renewcommand*\ttdefault{cmtt}% typewriter font: Computer Modern Teletype. (previously also used: lcmtt, Computer Modern Teletype L; pcr, Courier New
+\usepackage{cabin}% sans-serif font: Cabin
+%
+\usepackage{
+  amsmath,% facilitates math formulae typography
+  amssymb,% several other symbols
+  graphicx,% enables graphics insertion
+  color% enables colored text
+}
+\usepackage[
+frak= esstix, scr= boondoxo, cal= cm, bb= boondox
+]{mathalfa}% do not alter the order of this line (for strange reasons)
+% available ones: (* has small cases)
+% frak: *esstix, *boondox, *pxtx
+% bb: ams, pazo, fourier, esstix, *boondox, px, txof.
+% cal & scr: rsfs, rsfso, zapfc, pxtx, *esstix, *boondox, *boondoxo, *dutchcal. 
+%
+% Formatting.
+\setlength{\parskip}{1.5ex}% vertical spacing between paragraphs
+\setlength{\parindent}{4ex}% indent in a paragraph
+\usepackage{titling}% controls typesetting the title
+\setlength{\droptitle}{-2cm}% decreases spacing over the title
+\usepackage[
+  top=1.9cm, bottom=1.9cm, left=1.7cm, right=1.7cm
+]{geometry}% sets page margins
+\usepackage[compact]{titlesec}% adjusts spacing of each sec.; used below.
+\titlespacing{\section}{8ex}{*0}{*0}% resp., left margin, vertical spacing, seperation to text following.
+\titlespacing{\subsection}{2ex}{*0}{*2}% see above
+\titlespacing{\subsubsection}{0pt}{*0}{*0}
+\titleformat{\subsection}[% modifies the title of a subsec.
+  runin% no new-line before subsequent text
+]{
+  \color{red}\large\bfseries\itshape %color, font, shape
+}{}{}{}[]% end \titleformat
+\usepackage{listings}% quoting codes
+\definecolor{myGreen}{rgb}{0,0.6,0}
+\lstset{
+  language = Matlab,
+  basicstyle=\small\bfseries\ttfamily,breaklines=true,
+  keywordstyle=\color{blue},
+  commentstyle=\color{myGreen},
+}
+%\everymath{\displaystyle}% forces displaying in-text math w/ full height
+%
+% Custom shorthands.
+% lower case Greek alphabets w/ long name
+\newcommand\aG\alpha \newcommand\bG\beta  \newcommand\gG\gamma \newcommand\dG\delta \newcommand\eG\varepsilon \newcommand\zG\zeta \newcommand\tG\vartheta \newcommand\kG\kappa \newcommand\lG\lambda \newcommand\sG\sigma \newcommand\fG\varphi \newcommand\oG\omega 
+% upper case Greek alphabets
+\newcommand\GG\varGamma \newcommand\DG\varDelta \newcommand\TG\Theta \newcommand\LG\varLambda \newcommand\SG\varSigma \newcommand\FG\varPhi \newcommand\YG\varUpsilon \newcommand\OG\varOmega
+%
+% other symbols
+\newcommand{\oo}\infty% infinity, whose shape resembles "oo"
+\newcommand{\F}\frac% "F"raction
+\newcommand{\R}\sqrt% "R"oot
+\newcommand{\M}\cdot% "M"ultiply
+\newcommand{\N}\nabla% del sign
+\newcommand{\X}\times% cross, whose shape resembles "X"
+\newcommand{\Pt}\partial% "P"ar"T"ial differentiation
+\newcommand{\V}\mathbf% bold italic, e.g. "V"ectors
+\newcommand{\Ev}\forall% "Ev"ery
+\newcommand{\Ex}\exists% "Ex"ists
+\newcommand{\Ar}\rightarrow% right "Ar"row
+\newcommand{\Mp}\mapsto% "M"a"p"
+\newcommand{\St}{\textsf{\large \: s.t. \:}}% "S"uch "T"hat
+\newcommand{\Eq}{\Leftrightarrow}% "Eq"ivelent
+\newcommand{\Ip}{\Rightarrow} % "I"m"p"lies
+\newcommand{\ii}{ \mathring{\imath} }% for imag. unit
+\newcommand{\jj}{ \mathring{\jmath} }% for imag. unit
+\newcommand{\dd}{ \BF{d} }% for differential
+\newcommand{\ee}{ \BF{e} }% for natural base
+%
+% brackets, customized fonts
+\newcommand{\Rb}[1]{ \left( #1 \right) }% "R"ound "b"racket, or more commonly parenthesis
+\newcommand{\Sb}[1]{ \left[ #1 \right] }%("S"quare) "b"racket
+\newcommand{\Cb}[1]{ \left\{ #1 \right\} }%("C"urly) "b"race
+\newcommand{\Ab}[1]{ \left\langle #1 \right\rangle } %Chevrons, e.g. "A"ngle brackt
+\newcommand{\Nm}[1]{ \left| #1 \right| } %"N"or"m"
+\newcommand{\Bk}[2]{ \left\langle #1 \middle| #2 \right\rangle } %"B"ra-"K"et notation
+\newcommand{\Nb}[1]{ \quad \mbox{\color{blue}[#1]} \quad }%"N"ota "b"ene, i.e. note
+\newcommand{\Emph}[1]{ {\color{blue}\bfseries{#1}} }% my emphasis
+\newcommand{\BF}[1]{ \mathbb{#1} }% "B"lackboard "F"ont
+\newcommand{\CF}[1]{ \mathcal{#1} }% "C"ursive "F"ont
+\newcommand{\GF}[1]{ \mathfrak{#1} }% "G"othic "F"ont
+\newcommand{\SF}[1]{ \mathscr{#1} }% "S"cript "F"ont
+\newcommand{\Ss}[1]{\textsf{\bfseries{#1}}}% "S"ans-"s"erif
+\newcommand{\Tw}[1]{\texttt{#1}}% "t"ype"w"riter font
+%
+% miscellaneous
+\renewcommand{\L}\label% "L"a"b"el
+\newcommand\Nt{\notag\\}% "N"o"t"ag
+\newcommand{\EqG}[1]{ \begin{gather}{#1}\end{gather} }% Eqn. Gather
+\newcommand{\EqGo}[1]{ \begin{gather*}{#1}\end{gather*} } % unnumbered
+\newcommand{\EqA}[1]{ \begin{align}{#1}\end{align} }% Eqn. Align
+\newcommand{\EqAo}[1]{ \begin{align*}{#1}\end{align*} }% unnumbered
+\newcommand{\Id}{\hspace{5em}}% "I"n"d"ent, esp. in multi-line formulae
+\newcommand{\Nl}{\\ \indent} % "N"ew "Line", actually a narrower new-paragraph
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+\title{
+ \textit{Honours Introduction to} \\
+ \textit{\textbf{\Huge Algebra.}} \\
+ Notes, Part 3: \\
+ \huge\textsc{Polynomials, Fields, Modules}
+}
+\date{}
+\author{}
+\maketitle
+\allowdisplaybreaks[4]% allows page breaks amid eqn. arrays.
+
+\vspace{-3.4cm} %removes vertical spacing 
+\hfill{\itshape lectured by prof. Jing Yu} \par
+\hfill{\itshape organized by Tzu-Yu Jeng} \par
+\hfill{\itshape Dec. 3 to Dec. 31, 2015} \\
+\vspace{-0.2cm} 
+
+textbook: Dummit D.S. \& Foote R.M., Abstract Algebra (3rd ed.). Hoboken, New Jersey: John Wiley \& sons (2004). \par
+[Herstein I.N., Topic in Algebra (2nd ed.). Hoboken, New Jersey: John Wiley \& sons (2004).] \par
+[Fraleigh J.B., A First Course in Abstract Algebra (7th ed.). Boston, Massachusetts: Addison-Wesley (2003).]
+
+\setcounter{section}{20}
+\section{Gr\"obner bases}
+\subsection*{210. def.} [Dec. 3] In an ideal \(I\) having a Gr\"obner basis \(G\), carry out division for an \(f \in I\). 
+If we get remainder \(r=0\), denote \(f =0\;\; (\Tw{mod}\; G)\). 
+
+\subsection*{211.} The cancellation of poly.s may be done as thus: if \(M := \Tw{lcm}(\Tw{LT}(f_1),\Tw{LT}(f_2))\), \EqGo{
+ S(f_1,f_2) :=\F{M}{\Tw{LT}(f_1)}f_1 -\F{M}{\Tw{LT}(f_2)}f_2
+} Then clearly \(\Tw{deg}(S) < \Tw{deg}(M)\) (the notation means multi-degree)
+
+\subsection*{212. lemma.} Let \(f_1,\dotsc,f_m \in F[\V{x}]\) (shorthand for \(F[x_1,\dotsc,x_n]\)), where \(F\) is a field, with the same multi-deg \( := (i_1,\dotsc,i_n)\). 
+Suppose \(h := a_1 f_1 +\dotsb+ a_m f_m\) where \(a_i \in F\), and \(h\) has smaller multi-deg. 
+Then \(h = \sum_{i=2}^m b_i S(f_{i-1},f_i)\) for some scalars \(b_i \in F\). \par
+\Ss{Proof.} Write \(f_i = c_i f'_i, c_i \in F\), where each \(f_i'\) is monic. Then, by evident telescoping, rewrite as \EqAo{
+ h =& a_1 c_1 f_1' +\dotsb+ a_m c_m f_m' \\
+ =& a_1 c_1 (f_1' -f_2') +(a_1 c_1 +a_2 c_2)(f_2' -f_3') + (a_1 c_1 +a_2 c_2 +a_3 c_3)(f_3' -f_4') +\dotsb+ \\
+ &\Id  (a_1 c_1 +\dotsb+a_{m-1} c_{m-1})(f_{m-1}' -f_m') +(a_1 c_1 +\dotsb+ a_m c_m) f_m'
+} But every term except possibly the last has smaller multi-deg than \(\aG\), hence last must have coefficient 0. 
+
+\subsection*{213. results of Gr\"obner basis.} Suppose \(G := \{g_1,\dotsc,g_m\}\) is a Gr\"obner basis for \(I := \Ab{g_1,\dotsc,g_m}\), 
+then: (i) every poly.\ \(f \in F[\V{x}]\) can be written uniquely as \(f :=f_I +r\) with \(f_I \in I\), 
+under requirement that no monomial term of the remainder, \(r\), is divisible by any of \(\Tw{LT}(g_1),\dotsc,\Tw{LT}(g_m)\). \par
+We now show why. Of course, such expression exists, for if any monomial, not being \(\in I\), were divisible, absorb it into \(f_I\). 
+It remains to show uniqueness. Towards that end, assume \(f = f_I +r = f_I' +r'\). But \(r -r' \in I\) implies \(\Tw{LT}(r -r') \in \Tw{LT}(I)\) (ideal generated by all \(LT(f_I): f_I \in I\)). 
+Now that \(r -r'=\) sum of \(\tilde{f}_I \Tw{LT}(g_i)\), it follows \(r=r'\). 
+Think about any monomial \(\V{x}^{\pmb{\aG}}\) contained in \(r -r'\); it is contained both in \(r\) and \(r'\). 
+Well, \(F\) is a field, and some term must've been solely multiple of some \(\Tw{LT}(g_i)\). 
+
+\subsection*{214.} (ii) Both \(f_i\) and \(r\) can be computed by poly.\ division by \(g_1,\dotsc,g_m\). 
+Moreover, in doing so, their expressions are not affected by the order of occurrence by which \(g_i\)'s are applied. (this follows from item 213)
+
+\subsection*{215.} (iii) The remainder \(r\) serves as a unique representative of the coset of \(\Ev f \in F[\V{x}]/I\). 
+In particular, for \(\Ev f\), \(f \in I\) iff \(r =0\) (this follows from item 213).
+
+\subsection*{216. Buchberger's criterion for Gr\"obner basis.} Let ideal \(I =\Ab{g_1,\dotsc,g_m}\) and subset \(G =\{g_1,,,g_m\}\) be given. 
+Then \(G\) is Gr\"obner iff \(S(g_i,g_j) =0\;\; (\Tw{mod}\; G),\; \Ev i,j\) (see item 210). \par
+\Ss{Proof.} [\(\Ip\)] Trivial, since \(S\) itself is linear combination of \(g_i\), and \(g_j\). \par
+[\(\Leftarrow\)] Choose \(f = h_1 g_1 +\dotsb+ h_s g_s\). 
+While surely \(f\) is combination of \(g_i\)'s, we worry they might fail to generate \(\Tw{LT}(f)\). 
+Define \EqGo{
+ \aG := \underset{h_i': \sum_i h_i' g_i' =f}{\Tw{min}} \; \underset{1 \leq i \leq s}{\Tw{max}}\; \Tw{deg}(\Tw{LT}(h_i' g_i'))
+} (Among all possible \(F[\V{x}]\)-linear comb.\ that each gives \(f\), choose that whose leading terms (one having maximal ordering) among \(h_i g_i\)'s has minimal ordering). 
+Keep in mind \(\aG\) corresponds to the term \(\Tw{LT}(f)\). \par
+Of course, \(\aG\) cannot \(< \Tw{deg}(f)\), for this way, \(h_i g_i\)'s couldn't give rise to \(\Tw{LT}(f)\). 
+Furthermore, if \(\aG =\Tw{deg}\; \Tw{LT}(f)\) , we are done, for \(\Tw{LT}(f)\) must have been linear combination of \(\Tw{LT}(h_i) \Tw{LT}(g_i)\)'s. 
+But it might well not be so, for \(\Tw{LT}(g_i)\)'s may have cancelled. \par
+However, we now suppose the otherwise, that \(\Tw{deg}(f) <\aG\), and reach contradiction: namely there is some combination \(f = \sum_i h_i' g_i\) with \(\Tw{max}_i\; \Tw{deg}(h_i') g_i <\aG\), contrary to def.\ of \(\aG\) that this number is minimum. 
+As just remarked, pick up \(\Tw{LT}(h_i) g_i\) (which should contain \(\Tw{LT}(f)\)), 
+and by lemma (item 212), it may be written as \EqGo{
+ \sum_{i=2}^m b_i S(\Tw{LT}(h_{i-1}) g_{i-1}, \Tw{LT}(h_i) g_i). 
+} Moreover, because assumption that \(S(g_{i-1},g_i)\) is combination of \(g_i\)'s, 
+a moment's thought reveals \\ \(S(\Tw{LT}(h_{i-1}) g_{i-1}, \Tw{LT}(h_i) g_i)\) is also combination of \(g_i\)'s, and the proof is done.
+
+\subsection*{217. Buchberger's algorithm.} Let ideal \(I =\Ab{g_1,\dotsc,g_m}\). 
+Suppose \(S(g_i,g_j) =r \neq 0\; (\Tw{mod}\; G)\) for \(i,j\). 
+Append remainder \(r\) to \(G\) so as to form new leading term ideal \(M_1 := \Ab{\Tw{LT}(g_1),\dotsc,\Tw{LT}(g_m),\Tw{LT}(r)}\). 
+Though \(r\) is a superfluous element already generated by \(G\), but \(r_1\) helps generate leading terms of \(S\) functions. 
+If some \(S(g_i,g_j)\) still leaves nonzero remainder, again append the remainder \(r_2\) to \(M_1\) to form  \(M_2 := \Ab{\Tw{LT}(g_1),\dotsc,\Tw{LT}(g_m),\Tw{LT}(r_1),\Tw{LT}(r_2)}\). , and so forth. 
+We get ascending chain \(M_1 \subseteq M_2 \subseteq\dotsb\). 
+But \(I\) is finitely-generated, and is thus Noetherian, and hence observes ACC (see item 173). 
+Thus some \(M_k\) must \(=I\). \par
+
+\section{a deeper look at zeros}
+\subsection*{218. def.} [Dec. 10] In the space \(F^n\) (in this context called \Ss{affine space}), denote the solution set, that is to say their zero points: \(\SF{Z}(\{f_1,\dotsc,f_m\}) := \{\V{a}: \V{a} \in F_n: f_i(\V{a}) =0,\; 1 \leq i \leq m\}\). [hereinafter, see Dummit \& Foote, chap. 15]
+
+\subsection*{219.} For example, \(\SF{Z}(\varnothing) =F^n\). 
+\(\SF{Z}(\{0\}) =F^n\). 
+\(\SF{Z}(F[\V{x}]) =\varnothing\). 
+
+\subsection*{220. prop.} The following properties should be evident: (i) If ideals \(S \subseteq T \subseteq F[\V{x}]\), it implies \(\SF{Z}(T) \subseteq \SF{Z}(S)\) [more equations, more stringent]. \Nl
+(ii) \(\SF{Z}(S) \cap \SF{Z}(T) =\SF{Z}(S \cup T)\) [they're strictly zeros of both systems]. \Nl
+(iii) \(\SF{Z}(I) \cup \SF{Z}(J) =\SF{Z}(IJ)\) [either of them must be evaluated as zero].
+
+\subsection*{221. def.} \(\SF{I}(A)= \{f: f \in F[\V{x}] \land f(\V{a}) =0\; \Ev \V{a} \in A\}\) (the map from points of \(F\) to the ideal whose solutions are they).
+
+\subsection*{222. prop.} Properties of \(\SF{I}\) corresponds to property of \(\SF{Z}\) (see item 220):
+(i) If \(A \subseteq B \subseteq F^n\), then \(\SF{I}(B) \subseteq \SF{I}(A)\). \Nl
+(ii) \(\SF{I}(A \cup B) =\SF{I}(A) \cap \SF{I}(B)\). \Nl
+(iii) \(\SF{I}(\varnothing) =F[\V{x}]\). \Nl
+(iv) If \(F\) is infinitely-many, then \(\SF{I}(F^n) =\{0\}\). 
+
+\subsection*{223. prop.} Straightforward facts regarding the sort-of inverse nature of \(\SF{I}\) and \(\SF{Z}\): \Nl
+(i) If \(\V{a} \in A \subseteq F^n\), then \(A \subseteq \SF{Z}(\SF{I}(A))\), by def. \Nl
+(ii) If \(I \subseteq F[\V{x}]\), then \(I \subseteq \SF{I}(\SF{Z}(I))\). \Nl
+(iii) If \(V := \SF{Z}(I)\) (is a algebraic set) then \(\SF{Z}(\SF{I}(V)) =V\). \Nl
+(iv) If \(I =\SF{I}(A)\) (is the describing equation of some set), then \(\SF{I}(\SF{Z}(I)) =I\). 
+
+\subsection*{224.} Let \(A\) consists of a single point \(=\{\V{a}\}\). 
+Notice \(\SF{I}(A) =\Ab{x_1-a_1,\dotsc,x_n-a_n}\). 
+Thus points may correspond to ideals. 
+
+\subsection*{225.} Hilbert's \Ss{Nullstellensatz} (zero-places statement, or better, theorem of zeros), in one of its weaker forms, states: every maximal ideal takes the form \(\Ab{x_1-a_1,\dotsc,x_n-a_n}\). 
+A set of point, \(A\), is thus mapped, 1-1, to maximal ideals that contains \(\SF{I}(A)\) (poly.\ equations). 
+This is very important, for it connects the discipline of geometry to that of algebra. 
+
+\subsection*{226.} In fact, there is an analog of the fundamental theorem of algebra, that states, if \(\{1\} \not\subseteq I\) (otherwise it makes an inconsistent equation \(1=0\)), and \(I \subset F[\V{x}]\) properly, then \(\SF{I}(I) \neq \varnothing\). 
+This appears now very reasonable, for whatever \(I\) is, it's likely to be spanned by \(x_1-a_1,\dotsc,x_n-a_n\), according to our past experience of Taylor series, so seemingly \(I\) isn't maximal. 
+
+\section{modules}
+\subsection*{227.} [Dec. 7] We want to generalize linear algebra over a field to one that's over rings, towards the end of solving a system of linear equations with coefficients from a ring. 
+We then generalize the concept \(R\)-module: When \(R=F\) is a field, an \(R\)-module is just a \(F\)-vector space. 
+
+\subsection*{228.} For a ring \(R\) here required with 1, an abelian group \(M\), a \(R\)-\Ss{module} is defined thus, together with ``scalar'' multiplication \(R \X M \Ar M\) sending \((r,m) \Ar rm\), required to meet: 
+\((1,m) \Ar m\) (unital condition), \((r+s,m) \Ar (r+s)m +rm+sm\) and \((r,m+n) \Ar rm +rn\) (distributive law of either set), \(rs,m) \Ar r(sm)\) (association). 
+
+\subsection*{229. examples.} Abelian groups are just \(\BF{Z}\)-modules, i.e., \(R=\BF{Z}\) (think about \(na =a+\dotsb+a\) for \(n\) times and verify module axioms.)
+
+\subsection*{230.} In particular, let abelian group \(A\) has \(|A| =p\), \(p\) being prime; use addition convention. 
+Then \(pa =0\), for \(\Ev 0 \neq a\in A\). 
+Then \(A\) may also be viewed as a \(F_p\)-module: \(F_p := \BF{Z}/p\BF{Z}\). 
+Simple thoughts reveal operation is well-defined: say, \(n+\Ab{p} =m+\Ab{p}\) iff \(n-m =0\), then \((n+\Ab{p})a =(m+\Ab{p})a\). 
+
+\subsection*{231.} Let \(V\) be a finite-dimensional vector space over field \(F\). Fix \(T: V \Ar V\), a linear transformation. 
+\(V\) may be endowed a structure of \(F[x]\)-module; just define \(F[x] \X V \Ar V\) by sending \((f(x),v) \Ar f(T)(v) \in V\). 
+
+\subsection*{232.} For ring \(R\), a \Ss{submodules} \(N \subseteq M\) is abelian subgroup w.r.t same addition of \(M\), and is closed under scalar multiplication of that of module \(M\). 
+
+\subsection*{233.} For example, when \(M\) is considered as a \(\BF{Z}\)-module, its submodules are just abelian subgroups. \par
+Consider \(V\), a finite-dim. vector space over \(F\), and linear transf. \(T:V\Ar V\). 
+Let \(U \subseteq V\) be a vector subspace. Then \(U\) is \(F[x]\)-submodule of \(V\). \par
+Let \(R\) be any commutative ring, \(I \subseteq R\), then naturally an ideal \(I\) is \(R\)-submodule, with its own multiplication, because \(RI \subseteq I\) holds. 
+
+\subsection*{234. def.} A \Ss{homomorphism} between \(R\)-modules, or \(R\)-\Ss{linear transformations}: \(f: N \Ar M\), is said a homomorphism, if \(f(n_1+n_2) =f(n_1)+f(n_2)\) and \(f(rn) =rf(n)\), where \(\Ev n,n_1,n_2 \in N,\; r \in R\). 
+
+\subsection*{235.} Check \(\Tw{ker}(f):= \{n \in N: f(n) =0\}\) is a \(R\)-submodule: indeed, it's closed, as, for \(n \in ker f,\; r \in R\), we have \(f(rn) =rf(n) =r \M 0 =0\). \par
+Also \(\Tw{img}(f) =f(N) := \{m \in M: \Ex n: m =f(n)\}\) is also an \(R\)-submodule: indeed, for some \(m\), \(f(rn) =rf(n) =rm \in M\). 
+
+\subsection*{236. def.} For given \(N \subseteq M\), an \(R\)-module and one submodules of its, the \Ss{quotient} \(R\)-modules denoted \(M/N\) consists of cosets \(m+N\), with natural scalar multiplication: \(r(m+N) := rm+rN\). 
+Check well-defined-ness: \(m+N =m'+N\) gives \(m-m' \in N\), which implies \(r(m-m') \in N\), so it's okay.
+
+\subsection*{237. isomorphism thm.s} Similar results of isomorphism theorems follows. [textbook exercises.] \Nl
+1st isom. thm.: \(\fG: M \Ar N\) is a homom., then \(M/ \Tw{ker}(\fG) \cong \fG(M) \subseteq N\). \Nl
+2nd isom. thm.: \(A,B \subseteq M\), being \(R\)-submodules; then \(A+B\) and \(A \cap B\) are also submodules, with \((A+B)/B \cong A/ A\cap B\). \Nl
+3rd isom. thm.: if \(A \subseteq B \subseteq M\), then \((B/A)/(M/A) \cong B/M\). \Nl
+4th isom. thm. (lattice thm.): Consider \(N \subseteq M\), a submodule. Then there is bijection between submodules of \(M\) containing \(N\) and submodules of \(M/N\): 
+for \(\{A: N \subseteq A \subseteq M\} \leftrightarrow \{A'/N: A'/N \subseteq M/N\}\) with recognition \(A \leftrightarrow A'/N\) when \(A=A'\). 
+
+\subsection*{238.} Define \Ss{free \(R\)-module} of rank n: \(R^n := R \X\dotsb\X R\). 
+Claim \(R^n \not\cong R^l\), for \(n \neq l\). \par
+We now show why. Since \(R\) commutative, \(R\) has maximal ideal \(M \subset R\) properly (need Zorn's lemma; here we just accept this). 
+Define \(R^n /(MR^n) \cong (R/M)^n =R/M \X\dotsb\X R/M\). 
+This is well-defined: \(M R^n \subseteq R^n\) is an \(R\)-submodule, so \(r(MR^n) =(rM)R^n =MR^r\). 
+Now \(M\), being maximal, implies \(R/M\) is a field (item 154). 
+Thus \(R^n /MR^n\) is a vector space over \(R/M\) of \(\Tw{dim} =n\). 
+But \(R^n /MR^n \cong R^l /MR^l\) entails \(n=l\), by the result, from linear algebra, that the vector space over the same field is unique up to isom. 
+
+\section{invitation to catogory theory}
+\subsection*{239.} [Dec. 17] With \(R\)-module \(M\) given, we seek to construct free \(R\)-module \(\CF{F}(A)\), 
+so that element set \(A\) is included in \(\CF{F}(A)\), by virtue of identity map \(\iota\), 
+and \(A\) is identified by a set map \(\fG\) to \(M\), 
+and there is a \(R\)-module homom.\ \(\FG: F(A) \Mp M\). 
+
+\subsection*{240.} Proceed as thus. 
+\(\CF{F}(A) :=\) collection of all \(f: A \Mp R\) so that \(f(a) =0\) for all except finitely-many \(a \in A\). 
+In it, addition is defined as usual, \((f+g)(a) := f(a) +g(a)\), and multiplication \((rf)(a) := rf(a)\). 
+
+\subsection*{241.} To check the universal property for our \(\CF{F}(A)\), let \(f_a: A \Mp M\), the characteristic function on \(\{a\}\). 
+That is to say \(f_a(a) :=1\), and \(f_a(b) =0\) whenever \(b \neq a\). 
+Then if \(\Ev f\) for which \(f(a_i) =r_i \in R\), it may be written as \(\sum_i r_i f_{a_i} =\sum_i r_i f\), so that \(f(a_i) =r_i\) indeed. 
+Finally, the homom.\ \(\FG\) is constructed as \(\FG(\sum_i r_i f_{a_i}) =\sum_i r_i \fG(a_i)\). Easy to check it's well-defined. 
+
+\subsection*{242. examples.} We are interested in finitely generated free \(R\)-modules, \(\{a_1,\dotsc,a_n\}\). 
+In this case, \(\CF{F}(A) \Mp R^n\) (direct product). \par
+\(R\), a comm.\ ring generated by single element \(A =\{s\}\), is a free \(R\)-module. 
+Its ideals \(\subseteq R\) are \(R\)-submodules. 
+
+\subsection*{243.} \(R =F[x,y] \supseteq (x,y)\) but \(I\) is not free. 
+\(I\) is \(R\)-submodule of \(R\), but \(x\) and \(y\) are not \(R\)-linearly independent: \(-yx +xy =0\). 
+The point here is, an \(R\)-submodule of a free \(R\)-module may not be free \(R\)-module. 
+
+\subsection*{244. prop.} Let \(N_1,\dotsc,N_k\) are \(R\)-submodules of \(M\), then the following are equivalent: \\
+\indent (i) \(\pi: N_1\X\dotsb\X N_k \Mp N_1 +\dotsb+ N_k \subseteq M\) (direct product and sum) by component-wise assignment \((a_1,\dotsc,a_k) \Mp a_1 +\dotsb+ a_k\), is an isom. \\
+\indent (ii) \(N_j \cap (N_1 +\dotsb+ N_{j-1} +N_{j+1} +\dotsb+ N_k) =\{0\}\). \\
+\indent (iii) Every \(x \in N_1 +\dotsb+ N_k\) can be written uniquely as \(x =a_1 +\dotsb+ a_k\). 
+
+\subsection*{245. def.} \(M\) is a \Ss{Noetherian \(R\)-module} if, as in the case of ideals, a inclusion chain \(M_i \subseteq M_{i+1}\) consisting of \(R\)-submodules always start to equal at some \(k\): \(M_k =M_{k+1} =\dotsb\). 
+
+\subsection*{246. prop.} Let \(M\) be a Noetherian \(R\)-module, then the following are equivalent: \\
+\indent (i) Every ascending chain of sub-modules stop at finitely many steps, that is: given \(N_1 \subseteq N_2 \subseteq\dotsb\subseteq M\), then \(\Ex l\), s.t. \(N_l =N_{l+1} =N_{l+2}=\dotsb\). 
+(ii) Every non-empty collection of \(R\)-submodules contains a maximal element. \par
+\Ss{Proof.} [(ii)\(\Ip\)(i)] \(N\) is finitely generated, so \(N =Ra_1 +\dotsb+ Ra_s\). 
+Let \(a_i \in N_{l(i)}\) for some integer \(l(i)\). 
+Take \(l =\max_i l(i)\), then \(\{a_1,\dotsc,a_s\} \subseteq N_l\), which implies \(N \subseteq N_l\). 
+This forces \(N_l =N_{l+1} =\dotsb\), the ACC condition. \par
+[(i)\(\Ip\)(ii)] To prove the inverse proposition. 
+Let \(\GG =\{N_j: j\in J\} \neq \varnothing\) for some index set \(J\). 
+If \(N_1\) is not maximal in \(\GG\), then \(\Ex N_2 \supset N_1\) properly. 
+If \(N_2\) is not maximal in \(\GG\), then \(\Ex N_3 \supset N_2\) properly. 
+Inductively, there is \(N_1 \subseteq N_2 \subseteq\dotsb\), each inclusion is proper. 
+The ACC condition is violated. 
+
+\subsection*{247. def.} In an \Ss{exact sequence} of \(R\)-modules \(\{0\} \Mp M' \Mp_\aG M \Mp_\bG M'' \Mp \{0\}\), \(\aG\) is 1-1, \(\bG\) is onto, and \(\Tw{img}(\aG) =\Tw{ker}(\bG)\). 
+
+\subsection*{248. example.} If \(N \subseteq M\), then \(\{0\} \Mp N \Mp_\aG M \Mp_\bG M/N \Mp \{0\}\), where 1st map is inclusion and 2nd map is canonical map of quotient, is an exact sequence. 
+
+\subsection*{249. prop.} Let \(\{0\} \Mp M' \Mp_\aG M \Mp_\bG M'' \Mp \{0\}\) be an exact sequences of \(R\) modules. 
+Then \(M\) is Noetherian iff both \(M'\) and \(M''\) are Noetherian. \par
+\Ss{Proof.} [\(\Ip\)] \(M',M''\) are proper sets of \(M\). 
+Their any ascending chains are also that of \(M\). 
+So if \(M\) is Noetherian, both \(M'\) and \(M''\) must be Noetherian. \par
+[\(\Rightarrow\)] Conversely, let both \(M'\) and \(M''\) be Noetherian. 
+Then we have ascending chains like this, and let \(k\) be so large that corresponding of \(M'\) and \(M''\) starting to equal. (the rotated \(\cap\) means inclusion, so every column is an ascending chain.) \begin{gather*}
+ \begin{matrix}
+ &\{0\} &\Mp &M' &\Mp_\aG &M &\Mp_\bG &M'' &\Mp &\{0\} \\
+ &\vdots & &\vdots & &\vdots & &\vdots & &\vdots \\
+ &\cup & &\cup & &\cup & &\cup & &\cup \\
+ &\{0\} &\Mp &M' \cap L_{k+1} &\Mp_\aG &L_{k+1} &\Mp_\bG &\bG(L_{k+1}) &\Mp &\{0\} \\
+ &\cup & &\cup & &\cup & &\cup & &\cup \\
+ &\{0\} &\Mp &M' \cap L_k &\Mp_\aG &L_k &\Mp_\bG &\bG(L_k) &\Mp &\{0\} \\
+ &\vdots & &\vdots & &\vdots & &\vdots & &\vdots \\
+ &\cup & &\cup & &\cup & &\cup & &\cup \\
+ &\{0\} &\Mp &M' \cap L_1 &\Mp_\aG &L_1 &\Mp_\bG &\bG(L_1) &\Mp &\{0\}
+ \end{matrix}
+\end{gather*} Given is \(a \in L_{k+1}\), and we wish \(a \in L_k\). 
+Then \(\bG(a) \in \bG(L_{k+1}) =\bG(L_k)\). 
+This implies \(\Ex b \in L_k\) s.t. \(\bG(b) =\bG(a)\), or \(\bG(b-a) =0\). 
+Now \(b-a \in \Tw{ker}(\bG)\) and consequently, by \(\Tw{img}(\aG) =\Tw{ker}(\bG)\), that \(b-a \in M' \cap L_{k+1} =M' \cap L_k\). 
+As a result, \(b-a \in L_k\), and \(a \in L_k\). 
+
+\section{solutions of non-linear systems in a field}
+\subsection*{250. prop.} [Dec. 21] Consider field extension \(F \subseteq E \subseteq L\). 
+Then \(L\) is a finite extension over \(F\), iff \(L\) is a finite extension over \(E\) and \(E\) too is a finite extension over \(F\), so that \([L:F] =[L:E] [E:F]\). \par
+\Ss{Proof.} [\(\Ip\)] Take basis \(\{v_i\}_i\) of \(L/E\), basis \(\{u_i\}_i\) of \(E/F\). 
+Easy to check \(\{v_i u_j\}_i,j\) is a basis of \(L/F\). \par
+[\(\Leftarrow\)] Conversely, take \(\aG \in L\) and express \(\aG =\sum_i a_i v_i = \sum_{i,j} b_{ij} v_i u_j\), where \(a_i \in E, b_{ij} \in F\). 
+Then this \(=\sum_i \Rb{\sum_j a_i u_j} v_i =\sum_i 0 \M v_i =0\). 
+
+\subsection*{251.} Suppose \(\bG\) algebraic over \(F(\aG)\). 
+This implies \(F(\aG)(\bG)\) is a finite extension of \(F(\aG)\). 
+While \(F(\aG)\) itself is a finite extension over \(F\), this in turn implies, \(F(\aG,\bG) =F(\aG)(\bG)\) is a finite extension of \(F\). 
+As a result, every element \(\in F(\aG,\bG)\) must be algebraic over \(F\). 
+In particular, \(\aG \pm \bG, \aG\bG, \aG/\bG\) are all algebraic over \(F\). 
+
+\subsection*{252. def.} Suppose \(R_1 \subseteq R_2\), and \(\bG \in R_2\). 
+\(\bG\) is said to be \Ss{integral} over \(R_1\) if \(\Ex\) monic \(f(x) \in R_1 [x]\) s.t. \(f(\bG) =0\). 
+
+\subsection*{253. prop.} Suppose \(R_1 \subseteq R_2\), and \(\bG \in R_2\). 
+Then \(\bG\) is integral, iff \(R_1[\bG]\) is a finitely generated \(R_1\)-module. \par
+\Ss{Proof.} [\(\Ip\)] Suppose \(f(\bG) =0 =\bG^l +a_{l-1} \bG^{l-1} +\dotsb+ a_0\). 
+Then \(1,\dotsc,\bG^{l-1}\) together generate \(R_1[\bG]\) seen as an \(R_1\)-module. \par
+[\(\Leftarrow\)] Conversely, if \(R_1[y]\) is a finitely generated \(R_1\)-module. 
+Suppose, then, \(\bG^l +a_{l-1} \bG^{l-1} +\dotsb+ a_0 =0\). 
+The linear map \(T(f) :=\bG f\) may be represented by a matrix \(M\) written according to basis \(1,\bG,\dotsc,\bG^{d-1}\). 
+This way, map \(\bG I -M\) identically vanishes. 
+Choose any \(f \in R_1[\bG]\). Then \(Mf =0\). 
+Multiply by the adjugate matrix to get \(\Tw{adj}(M)Mf =\Tw{det}(M)If =0\). 
+Set \(f=1\) now; it's seen \(\Tw{det}(M) =0\). This gives a poly.\ evaluated to be 0 at \(\bG\). 
+
+\subsection*{254.} Given are \(R_1 \subseteq R_2\), the set of all elements in \(R_2\) which are integral over \(R_1\), together form a subring of \(R_2\). 
+This subring thus formed contains a subset isom.\ to \(R_1\), which is called the \Ss{integral closure} of \(R_1\) in \(R_2\). 
+
+\subsection*{255.} Let \(R\) be an UFD, and \(F\) be its field of fractions. 
+Then \(R\) is \Ss{integrally closed} in \(F\), because \(\SF{Z}(f) \in R\) for \(\Ev f \in R[x]\). \par
+To show this, take any integral element \(a/b \in F\), with \(a,b \in R\), in lowest terms. 
+Then \((a/b)^d +c_{d-1} (a/b)^{d-1} +\dotsb+ a_0 =0\), or, \(-a^d =c_{d-1} a^{d-1} b +\dotsb+ c_0 b^d\). 
+In an UFD, Euclid lemma is valid. 
+Apply to \(b \nmid a^d\), then \(b\) must \(\Big| 1\), and hence \(b\) is a unit (see also text p.308, prop.11). 
+Actually \(a/b \in R\); since \(a,b\) arbitrary, all integral elements are included \(\in R\). 
+
+\subsection*{256. Zariski lemma.} Let there be a maximal ideal \(M\) in \(n\)-dim.\ multivariate poly.\ ring \(F[\V{x}]\). 
+Then \(F[\V{x}]/M\) is a finite extension of \(F\). \par
+It may be reformulated as such: if \(B\) is any finitely generated \(F\) algebra, which is also a field, 
+then \(B\) must be a finite extension of field \(F\). 
+[Why is that? \(B\) is an quotient in \(F[\V{x}]/M\), where the quotient ideal is the char.\ poly.\ of that algebraic / transcendental number. 
+But \(B\) is a field, so this ideal is maximal.] \par
+\Ss{Proof.} To show the latter statement. 
+Use math.\ induction on \(n\), the number of generators of \(B\). \par
+Case \(n=1\) is familiar to us: it is the extension made by a single element. \par
+Let proposition be true for \(n' =n -1\). Consider \(n' =n\). 
+Let \(A := F[\xi_1] \subseteq B\), and keep in mind \(A\) is an integral domain, \(B\) a field. 
+While \(A \cong F[x]\), it's an integral domain, and may produce its own field of fractions, \(K\). 
+By induction premise, \(B\) is finite extension of the field \(K\), generated by \(\xi_2,\dotsc,\xi_n\) over \(K\). 
+For \(2 \leq j \leq n\), \(\xi_j\) satisfies a poly.\ eqn.\ with coefficients \(\in K\). 
+Find \(f \in A\), so large as to be suitable to clear out denominators for all poly.\ eqn.s, when multiplied by \(f\). 
+Introduce \(A_f := \{a f^{-n}: a \in A, n \geq 0\} \subseteq K\). 
+This way, each of \(\xi_2,\dotsc,\xi_n\) becomes integral over \(A_f\), in view of their char.\ eqn.s in present form. 
+Therefore \(B\) is integral over \(A_f\). 
+Especially, \(K\), which \(\subseteq B\), is integral over \(A_f\). \par
+Is it possible that \(\xi_1\) is transcendental over \(F\)? 
+If so, \(A =F[\xi_1] \cong F[x]\), a PID. 
+In particular, \(A\) is an UFD. 
+And \(A_f\), a subset of it, is too an UFD. 
+By item 255, actually \(A_f\) is integrally closed in \(K\), and hence \(A_f =K\), a contradiction. \par
+Thus \(\xi_1\) is algebraic over \(F\), and in turn, \(B\) is a finite extension over \(F\). 
+
+\subsection*{257.} Suppose \(F\) is algebraically closed, then the only finite extension of \(F\) is \(F\) itself. 
+In light of this, for a maximal ideal \(M \subseteq F[\V{x}]\), the canonical map \(F[\V{x}] \Mp F[\V{x}]/M\), a finite extension of \(F\), which is just \(F\). 
+This sends \(\V{x}\) to \(\V{a} \in F^n\), and hence every proper ideal has a solution. 
+This is the fundamental thm.\ of algebra generalized to high dimension (refer to item 226). 
+Also it's seen that every maximal ideal take the form \(\Ab{x_1-a_1, \dotsc, x_n-a_n}\). 
+Moreover, that an ideal \(I \neq F[\V{x}]\) (i.e., is not an inconsistent system), is equivalent to that \(1 \notin I\). 
+In practice, we may check \(1 \notin G\), its Gr\"obner basis, because recall that \(G\) may readily divide leading terms of all members of \(I\). 
+
+\subsection*{258. thm.} The following are equivalent: \\
+\indent (i) \(\Ev i: 1 \leq i \leq n\), \(\Ex m_i \geq 0\), s.t. \(x_i^{m_i} \in \Tw{LT}(I)\) (leading terms). \\
+\indent (ii) \(\Ev i: 1 \leq i \leq n\), \(\Ex m_i \geq 0\), s.t. \(x_i^{m_i} \in \Tw{LT}(G)\) (\(G\) is the monic Gr\"obner basis of \(I\)). \\
+\indent (iii) \(|\{\V{x}^{\pmb{\aG}}: \V{x}^{\pmb{\aG}} \notin \Tw{LT}(I)\}| < \oo\) (leading terms of \(I\) spans all but finitely-many power products). \\
+\indent (iv) \(F[\V{x}]/I\) is finite-dim.\ vector space over \(F\). \par
+\Ss{Proof.} It's evident, (i) and (ii) are equivalent. \par
+To see (iii) and (iv) are equivalent, note that: whenever \(\V{x}^\aG \notin I\), append it into the set of coset representatives. 
+It may be seen as \(F[\V{x}]/I\). 
+It is the same thing to say that \(F[\V{x}]/I\) is finite-dim.\ and that all but finitely-many \(\Tw{LT}\)'s are \(\in I\). \par
+That (i) implies (iii) is obvious. 
+Indeed, for \(1 \leq i \leq n\), among powers of \(x_i\), only \(1,x_i,\dotsc,x_i^{m-1}\) are not spanned by \(\Tw{LT}(I)\). 
+A moment's though reveals there cannot be infinitely many multi-deg.\ that's not spanned by \(\Tw{LT}(I)\). \par
+Finally, to show (iv) implies (i). 
+Suppose \(\SF{Z}(f_1,\dotsc,f_m) \subseteq \SF{Z}(f)\), then, after introducing new indeterminate \(y\), clearly \(\SF{Z}(f_1,\dotsc,f_m,1-yf) =\varnothing\) (is an inconsistent system). 
+By Nullstellen Satz (item 225), actually \(\Ab{f_1,\dotsc,f_m,1-yf} =F[\V{x},y]\), and hence contains 1. 
+We may find \(1=\) linear comb.\ of \(f_1,\dotsc,f_m,1-yf\), and after arranging, plug in \(y =1/f\), \EqGo{
+ s(\V{x},y) \M f_i(\V{x}) +r(\V{x},y) \M (1-yf)
+ =s(\V{x},1/f) \M f_i(\V{x}) +0 =0. \\
+ \Ip f^l = \sum\nolimits_i p_i (\V{x},y) \M f_i(\V{x})
+} for suitable \(l\) and poly.s \(p_i\). \par
+Apply the result to \(x_i^m\). [If after some evaluation, all \(\Tw{LT}\)'s =0, then each \(x_i =0\) also. 
+Then power of \(x_i\) falls in ideal spanned by \(\Tw{LT}\)'s, and is actually a certain \(\Tw{LT}\).]
+
+\subsection*{259.} Moreover, condition (iv) implies there are only finitely-many solutions. \par
+To show this. Let \(N >\) dim.\ of this vector space. 
+Then \(1,x_i,\dotsc,x_i^N\) has a linear comb.\ that is 0. 
+Back to viewpoint of \(F[\V{x}]\), this means \(\sum_j^N c_j x_i^j \in I\) for suitable \(c_j\)'s. 
+From the perspective of evaluation-homom., if \(\V{a} \in \SF{Z}(I)\) (algebraic variety), then \(\V{a}\) is also a root of \(\sum_j^N c_j x_i^j =0\), which is finitely-many. 
+
+\subsection*{260. prop.} [Dec. 28] (text p.330) Let \(t >x_1 >\dotsc >x_n\) be distinct free variables, ordered as such. 
+Suppose \(I,J \subseteq F[\V{x}]\). 
+Then \(I \cap J =(tI +(1-t)J) \cap F[\V{x}]\). (it's the \Ss{first elimination ideal}). \par
+\Ss{Proof.} To see \(tI +(1-t)J\) is an ideal, \(c(tI +(1-t)J) =tcI +(1-t)cJ =tI +(1-t)J\); and \(tf_1 +(1-t)f_2 +tf_1' +(1-t)f_2' =t(f_1+f_1') +(1-t)(f_2+f_2')\) is closed, if \(f_1 \in I,\; f_2 \in J\). 
+That \((tI +(1-t)J) \subseteq I \cap J\) of course. 
+In addition, pick any element \(tf_1 +(1-t)f_2\) that does not contain \(t\), if \(f_1 \in I,\; f_2 \in J\). 
+Then \(f_1 =f_2\), and \(f \in I \cap J\). 
+
+\subsection*{261.} For brevity, set \(\V{t} :=(t_1,\dotsc,t_m)\) and \(\V{x} :=(x_1,\dotsc,x_n)\). 
+Let there be poly.\ map \(\eta: F^m \mapsto F^n\) given by \(x_1 =f_1(\V{t}),\dotsc, x_n =f_n(\V{t})\). 
+Consider ideal \(I :=(x_1 -f_1(\V{t}),\dotsc,x_n -f_n(\V{t})) \in F[\V{x},\V{t}]\), and its elimination ideal \(I_m := I \cap F[\V{x}]\). 
+Claim that the \(\SF{Z}(I_m)\) is the smallest algebraic variety containing the image \(\eta(F^m)\). \par
+\Ss{Proof.} Use monomial order \(x_1 >x_2 >\dotsb >x_n >t_1 >t_2 >\dotsb >t_m\). 
+First check \(\SF{Z}(I_m) \supseteq \eta(F^m)\), i.e., \(f\) must vanish on \(\eta(F^m)\). 
+For \(\Ev \V{a} \in F^m\), set \(\V{b} := \V{f}(\V{a})\). 
+Then \((\V{b},\V{a}) \in \SF{Z}(I)\). 
+\(f \in I_m \subseteq I\), and it follows \(\eta(F^m) \supseteq \SF{Z}(I_m)\). \par
+Next, to show \(\SF{Z}(I_m)\) is the smallest one containing it. 
+Suppose \(g \in F[\V{x}]\) vanishes on \(\eta(F^m)\), it remains to check \(g \in I_m\). 
+Dividing \(g\) by \(x_1 -f_1(\V{t}),\dotsc,x_n -f_n(\V{t})\) inside \(F[\V{x},\V{t}]\) to obtain \(g =q_i \M (x_1-f_1) +\dotsb+ q_n \M (x_n-f_n) +r(\V{t})\), which is possible since \(\Tw{LT}(x_i-f_i) =x_i\). 
+At this stage, substitute \(\V{t} \leftarrow \V{a}\) (which does not matter since \(g \in F[\V{x}]\)), with naturally \(\V{x} \leftarrow \V{b} \in \eta(F^m)\). 
+Now \(g\) vanishes on \(\eta(F^m)\), which implies \(r=0\) identically \(\in F[\V{x}]\). 
+That is, \(g \in I\), and in fact \(\in I_m\). 
+
+\section{solutions of linear systems in a ring}
+\subsection*{262. lemma.} [Dec. 24] Let \(A,B\) be \(R\)-modules, with \(B \neq \{0\}\). 
+If \(A \oplus B \Mp A\), being into, then \(A\) is not a Noetherian \(R\)-module. \par
+\Ss{Proof.} Construct all \(B_i \cong B,\; i=1,2,\dotsc\). 
+They give \(B_1 \subset B_1 \oplus B_2 \subset B_1 \oplus B_2 \oplus B_3 \subset\dotsb\), all properly included. 
+But \(A \oplus B_1 \subseteq A\) as a submodule. 
+In turn, by assumption, \(A \oplus B_1 \oplus B_2 \subseteq A\) as a submodule, and consequently so is \(A \oplus B_1 \oplus B_2 \oplus B_3\), and so forth. 
+This is a infinite ascending chain contained in \(A\).
+
+\subsection*{263.} Remark that \(R\) is Noetherian ring, iff \(R\), seen as \(R\)-module acting on itself, is a Noetherian module. 
+[However, \(R \X R \Mp R\) is not into, so this lemma cannot be used.]
+
+\subsection*{264. def.} The \Ss{rank} of a finitely generated \(R\)-module \(M\) is the maximal number of \(R\)-linearly independent elements inside \(M\). 
+
+\subsection*{265. prop.} Any homogeneous system of \(n\) linear eqn.s, involving \(m\) (which \(>n\)) variables, over \(R\) a comm.\ ring with unity, has non-trivial solutions over \(R\). \par
+There is the culmination of our presentation. Just like in our experience of \(\BF{R}^n\) vector space, when more unknowns are there than eqn.s, there must non-trivial solutions be. \par
+\Ss{Proof.} Examine the spacial case that \(R\) is Noetherian. 
+Claim that, with \(m>n\), \(R^m\) cannot be \(\Mp R^n\) as \(R\)-modules. 
+To see this, use the lemma (item 260), by setting \(A \leftarrow R^n\). 
+This yields \(R^m \cong A \oplus R^{m-n}\) as \(m>n\). 
+Suppose such into embedding were possible, then \(R^n\) isn't Noetherian, which is false. 
+Then \(R^m\) cannot be embedded in \(R^n\). \par
+In other words, every \(R\)-module of \(R^n\) must have rank \(\leq n\), i.e., the maximal number of linearly independent elements must be \(\leq n\). 
+We see this another way: \(n\) eqn.s \begin{gather*} \begin{matrix}
+ a_{1,1} r_1 +\dotsb+ a_{1,m} r_m =&0 \\
+ a_{2,1} r_1 +\dotsb+ a_{2,m} r_m =&0 \\
+ \vdots &\vdots \\
+ a_{n,1} r_1 +\dotsb+ a_{n,m} r_m =&0
+\end{matrix} \end{gather*} is a homom.\ \(\fG: R^m \Mp R^n\), which must has non-trivial \(\Tw{ker}\). 
+That is, among all choices \(r_j \in R\), there is at least one non-trivial solution. \par
+It remains to show the case of general \(R\) (comm.\ and having unity). 
+Take free variables \(\{y_{i,j}: 1 \leq 1 \leq n,\; 1 \leq j \leq m\}\). 
+Under evaluation homom.\ \(\psi: \BF{Z}[y_{i,j}] \Mp R\) by virtue of \(y_{i,j} \Mp a_{i,j}\) (which are completely arbitrary), 
+and by regarding poly.\ coefficients are acted in the module sense; 
+Notice commutativity is used at this point, a key step of the proof. 
+Now, \(R' := \psi(\BF{Z}[y_{i,j}])\) is Noetherian, since \(\BF{Z}[y_{i,j}]\) is. 
+But we have already seen the special case, and \(R'\) gives non-trivial solutions. The proof is complete. 
+
+\section{the Jordan canonical form}
+\subsection*{266. prop.} Suppose \(M\) is a finitely generated, free \(R\)-module of rank \(m\). 
+In addition, assume \(N \subseteq M\) is an \(R\)-submodule, and \(R\) is a PID. 
+Then \(N\) must be a free \(R\)-module of rank \(n \leq m\). 
+
+\subsection*{267.} How to find minimal poly.\ \(f(\lG) \in F[\lG]\) of a linear trans.\ \(T\)? 
+Na\:ively, one may find \(\Tw{det}(\lG I -T)\). 
+Since this is a multiple of min.\ poly., one may factor it. 
+But this is extremely high in computation complexity. 
+
+\subsection*{268. modules over PID.} [Dec. 31] (text p.460, thm.4) Given are \(R\) being a PID, \(M\) being a free \(R\)-module having finite rand \(n\), and \(N\) being a submodule of \(M\). 
+Then \(N\) is free of some rank \(m\) which \(<n\). 
+And there exists a basis, \(y_1, y_2, \dotsc, y_n\), of \(M\), such that \(a_1 y_1, a_2 y_2, \dotsc, a_m y_m\) is a basis of \(N\), with some \(a_i\) satisfying \(a_1 \Big| a_2 \Big|\dotsb\Big| a_m\). \par
+\Ss{Proof.} [T.-Y. J. --- see text for detailed proof; I shall summarize in a very sloppy way. 
+\newcommand\Mnu{\overset{\nu}{\mapsto}}
+\begin{gather*} \begin{matrix}
+ M &= &\langle y_1, y_2, &\dotsc, &y_n \rangle &\Mnu &\nu(M) &\subseteq &R \\
+ \cup & & & & & &\cup & &\cup \\
+ N &= &\langle a_1 y_1, a_2 y_2, &\dotsc, &a_m y_m \rangle &\Mnu &\Ab{a_1} &\subseteq &R \\
+ y_1 &= &b_1 x_1 +&\dotsb+ &b_n x_n &\Mnu &1 & \\
+ y &:= &a_1 b_1 x_1 +&\dotsb+ &a_1 b_n x_n &\Mnu &a_1 & \\
+ & &\downarrow \pi_1 & &\downarrow \pi_n & & & \\
+ & &a_1 b_1 &\dotsb &a_1 b_n & & &
+\end{matrix} \end{gather*} \indent [The basic idea is to select, among all possible homom.\ \(\psi': M \mapsto R\), the \(\nu\) that gives \(\nu(N)\) not properly contained in any other \(\psi'(N)\). 
+Suppose \(\nu(N) =\Ab{a_1}\) with preimage \(\nu(y) =a_1\); the fact \(R\) is a PID is used here. 
+One need to explain \(a_1 \neq 0\), though. \par
+[A crucial step is: \(\Ab{a_1} \Big| \psi'(y)\) for \(\Ev \psi'\). 
+This is because B\'ezout identity \EqGo{
+ \Tw{gcd}(a_1,\psi'(y)) =r_1 a_1 +r_2 \psi'(y) =(r_1 \nu +r_2 \psi')(y)
+} yields \(\Ab{a_1} \subseteq (r_1 \nu +r_2 \psi')(y)\); 
+but by construction of \(\Ab{a_1}\), it must be as small as \(\Tw{gcd}(a_1,\psi'(y))\) in order not to lie inside the rhs ideal. 
+In particular, if \(y\) is expanded according to basis, \(\Ab{x_1,\dotsc,x_n}\), of \(M\), then the homom.\ \(\pi_i\) that picks up each coordinate \(x_i\) gives multiple of \(a_1\). 
+Cancel this factor \(a_1\), and we have found an element \(y_1\) with \(\nu(y_1) =1\).  \par
+[Afterwards choose \(y_1\) to be one basis, to expand every \(x \in M\) as \(\nu(x) y_1 +(x -\nu(x) y_1)\), the former \(\in Ry_1\), the latter (after a moment's thought) \(\in \Tw{ker}(\nu)\), i.e.\  \(M =R y_1 \oplus \Tw{ker}(\nu)\). 
+With this applied especially to \(N\) which \(\subseteq M\), together with the fact image of \(\nu\) is multiple of \(a_1\), yields decomposition \(N =R a_1 y_1 \oplus (\Tw{ker}(\nu) \cap N)\). \par
+[Then math.\ induction may be used. 
+From above decomposition of \(M\) and the induction premise, since \(\Tw{ker}(\nu)\) has rank \(n-1\) (maximum no.\ of linear indep.\ elements), submodule \(\Tw{ker}(\nu) \cap N\) has smaller, finite rank, say \(m-1\), again from above decomposition of \(N\); thus \(N\) has rank \(m\). \par
+[Apply the induction premise to find suitable basis \(y_2, \dotsc, y_n\) of \(M\), such that \(a_2 y_2, \dotsc, a_m y_m\), of \(N\), with \(a_2 \Big| a_m\).
+It remains to show \(a_1 \Big| a_2\). 
+Consider \(\fG(y_1) =\fG(y_2) :=1\), and \(\fG(y_i) =0\) otherwise. 
+Then \(\Ab{a_1} =\Ab{\fG(a_1 y_1)} \subseteq \fG(N)\), because \(a_1 y_1\) is a free generator; but \(\Ab{a_1}\) is maximal, so \(\Ab{a_1} =\fG(N)\). 
+Similarly, \(\Ab{a_2} \subseteq \fG(N)\). 
+As a result, \(a_2 \in \Ab{a_1}\).]
+
+\subsection*{269.} Let \(A \in \CF{M}_{n \X n}(F[\lG])\), and has nonzero 1st column. 
+Then under row operations, \(M\) is equivalent to another matrix with 1st column \(\Ab{p(x),0,\dotsc,0}\), where \(p(x)\) is \(\Tw{gcd}\) of all entries in 1st column of \(M\). 
+
+\subsection*{270.} Over the \(F[\lG]\), a PID, by elementary row and column operations we may write any \(A \in \CF{M}_{n \X n}(F[\lG])\) (known as the \Ss{Smith normal form}) \begin{gather*} 
+ \lG I -A = \begin{bmatrix}
+ 1, &0, &0, & &\dotsc &0 \\
+ 0, &\ddots &0, & &\dotsc &0 \\
+ 0, &0, &1, & & &\vdots \\
+  & & &a_1(\lG), &0, &0 \\
+ \vdots &\vdots & &0, &\ddots &0 \\
+ 0, &0, &\dotsc &0, &0, &a_m(\lG)
+\end{bmatrix}\end{gather*} where \(a_1 \Big| a_2 \Big| \dotsb \Big| a_m\). 
+As a result, all roots of \(\Tw{det}(\lG I -A)\) are also roots of \(a_m(\lG)\), and hence \(a_m(\lG)\) is the characteristic poly. 
+
+\subsection*{271.} (text p.481) Same settings; let \(A\) be the linear transf.\ of multiplying \(\lG\). 
+Then \(\lG I -A\) is the zero transf. 
+Convert it into Smith form, with basis, say, \(e_1,\dotsc,e_n\). 
+But \(e_1 +\dotsc +e_{n-m} +a_1(\lG) e_{n-m+1} +\dotsb +a_m(\lG) e_n =0\). 
+Since they are free, the only possibility is \(e_1,\dotsc,e_{n-m}\) all \(=0\), while the rest is resp.\ annihilated by \(a_i(\lG)\). 
+In other words, \EqGo{
+ F[\lG]/a_1(\lG) \oplus\dotsb\oplus F[\lG]/a_m(\lG).
+}
+
+\subsection*{272.} Given is \(B \in \CF{M}_{n \X n}(F[\lG])\). 
+Define \(\dG_l(B) =\Tw{gcd}(\{\Tw{det}(C')\})\) where \(C'\) runs through all \(l \X l\) submatrices of \(M\). 
+To be consistent, \(\dG_n(B) =\Tw{det}(B)\), and \(\dG_1(B) =\Tw{gcd}(B(i,j))\). 
+Then \begin{gather*}
+ \F{\dG_l(\lG I -A)}{\dG_{l-1}(\lG I -A)}
+ =\begin{cases} 1, &1 \leq l \leq n-m \\
+ a_{l-n+m}(\lG), &l >n-m \end{cases}
+\end{gather*} This is evident from Smith form (item 268). Indeed, \(\dG_i\) is irrelevant of bases, and hence \Ss{invariant}. 
+When \(l\) does not exceed \(n-m\), all \(\Tw{det}\) are 1. 
+For greater \(l\), the \(\Tw{gcd}\) is the product up to \(a_{l-n+m}\). 
+Then \(\dG_l(\lG I -A)\) and \(\dG_{l-1}(\lG I -A)\) differ only in \(a_{l-n+m}\), which is left. 
+
+\end{document}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%~%~%~%~%~%~%~%~%~%~%~%~%~%~%~%~%~%~%~%~%~%~%~%~%~%~%~%~%~%~
+Yay~below this line nothing is printed.
